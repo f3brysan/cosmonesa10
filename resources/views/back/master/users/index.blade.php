@@ -25,8 +25,11 @@
         <div class="row">
             <div class="col-xl-12 mb-6">
                 <div class="card">
+                    <div class="card-header">
+                        <h5>Daftar Pengguna</h5>
+                    </div>
                     <div class="card-body">
-                        <table id="myTable" class="table table-striped table-hover">
+                        <table id="myTable" class="table table-sm text-nowrap table-border-top-0">
                             <thead>
                                 <tr>
                                     <th class="text-center">Nama</th>

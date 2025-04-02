@@ -21,11 +21,28 @@ class B_UsersController extends Controller
         if ($request->ajax()) {
             return DataTables::of($users)
                 ->addIndexColumn()
+                ->addColumn('name', function ($user) {
+                    $result = '<div class="d-flex justify-content-start align-items-center">
+                    <div class="avatar-wrapper">
+                      <div class="avatar avatar-sm me-2">
+                        <img src="' . asset('backend') . '/assets/img/avatars/1.png" alt="Avatar" class="rounded-circle" />
+                      </div>
+                    </div>
+                    <div class="d-flex flex-column">
+                      <a class="text-heading text-truncate fw-medium">'.$user->name.'</a>                      
+                    </div>
+                  </div>';
+
+                  return $result;
+                })
                 ->addColumn('action', function ($user) {
                     // Initialize the $btn variable
-                    $btn = '<a href="javascript:void(0)" data-toggle="tooltip"  data-id="' . $user->id . '" data-name="' . $user->name . '" data-original-title="Edit" class="btn btn-danger btn-sm deactive"><i class="ft-slash"></i> Hapus</a>';
-                    $btn .= '&nbsp';
-                    $btn .= '<a href="javascript:void(0)" data-toggle="tooltip"  data-id="' . Crypt::encrypt($user->id) . '" data-name="' . $user->name . '" data-original-title="Edit" class="btn btn-primary btn-sm loginas"><i class="ft-log-in"></i> Login as</a>';
+                    $btn = '<button type="button" class="btn p-0 dropdown-toggle hide-arrow" data-bs-toggle="dropdown"><i class="icon-base bx bx-dots-vertical-rounded"></i></button>
+                    <div class="dropdown-menu">
+                      <a class="dropdown-item" href="javascript:void(0);"><i class="icon-base bx bx-edit-alt me-1"></i> View Details</a>
+                      <a class="dropdown-item" href="javascript:void(0);"><i class="icon-base bx bx-trash me-1"></i> Delete</a>
+                    </div>
+                  </div>';
                     // Return the generated action buttons
                     return $btn;
                 })
@@ -33,14 +50,14 @@ class B_UsersController extends Controller
                     $role = '';
                     foreach ($user->roles as $item) {
                         if ($item->name == 'superadmin') {
-                            $role .= '<span class="badge badge-info">' . $item->name . '</span>';
+                            $role .= '<span class="badge bg-label-primary">' . $item->name . '</span>';
                         } else {
                             $role .= '<span class="badge badge-warning">' . $item->name . '</span>';
                         }
                     }
                     return $role;
                 })
-                ->rawColumns(['action', 'role'])
+                ->rawColumns(['action', 'role', 'name'])
                 ->addIndexColumn()
                 ->make(true);
         }

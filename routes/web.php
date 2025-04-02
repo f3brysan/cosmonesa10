@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\API\APIOauthController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -13,6 +14,13 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
+Route::get('/', [F_DashboardController::class, 'index']);
+// Route::get('/book', [F_AppointmentController::class, 'index']);
+
+Route::get('/login', function () {
+    return view('auth.login');
 });
+
+// oauth
+Route::get('oauth/google', [APIOauthController::class, 'redirectToProvider'])->name('oauth.google');  
+Route::get('oauth/google/callback', [APIOauthController::class, 'handleProviderCallback'])->name('oauth.google.callback');

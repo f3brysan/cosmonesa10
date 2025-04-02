@@ -8,9 +8,10 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('welcome');
 });
-Route::group(['middleware' => ['auth']], function () {
+Route::group(['middleware' => ['auth', 'role:superadmin|pengelola|seller']], function () {
     Route::get('dashboard', [B_DashboardController::class, 'index']);
-
+});
+Route::group(['middleware' => ['auth', 'role:superadmins|pengelola']], function () {    
     Route::get('master/pengguna', [B_UsersController::class, 'index']);
 });
 

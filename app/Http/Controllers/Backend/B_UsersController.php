@@ -54,11 +54,24 @@ class B_UsersController extends Controller
                 ->addColumn('role', function ($user) {
                     $role = '';
                     foreach ($user->roles as $item) {
-                        if ($item->name == 'superadmin') {
-                            $role .= '<span class="badge bg-label-primary">' . $item->name . '</span>';
-                        } else {
-                            $role .= '<span class="badge bg-label-info">' . $item->name . '</span>';
-                        }
+
+                        switch ($item->name) {
+                            case 'superadmin':
+                                $role .= '<span class="badge bg-label-primary">' . $item->name . '</span>';
+                                break;
+
+                            case 'pengelola':
+                                $role .= '<span class="badge bg-label-info">' . $item->name . '</span>';
+                                break;
+
+                            case 'seller':
+                                $role .= '<span class="badge bg-label-success">' . $item->name . '</span>';
+                                break;
+
+                            default:
+                                $role .= '<span class="badge bg-label-secondary">' . $item->name . '</span>';
+                                break;
+                        }                        
                     }
                     return $role;
                 })

@@ -61,6 +61,10 @@ class APIOauthController extends Controller
                 // Login the new user
                 Auth::login($newUser);
 
+                if ($newUser->hasRole(['superadmin', 'pengelola', 'seller'])) {
+                    return redirect()->intended('back/dashboard');
+                }
+
                 // Redirect the new user to the customer dashboard
                 return redirect('/dashboard');
             }

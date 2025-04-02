@@ -60,7 +60,8 @@
             <p class="mb-6 mx-2">
                 Anda tidak memiliki otorisasi untuk melihat halaman ini
                 <br>Anda
-                dapat mengklik tombol di bawah ini untuk kembali ke beranda.</p>
+                dapat mengklik tombol di bawah ini untuk kembali ke beranda.
+            </p>
             <a href="javascript:void(0)" onclick="history.back();" class="btn btn-primary">Kembali</a>
             <div class="mt-6">
                 <img src="https://demos.themeselection.com/sneat-bootstrap-html-admin-template/assets/img/illustrations/girl-with-laptop-light.png"

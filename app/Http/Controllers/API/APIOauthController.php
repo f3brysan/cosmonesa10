@@ -21,7 +21,7 @@ class APIOauthController extends Controller
         return Socialite::driver('google')->redirect();
     }
 
-    public function handleProviderCallback(Request $request): \Illuminate\Http\RedirectResponse
+    public function handleProviderCallback()
     {
         try {
             // Get the user from the OAuth provider

@@ -7,8 +7,9 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('welcome');
 });
-
-Route::get('dashboard', [B_DashboardController::class, 'index']); 
+Route::group(['middleware' => ['auth']], function () {
+    Route::get('dashboard', [B_DashboardController::class, 'index']);
+});
 
 // API RAJA ONGKIR
 Route::get('api/provinces', [APIRajaOngkirController::class, 'getProvinces']);

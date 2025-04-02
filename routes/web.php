@@ -20,7 +20,7 @@ Route::get('/', [F_DashboardController::class, 'index']);
 
 Route::get('/login', function () {
     return view('auth.login');
-});
+})->name('login');
 
 // oauth
 Route::get('oauth/google', [APIOauthController::class, 'redirectToProvider'])->name('oauth.google');  

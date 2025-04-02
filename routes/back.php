@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\API\ApiRajaOngkirController;
 use App\Http\Controllers\Backend\B_DashboardController;
+use App\Http\Controllers\Backend\B_UsersController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -9,6 +10,8 @@ Route::get('/', function () {
 });
 Route::group(['middleware' => ['auth']], function () {
     Route::get('dashboard', [B_DashboardController::class, 'index']);
+
+    Route::get('master/pengguna', [B_UsersController::class, 'index']);
 });
 
 // API RAJA ONGKIR

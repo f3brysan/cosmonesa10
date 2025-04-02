@@ -29,8 +29,11 @@
                             </div>
                           </div>
                           <div class="flex-grow-1">
-                            <h6 class="mb-0">John Doe</h6>
-                            <small class="text-body-secondary">Admin</small>
+                            <h6 class="mb-0">{{ auth()->user()->name }}</h6>
+                            @foreach (auth()->user()->getRoleNames() as $item)
+                                
+                            <small class="text-body-secondary">{{ $item }}</small>
+                            @endforeach
                           </div>
                         </div>
                       </a>
@@ -61,9 +64,12 @@
                       <div class="dropdown-divider my-1"></div>
                     </li>
                     <li>
-                      <a class="dropdown-item" href="javascript:void(0);">
+                      <form action="{{ URL::to('logout') }}" method="POST">
+                        @csrf
+                      <button class="dropdown-item">
                         <i class="icon-base bx bx-power-off icon-md me-3"></i><span>Log Out</span>
-                      </a>
+                      </button>
+                      </form>
                     </li>
                   </ul>
                 </li>

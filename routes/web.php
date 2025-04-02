@@ -1,8 +1,9 @@
 <?php
 
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\API\APIOauthController;
 use App\Http\Controllers\Frontend\F_DashboardController;
-use Illuminate\Support\Facades\Route;
 
 /*
 |--------------------------------------------------------------------------
@@ -21,6 +22,14 @@ Route::get('/', [F_DashboardController::class, 'index']);
 Route::get('/login', function () {
     return view('auth.login');
 })->name('login');
+
+Route::post('logout', function () {
+    // Log out user
+    Auth::logout();
+    // Redirect to login page
+    return redirect()->route('login');
+});
+
 
 // oauth
 Route::get('oauth/google', [APIOauthController::class, 'redirectToProvider'])->name('oauth.google');  

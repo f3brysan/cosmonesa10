@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\API\APIOauthController;
+use App\Http\Controllers\Frontend\F_DashboardController;
 use Illuminate\Support\Facades\Route;
 
 /*

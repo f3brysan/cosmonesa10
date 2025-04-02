@@ -26,15 +26,15 @@ class B_UsersController extends Controller
                     $result = '<div class="d-flex justify-content-start align-items-center">
                     <div class="avatar-wrapper">
                       <div class="avatar avatar-sm me-2">
-                        <img src="https://ui-avatars.com/api/?name='.$name.'&background=random" alt="Avatar" class="rounded-circle" />
+                        <img src="https://ui-avatars.com/api/?name=' . $name . '&background=random" alt="Avatar" class="rounded-circle" />
                       </div>
                     </div>
                     <div class="d-flex flex-column">
-                      <a class="text-heading text-truncate fw-medium">'.$user->name.'</a>                      
+                      <a class="text-heading text-truncate fw-medium">' . $user->name . '</a>                      
                     </div>
                   </div>';
 
-                  return $result;
+                    return $result;
                 })
                 ->editColumn('email', function ($user) {
                     $maskEmail = substr($user->email, 0, 3) . str_repeat('*', 5) . substr($user->email, strpos($user->email, '@'));
@@ -68,6 +68,5 @@ class B_UsersController extends Controller
         }
 
         return view('back.master.users.index', compact('roles'));
-
     }
 }

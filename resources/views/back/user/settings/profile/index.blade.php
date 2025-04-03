@@ -118,13 +118,47 @@
                             <li class="d-flex align-items-center mb-4"><span class="fw-medium mx-2">Nama :</span>
                                 <span>{{ $user->name }}</span>
                             </li>
-                            <li class="d-flex align-items-center mb-4"><span class="fw-medium mx-2">Nama :</span>
-                                <span>{{ $user->name }}</span>
+                            <li class="d-flex align-items-center mb-4"><span class="fw-medium mx-2">Tanggal Lahir :</span>
+                                <span>{{ $profile->dob ?? 'Belum Terisi' }}</span>
+                            </li>
+                            <li class="d-flex align-items-center mb-4"><span class="fw-medium mx-2">Jenis Kelamin :</span>
+                                <span>
+                                    @if (!empty($profile->gender))
+                                        {{ $profile->gender == 'L' ? 'Laki-laki' : 'Perempuan' }}
+                                    @else
+                                        Belum Terisi
+                                    @endif
+                                </span>
+                            </li>
+                            <li class="d-flex align-items-center mb-4"><span class="fw-medium mx-2">Nomor HP :</span>
+                                <span>{{ $profile->hp ?? 'Belum Terisi' }}</span>
+                            </li>
+                            <li class="d-flex align-items-center mb-4"><span class="fw-medium mx-2">Email :</span>
+                                <span>{{ $user->email }}</span>
                             </li>
                         </ul>
                     </div>
+                    <div class="card-footer">
+                        <a href="javascript:void(0);" class="btn btn-primary float-end" onclick="editProfile()"><i
+                                class="icon-base bx bx-edit-alt icon-sm"></i> Edit Profile</a>
+                    </div>
                 </div>
                 <!--/ Profile Timeline -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Large Modal -->
+    <div class="modal fade" id="profileModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel3">Perbarui Profil</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div id="profileForm"></div>
+                </div>                
             </div>
         </div>
     </div>
@@ -141,8 +175,16 @@
 
     <script>
         $(document).ready(function() {
-
+                        
 
         });
+
+        function editProfile() {
+            $.get("{{ URL::to('back/user/settings/profile/edit') }}",
+                function(data) {
+                    $('#profileModal').modal('show');
+                    $('#profileForm').html(data);
+                });
+        }
     </script>
 @endpush

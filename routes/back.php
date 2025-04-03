@@ -14,6 +14,8 @@ Route::group(['middleware' => ['auth', 'role:superadmin|pengelola|seller']], fun
     Route::get('dashboard', [B_DashboardController::class, 'index']);
 
     Route::get('user/settings', [B_UserSettingsController::class, 'index']);
+    Route::get('user/settings/profile/edit', [B_UserSettingsController::class, 'editProfile']);
+    Route::post('user/settings/profile/update', [B_UserSettingsController::class, 'updateProfile']);
 });
 
 Route::group(['middleware' => ['auth', 'role:superadmin|pengelola']], function () {

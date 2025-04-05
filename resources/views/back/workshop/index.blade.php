@@ -88,7 +88,8 @@
                     {
                         data: 'price',
                         name: 'price',
-                        className: 'text-end'
+                        className: 'text-end',
+                        render: $.fn.dataTable.render.number('.', ',', 2, 'Rp '),
                     },
                     {
                         data: 'action',

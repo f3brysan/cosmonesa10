@@ -72,7 +72,7 @@
             </ul>
             <ul class="menu-sub">
                 <li class="menu-item">
-                    <a href="" class="menu-link">
+                    <a href="{{ URL::to('back/workshop') }}" class="menu-link">
                         <div class="text-truncate" data-i18n="Workshop">Workshop</div>
                     </a>
                 </li>

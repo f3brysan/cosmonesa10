@@ -52,7 +52,11 @@
             </a>
         </li>
 
+        @role('superadmin|pengelola')
         <!-- Layouts -->
+        <li class="menu-header small text-uppercase">
+            <span class="menu-header-text">Menu</span>
+        </li>
         <li class="menu-item">
             <a href="javascript:void(0);" class="menu-link menu-toggle">
                 <i class="menu-icon tf-icons bx bx-layout"></i>
@@ -81,12 +85,13 @@
                 </li>
             </ul>
         </li>
+        @endrole
 
+        @role('superadmin')
         <!-- Master Tools -->
         <li class="menu-header small text-uppercase">
             <span class="menu-header-text">Master</span>
         </li>
-
         <li class="menu-item">
             <a href="javascript:void(0);" class="menu-link menu-toggle">
                 <i class="menu-icon tf-icons bx bxs-wrench"></i>
@@ -101,5 +106,6 @@
                 </li>
             </ul>
         </li>
+        @endrole
     </ul>
 </aside>

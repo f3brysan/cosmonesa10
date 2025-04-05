@@ -23,6 +23,7 @@ Route::group(['middleware' => ['auth', 'role:superadmin|pengelola|seller']], fun
 Route::group(['middleware' => ['auth', 'role:superadmin|pengelola']], function () {
     Route::get('workshop', [B_WorkshopController::class, 'index']);
     Route::get('workshop/create', [B_WorkshopController::class, 'create']);
+    Route::post('workshop/store', [B_WorkshopController::class, 'store']);
 });
 
 Route::group(['middleware' => ['auth', 'role:superadmin|pengelola']], function () {

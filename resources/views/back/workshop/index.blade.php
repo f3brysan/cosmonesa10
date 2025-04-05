@@ -83,11 +83,8 @@
                     {
                         data: 'event_date',
                         name: 'event_date',
-                    },
-                    {
-                        data: 'email',
-                        name: 'email',
-                    },
+                        className: 'text-center'
+                    },                    
                     {
                         data: 'price',
                         name: 'price',

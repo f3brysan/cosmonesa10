@@ -31,49 +31,62 @@
                     <div class="card-header">
                         <h5>Tambah Workshop dan Seminar Baru</h5>
                     </div>
-                    <div class="card-body">
-                        <div class="mb-4">
-                            <label for="exampleFormControlInput1" class="form-label">Judul</label>
-                            <input type="text" class="form-control" id="title" name="title" required
-                                value="{{ old('title') }}" />
-                        </div>
-                        <div class="mb-4">
-                            <label for="exampleFormControlTextarea1" class="form-label">Detail</label>
-                            <textarea class="form-control" id="summernote" id="detail" name="detail" rows="10">{{ old('detail') }}</textarea>
-                        </div>
-                        <div class="row mb-4">
-                            <p><b>Tanggal Pendaftaran</b></p>
-                            <div class="col-md-6">
-                                <label for="exampleFormControlInput1" class="form-label">Tanggal Mulai</label>
-                                <input type="date" class="form-control" id="register_date_start"
-                                    name="register_date_start" required value="{{ old('register_date_start') }}" />
+                    <form action="{{ URL('back/workshop/store') }}" enctype="multipart/form-data" method="POST">
+                        @csrf
+                        <input type="hidden" name="id" id="id">
+                        <div class="card-body">
+                            <div class="mb-4">
+                                <label for="exampleFormControlInput1" class="form-label">Judul</label>
+                                <input type="text" class="form-control" id="title" name="title" required
+                                    value="{{ old('title') }}" />
                             </div>
-                            <div class="col-md-6">
-                                <label for="exampleFormControlInput1" class="form-label">Tanggal Selesai</label>
-                                <input type="date" class="form-control" id="register_date_end" name="register_date_end"
-                                    required value="{{ old('register_date_end') }}" />
+                            <div class="mb-4">
+                                <label for="exampleFormControlTextarea1" class="form-label">Detail</label>
+                                <textarea class="form-control" id="summernote" name="detail" rows="10">{{ old('detail') }}</textarea>
                             </div>
-                        </div>
-                        <div class="mb-4">
-                            <label for="exampleFormControlInput1" class="form-label">Tanggal Event</label>
-                            <input type="date" class="form-control" id="event_date" name="event_date" required
-                                value="{{ old('event_date') }}" />
-                        </div>
-                        <div class="mb-4">
-                            <div class="col-md-12">
-                                <img id="preview-image-before-upload" src="https://placehold.co/1200x800" alt="preview image"
-                                    style="max-height: 250px;">
+                            <div class="mb-4">
+                                <label for="exampleFormControlTextarea1" class="form-label">Harga</label>
+                                <input type="text" class="form-control" id="price" name="price" required
+                                value="{{ old('price') }}" />
                             </div>
-                            <div class="col-md-12">
-                                <label class="mt-2">Event Banner</label>
-                                <input type="file" name="image" placeholder="Choose image" id="image"
-                                    accept="image/*" class="form-control">
+                            <div class="row mb-4">
+                                <p><b>Tanggal Pendaftaran</b></p>
+                                <div class="col-md-6">
+                                    <label for="exampleFormControlInput1" class="form-label">Tanggal Mulai</label>
+                                    <input type="date" class="form-control" id="register_date_start"
+                                        name="register_date_start" required value="{{ old('register_date_start') }}" />
+                                </div>
+                                <div class="col-md-6">
+                                    <label for="exampleFormControlInput1" class="form-label">Tanggal Selesai</label>
+                                    <input type="date" class="form-control" id="register_date_end"
+                                        name="register_date_end" required value="{{ old('register_date_end') }}" />
+                                </div>
                             </div>
-                        </div>
-                    </div>
-                </div>
+                            <div class="mb-4">
+                                <label for="exampleFormControlInput1" class="form-label">Tanggal Event</label>
+                                <input type="date" class="form-control" id="event_date" name="event_date" required
+                                    value="{{ old('event_date') }}" />
+                            </div>
+                            <div class="mb-4">
+                                <div class="col-md-12">
+                                    <img id="preview-image-before-upload" src="https://placehold.co/1200x800"
+                                        alt="preview image" style="max-width: 100%; width: 400px;">
+                                </div>
+                                <div class="col-md-12">
+                                    <label class="mt-2">Event Banner <code>*Maksimal 2MB dan format gambar</code></label>
+                                    <input type="file" name="image" placeholder="Choose image" id="image"
+                                        accept="image/*" class="form-control">
+                                </div>
+                            </div>
+                            <div class="mb-6">
+                                <button type="submit" class="btn btn-primary float-end m-1">Simpan</button>
+                                <a href="{{ URL::to('back/workshop') }}" class="btn btn-secondary float-end mb-6 m-1">Kembali</a>
+                            </div>
+                    </form>
+                </div>  
             </div>
         </div>
+    </div>
     </div>
 @endsection
 
@@ -84,6 +97,8 @@
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     {{-- Summernote --}}
     <script src="https://cdn.jsdelivr.net/npm/summernote@0.9.0/dist/summernote.min.js"></script>
+    {{-- Mask --}}
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.16/jquery.mask.js" integrity="sha512-0XDfGxFliYJPFrideYOoxdgNIvrwGTLnmK20xZbCAvPfLGQMzHUsaqZK8ZoH+luXGRxTrS46+Aq400nCnAT0/w==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 
     <script>
         $(document).ready(function() {
@@ -98,6 +113,8 @@
                 }
                 reader.readAsDataURL(this.files[0]);
             });
+
+            $('#price').mask('000.000.000.000.000', {reverse: true});
         });
     </script>
 @endpush

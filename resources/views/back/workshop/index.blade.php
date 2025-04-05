@@ -40,7 +40,8 @@
                                 <thead>
                                     <tr>                                        
                                         <th class="text-center">Judul</th>
-                                        <th class="text-center">Tanggal</th>
+                                        <th class="text-center">Waktu Daftar</th>
+                                        <th class="text-center">Tanggal Acara</th>
                                         <th class="text-center">HTM</th>
                                         <th class="text-center">Aksi</th>
                                     </tr>
@@ -79,6 +80,11 @@
                     {
                         data: 'title',
                         name: 'title',
+                    },
+                    {
+                        data: 'register',
+                        name: 'register',
+                        className: 'text-center'
                     },
                     {
                         data: 'event_date',

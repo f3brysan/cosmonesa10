@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers\Backend;
 
+use Carbon\Carbon;
+use Carbon\CarbonPeriod;
 use App\Models\Workshops;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
@@ -29,6 +31,18 @@ class B_WorkshopController extends Controller
             if ($request->ajax()) {
                 return DataTables::of($workshops)
                     ->addIndexColumn()
+                    ->addColumn('register', function ($item) {
+                        $start = Carbon::parse($item->start_date);
+                        $end = Carbon::parse($item->end_date);
+
+                        $daysWithInclusive = $start->diffInDays($end) + 1;
+
+                        $result = $item->start_date . ' - ' . $item->end_date;
+                        $result .= '<br>';
+                        $result .= '('.$daysWithInclusive. ' Hari lagi)' ;
+
+                        return $result ?? ''; 
+                    })
                     ->addColumn('action', function ($item) {
                         // Generate action buttons for each workshop
                         $btn = '<button type="button" class="btn p-0 dropdown-toggle hide-arrow" data-bs-toggle="dropdown"><i class="icon-base bx bx-dots-vertical-rounded"></i></button>
@@ -39,7 +53,7 @@ class B_WorkshopController extends Controller
                       </div>';
                         return $btn;
                     })
-                    ->rawColumns(['action'])
+                    ->rawColumns(['action', 'register'])
                     ->addIndexColumn()
                     ->make(true);
             }
@@ -85,8 +99,8 @@ class B_WorkshopController extends Controller
         } else {
             $path = $checkOldImage;
         }
-        
-        $price = str_replace('.','', $request->price);
+
+        $price = str_replace('.', '', $request->price);
         $store = Workshops::updateOrCreate(
             ['id' => $request->id],
             [
@@ -103,6 +117,6 @@ class B_WorkshopController extends Controller
             ]
         );
 
-        return redirect()->intended(URL::to('back/workshop'))->with('success','Data Berhasil Disimpan');
+        return redirect()->intended(URL::to('back/workshop'))->with('success', 'Data Berhasil Disimpan');
     }
 }

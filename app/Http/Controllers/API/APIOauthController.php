@@ -28,9 +28,19 @@ class APIOauthController extends Controller
             $user = Socialite::driver('google')->user();
 
             // Check if the user already exists in the database
-            $finduser = User::where('gauth_id', $user->id)->first();
+            $finduser = User::where(function ($query) use ($user) {
+                $query->where('gauth_id', $user->id)
+                      ->orWhere('email', $user->email);
+            })->first();
 
             if ($finduser) {
+
+                // Update the user's email and Google Auth ID if the user exists                
+                $update = $finduser->update([                                        
+                    'email' => $user->email,                    
+                    'gauth_id' => $user->id,                    
+                ]);
+
                 // If the user exists, login the user
                 $login = Auth::loginUsingId($finduser->id);
                

@@ -35,7 +35,7 @@
                                 <a href="{{ URL::to('back/workshop/create') }}" class="btn btn-primary"><i class="icon-base bx bx-plus me-1"></i> Tambah</a>
                             </div>
                         </div>
-                        <div class="card-datatable text-nowrap">
+                        <div class="card-datatable">
                             <table id="myTable" class="datatables-basic table table-bordered table-responsive">
                                 <thead>
                                     <tr>                                        
@@ -43,6 +43,7 @@
                                         <th class="text-center">Waktu Daftar</th>
                                         <th class="text-center">Tanggal Acara</th>
                                         <th class="text-center">HTM</th>
+                                        <th class="text-center">Kuota</th>
                                         <th class="text-center">Aksi</th>
                                     </tr>
                                 </thead>
@@ -90,6 +91,11 @@
                         data: 'event_date',
                         name: 'event_date',
                         className: 'text-center'
+                    },                    
+                    {
+                        data: 'quota',
+                        name: 'quota',
+                        className: 'text-end'
                     },                    
                     {
                         data: 'price',

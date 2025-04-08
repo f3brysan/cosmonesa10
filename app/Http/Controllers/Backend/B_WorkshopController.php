@@ -25,7 +25,7 @@ class B_WorkshopController extends Controller
     {
         try {
             // Fetch workshops that are not certifications
-            $workshops = Workshops::where('is_certication', false)->get();
+            $workshops = Workshops::where('is_certication', false)->get();            
 
             // Handle AJAX request for data tables
             if ($request->ajax()) {
@@ -45,7 +45,7 @@ class B_WorkshopController extends Controller
                         $result .= '('.$daysWithInclusive. ' Hari lagi)' ;
                         
                         return $result ?? ''; 
-                    })
+                    })                   
                     ->addColumn('action', function ($item) {
                         // Generate action buttons for each workshop
                         $btn = '<button type="button" class="btn p-0 dropdown-toggle hide-arrow" data-bs-toggle="dropdown"><i class="icon-base bx bx-dots-vertical-rounded"></i></button>
@@ -57,7 +57,7 @@ class B_WorkshopController extends Controller
                       </div>';
                         return $btn;
                     })
-                    ->rawColumns(['action', 'register','event_date'])
+                    ->rawColumns(['action', 'register','event_date', 'htm'])
                     ->addIndexColumn()
                     ->make(true);
             }

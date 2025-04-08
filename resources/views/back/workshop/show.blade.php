@@ -30,7 +30,7 @@
                 <div class="card h-100">
                     <img class="card-img-top mt-5"
                         src="{{ asset('storage/' . $workshop->picture) ?? 'https://via.placeholder.com/150' }}"
-                        style="max-width: 100%; width: 1080px; display: block; margin: auto;"
+                        style="max-width: 100%; display: block; margin: auto;"
                         alt="Banner {{ $workshop->title }}" />
                     <div class="card-body">
                         <h5 class="card-title">{{ $workshop->title }}</h5>

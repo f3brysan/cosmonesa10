@@ -49,6 +49,11 @@
                                 <input type="text" class="form-control" id="price" name="price" required
                                 value="{{ old('price') }}" />
                             </div>
+                            <div class="mb-4">
+                                <label for="exampleFormControlTextarea1" class="form-label">Kuota</label>
+                                <input type="numeric" class="form-control" id="quota" name="quota" required
+                                value="{{ old('quota') }}" max="10000" />
+                            </div>
                             <div class="row mb-4">
                                 <p><b>Tanggal Pendaftaran</b></p>
                                 <div class="col-md-6">

@@ -31,29 +31,33 @@ class B_WorkshopController extends Controller
             if ($request->ajax()) {
                 return DataTables::of($workshops)
                     ->addIndexColumn()
-                    ->addColumn('register', function ($item) {
-                        $start = Carbon::parse($item->start_date);
-                        $end = Carbon::parse($item->end_date);
+                    ->addColumn('register', function ($item) {                    
+                        $result = $item->start_date . ' s/d ' . $item->end_date;
+                        return $result ?? ''; 
+                    })
+                    ->editColumn('event_date', function ($item) { 
+                        $start = Carbon::parse(date('Y-m-d H:i:s'));
+                        $end = Carbon::parse($item->event_date);
 
                         $daysWithInclusive = $start->diffInDays($end) + 1;
-
-                        $result = $item->start_date . ' - ' . $item->end_date;
+                        $result = $item->event_date;
                         $result .= '<br>';
                         $result .= '('.$daysWithInclusive. ' Hari lagi)' ;
-
+                        
                         return $result ?? ''; 
                     })
                     ->addColumn('action', function ($item) {
                         // Generate action buttons for each workshop
                         $btn = '<button type="button" class="btn p-0 dropdown-toggle hide-arrow" data-bs-toggle="dropdown"><i class="icon-base bx bx-dots-vertical-rounded"></i></button>
                         <div class="dropdown-menu">
-                          <a class="dropdown-item view" href="' . URL::to('back/workshop/detail/' . Crypt::encrypt($item->id) . '') . '"><i class="icon-base bx bx-edit-alt me-1"></i> View Details</a>
-                          <a class="dropdown-item destroy" data-id="' . Crypt::encrypt($item->id) . '" href="javascript:void(0);" ><i class="icon-base bx bx-trash me-1"></i> Deactivate</a>
+                          <a class="dropdown-item view" href="' . URL::to('back/workshop/detail/' . Crypt::encrypt($item->id) . '') . '"><i class="icon-base bx bx-show me-1"></i> Detil</a>
+                          <a class="dropdown-item view" href="' . URL::to('back/workshop/edit/' . Crypt::encrypt($item->id) . '') . '"><i class="icon-base bx bx-edit-alt me-1"></i> Ubah</a>
+                          <a class="dropdown-item destroy" data-id="' . Crypt::encrypt($item->id) . '" href="javascript:void(0);" ><i class="icon-base bx bx-trash me-1"></i> Hapus</a>
                         </div>
                       </div>';
                         return $btn;
                     })
-                    ->rawColumns(['action', 'register'])
+                    ->rawColumns(['action', 'register','event_date'])
                     ->addIndexColumn()
                     ->make(true);
             }
@@ -113,7 +117,8 @@ class B_WorkshopController extends Controller
                 'picture' => $path,
                 'created_by' => auth()->user()->name,
                 'is_certication' => false,
-                'price' => $price
+                'price' => $price,
+                'quota' => $request->quota
             ]
         );
 

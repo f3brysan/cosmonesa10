@@ -130,6 +130,23 @@ class B_WorkshopController extends Controller
         return redirect()->intended(URL::to('back/workshop'))->with('success', 'Data Berhasil Disimpan');
     }
 
+    public function show($id) 
+    {
+        try {            
+            $id = Crypt::decrypt($id);
+        } catch (\Throwable $th) {            
+            abort(404);
+        }
+        
+        try {
+            $workshop = Workshops::where('id', $id)->first();
+        } catch (\Throwable $th) {
+            abort(404);
+        }
+
+        return view('back.workshop.show', compact('workshop'));
+    }
+
     public function edit($id)
     {
         try {            

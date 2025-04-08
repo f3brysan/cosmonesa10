@@ -50,8 +50,8 @@ class B_WorkshopController extends Controller
                         // Generate action buttons for each workshop
                         $btn = '<button type="button" class="btn p-0 dropdown-toggle hide-arrow" data-bs-toggle="dropdown"><i class="icon-base bx bx-dots-vertical-rounded"></i></button>
                         <div class="dropdown-menu">
-                          <a class="dropdown-item view" href="' . URL::to('back/workshop/detail/' . Crypt::encrypt($item->id) . '') . '"><i class="icon-base bx bx-show me-1"></i> Detil</a>
-                          <a class="dropdown-item view" href="' . URL::to('back/workshop/edit/' . Crypt::encrypt($item->id) . '') . '"><i class="icon-base bx bx-edit-alt me-1"></i> Ubah</a>
+                          <a class="dropdown-item" href="' . URL::to('back/workshop/detail/' . Crypt::encrypt($item->id) . '') . '"><i class="icon-base bx bx-show me-1"></i> Detil</a>
+                          <a class="dropdown-item" target="_blank" href="' . URL::to('back/workshop/edit/' . Crypt::encrypt($item->id) . '') . '"><i class="icon-base bx bx-edit-alt me-1"></i> Ubah</a>
                           <a class="dropdown-item destroy" data-id="' . Crypt::encrypt($item->id) . '" href="javascript:void(0);" ><i class="icon-base bx bx-trash me-1"></i> Hapus</a>
                         </div>
                       </div>';
@@ -81,15 +81,19 @@ class B_WorkshopController extends Controller
     public function store(Request $request)
     {
         $this->validate($request, [
-            'image' => [
-                'required',
+            'image' => [                
                 'image',
                 'mimes:jpg,png,jpeg,gif,svg',
                 'max:2048'
             ],
         ]);
 
-        $checkOldImage = Workshops::where('id', $request->id)->first();
+        $id = NULL;
+        if (!empty($request->id)) {
+            $id = Crypt::decrypt($request->id);            
+        }
+
+        $checkOldImage = Workshops::where('id', $id)->first();
         $path = '';
         if ($request->file('image') != null) {
             if (!empty($checkOldImage->picture)) {
@@ -101,12 +105,13 @@ class B_WorkshopController extends Controller
             $filename = date('YmdHis') . '_' . $type . '.' . $file->getClientOriginalExtension();
             $path = $file->storeAs('workshop', $filename, 'public');
         } else {
-            $path = $checkOldImage;
+            $path = $checkOldImage->picture;
         }
-
+             
+        
         $price = str_replace('.', '', $request->price);
         $store = Workshops::updateOrCreate(
-            ['id' => $request->id],
+            ['id' => $id],
             [
                 'title' => $request->title,
                 'slug' => Str::slug($request->title, '-'),
@@ -123,5 +128,23 @@ class B_WorkshopController extends Controller
         );
 
         return redirect()->intended(URL::to('back/workshop'))->with('success', 'Data Berhasil Disimpan');
+    }
+
+    public function edit($id)
+    {
+        try {            
+            $id = Crypt::decrypt($id);
+        } catch (\Throwable $th) {            
+            abort(404);
+        }
+        
+        try {
+            $workshop = Workshops::where('id', $id)->first();
+        } catch (\Throwable $th) {
+            abort(404);
+        }
+
+        return view('back.workshop.edit', compact('workshop'));
+        
     }
 }

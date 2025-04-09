@@ -4,6 +4,8 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\API\APIOauthController;
 use App\Http\Controllers\Frontend\F_DashboardController;
+use App\Http\Controllers\Frontend\F_AppointmentController;
+use App\Http\Controllers\Frontend\F_WorkshopController;
 
 /*
 |--------------------------------------------------------------------------
@@ -17,7 +19,8 @@ use App\Http\Controllers\Frontend\F_DashboardController;
 */
 
 Route::get('/', [F_DashboardController::class, 'index']);
-// Route::get('/book', [F_AppointmentController::class, 'index']);
+Route::get('/book', [F_AppointmentController::class, 'index']);
+Route::get('/ws', [F_WorkshopController::class, 'index']);
 
 Route::get('/login', function () {
     return view('auth.login');
@@ -32,5 +35,5 @@ Route::post('logout', function () {
 
 
 // oauth
-Route::get('oauth/google', [APIOauthController::class, 'redirectToProvider'])->name('oauth.google');  
+Route::get('oauth/google', [APIOauthController::class, 'redirectToProvider'])->name('oauth.google');
 Route::get('oauth/google/callback', [APIOauthController::class, 'handleProviderCallback'])->name('oauth.google.callback');

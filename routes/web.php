@@ -23,7 +23,7 @@ Route::get('/book', [F_AppointmentController::class, 'index']);
 Route::get('/ws', [F_WorkshopController::class, 'index']);
 
 Route::get('/login', function () {
-    return view('auth.login');
+    return view('front.page.login.login');
 })->name('login');
 
 Route::post('logout', function () {

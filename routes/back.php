@@ -3,6 +3,7 @@
 use App\Http\Controllers\API\ApiRajaOngkirController;
 use App\Http\Controllers\Backend\B_DashboardController;
 use App\Http\Controllers\Backend\B_EventController;
+use App\Http\Controllers\Backend\B_ProductController;
 use App\Http\Controllers\Backend\B_UsersController;
 use App\Http\Controllers\Backend\B_UserSettingsController;
 use Illuminate\Support\Facades\Route;
@@ -27,7 +28,7 @@ Route::group(['middleware' => ['auth', 'role:superadmin|pengelola']], function (
     Route::get('event/detail/{slug}', [B_EventController::class, 'show']);
     Route::get('event/edit/{id}', [B_EventController::class, 'edit']);
     
-
+    Route::get('product', [B_ProductController::class, 'index']);
 });
 
 Route::group(['middleware' => ['auth', 'role:superadmin|pengelola']], function () {

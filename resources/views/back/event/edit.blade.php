@@ -121,7 +121,7 @@
             });
             
             var htmlString = '{!! $event->description !!}';
-            $("#summernote").summernote("pasteHTML", htmlString);
+            $("#summernote").summernote("code", htmlString);
 
             $('#image').change(function() {
                 let reader = new FileReader();

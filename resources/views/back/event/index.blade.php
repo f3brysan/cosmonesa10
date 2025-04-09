@@ -40,6 +40,7 @@
                                 <thead>
                                     <tr>                                        
                                         <th class="text-center">Judul</th>
+                                        <th class="text-center">Jenis Acara</th>
                                         <th class="text-center">Waktu Daftar</th>
                                         <th class="text-center">Tanggal Acara</th>
                                         <th class="text-center">HTM</th>
@@ -81,6 +82,11 @@
                     {
                         data: 'title',
                         name: 'title',
+                    },
+                    {
+                        data: 'event_type',
+                        name: 'event_type',
+                        className: 'text-center'
                     },
                     {
                         data: 'register',

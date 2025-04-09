@@ -18,7 +18,7 @@ class B_EventController extends Controller
     {
         try {
             // Fetch workshops that are not certifications
-            $events = Events::where('is_certication', false)->get();
+            $events = Events::with('eventtype')->get();            
 
             // Handle AJAX request for data tables
             if ($request->ajax()) {
@@ -39,6 +39,10 @@ class B_EventController extends Controller
 
                         return $result ?? '';
                     })
+                    ->addColumn('event_type', function ($item) {
+                        $result = ucfirst($item->eventtype->name);
+                        return $result ?? '';
+                    })
                     ->addColumn('action', function ($item) {
                         // Generate action buttons for each event
                         $btn = '<button type="button" class="btn p-0 dropdown-toggle hide-arrow" data-bs-toggle="dropdown"><i class="icon-base bx bx-dots-vertical-rounded"></i></button>
@@ -50,7 +54,7 @@ class B_EventController extends Controller
                       </div>';
                         return $btn;
                     })
-                    ->rawColumns(['action', 'register', 'event_date', 'htm'])
+                    ->rawColumns(['action', 'register', 'event_date', 'htm', 'event_type'])
                     ->addIndexColumn()
                     ->make(true);
             }

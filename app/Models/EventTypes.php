@@ -6,18 +6,13 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
-class Events extends Model
+class EventTypes extends Model
 {
     use HasFactory;
     use HasUuids;
-    protected $table = 'events';    
+    protected $table = 'event_types';    
     public $incrementing = false;
     protected $guarded = [
         
     ];
-
-    public function eventtype()
-    {
-        return $this->belongsTo(EventTypes::class, 'event_type_id');
-    }
 }

@@ -65,8 +65,8 @@
 
             <ul class="menu-sub">
                 <li class="menu-item">
-                    <a href="" class="menu-link">
-                        <div class="text-truncate" data-i18n="Produk">Produk</div>
+                    <a href="{{ URL::to('back/product') }}" class="menu-link">
+                        <div class="text-truncate" data-i18n="Produk">Product</div>
                     </a>
                 </li>
             </ul>

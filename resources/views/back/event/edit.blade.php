@@ -41,6 +41,15 @@
                                     value="{{ old('title', $event->title) }}" />
                             </div>
                             <div class="mb-4">
+                                <label for="exampleFormControlInput1" class="form-label">Jenis Acara</label>
+                                <select name="event_type" id="event_type" class="form-control" required>
+                                    <option value="">Silahkan Pilih</option>
+                                    @foreach ($eventTypes as $item)
+                                        <option value="{{ $item->id }}" {{ $item->id == $event->event_type_id ? 'selected' : '' }}>{{ ucfirst($item->name) }}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                            <div class="mb-4">
                                 <label for="exampleFormControlTextarea1" class="form-label">Detail</label>
                                 <textarea class="form-control" id="summernote" name="detail" rows="10"></textarea>
                             </div>
@@ -111,7 +120,7 @@
                 height: 200,
             });
             
-            var htmlString = "{!! $event->description !!}";
+            var htmlString = '{!! $event->description !!}';
             $("#summernote").summernote("pasteHTML", htmlString);
 
             $('#image').change(function() {

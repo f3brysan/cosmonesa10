@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Backend;
 
 use Carbon\Carbon;
 use App\Models\Events;
+use App\Models\EventTypes;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use Yajra\DataTables\DataTables;
@@ -40,8 +41,8 @@ class B_EventController extends Controller
                         return $result ?? '';
                     })
                     ->addColumn('event_type', function ($item) {
-                        $result = ucfirst($item->eventtype->name);
-                        return $result ?? '';
+                        $result = !empty($item->eventtype->name) ? ucfirst($item->eventtype->name) : '';
+                        return $result;
                     })
                     ->addColumn('action', function ($item) {
                         // Generate action buttons for each event
@@ -72,7 +73,8 @@ class B_EventController extends Controller
 
     public function create()
     {
-        return view('back.event.create');
+        $eventTypes = EventTypes::all();
+        return view('back.event.create', compact('eventTypes'));
     }
 
     public function store(Request $request)
@@ -117,10 +119,10 @@ class B_EventController extends Controller
                 'end_date' => $request->register_date_end,
                 'event_date' => $request->event_date,
                 'picture' => $path,
-                'created_by' => auth()->user()->name,
-                'is_certication' => false,
+                'created_by' => auth()->user()->name,                
                 'price' => $price,
-                'quota' => $request->quota
+                'quota' => $request->quota,
+                'event_type_id' => $request->event_type
             ]
         );
 
@@ -153,13 +155,14 @@ class B_EventController extends Controller
 
         // Retrieve the event by id
         try {
-            $event = Events::where('id', $id)->first();
+            $event = Events::with('eventtype')->where('id', $id)->first();
         } catch (\Throwable $th) {
             // If the event is not found, abort with a 404 error
             abort(404);
         }
 
+        $eventTypes = EventTypes::all();
         // Return the view for editing the event
-        return view('back.event.edit', compact('event'));
+        return view('back.event.edit', compact('event', 'eventTypes'));
     }
 }

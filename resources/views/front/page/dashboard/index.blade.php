@@ -114,7 +114,70 @@
     </div>
 </section>
 <!-- End:: Slider Section -->
-
+<section class="commonSection blogSection3">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-10 offset-lg-1">
+                <div class="sectionTitle text-center">
+                    <img src="{{ asset('frontend/images/icons/2.png') }}" alt="">
+                    <h5 class="primaryFont">News About Our Company</h5>
+                    <h2>News <span class="colorPrimary fontWeight400">Feed</span></h2>
+                    <p>
+                        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+                        Quis ipsum suspendisse ultrices gravida. Risus commodo viverra maecenas accumsan lacus vel facilisis.
+                    </p>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-4 col-md-6">
+                <div class="blog_item_03">
+                    <img src="{{ asset('frontend/images/blog/1.jpg') }}" alt=""/>
+                    <div class="bp_content">
+                        <span>February 18, 2017</span>
+                        <h3><a href="single-blog.html">Spring is in the Air and and So Our These Amazing Spa Offers</a></h3>
+                        <a class="lr_more" href="single-blog.html">
+                            Learn More
+                            <svg width="300%" height="100%" viewBox="0 0 1200 60" preserveAspectRatio="none">
+                            <path d="M0,56.5c0,0,298.666,0,399.333,0C448.336,56.5,513.994,46,597,46c77.327,0,135,10.5,200.999,10.5c95.996,0,402.001,0,402.001,0"></path>
+                            </svg>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-4 col-md-6">
+                <div class="blog_item_03">
+                    <img src="{{ asset('frontend/images/blog/2.jpg') }}" alt=""/>
+                    <div class="bp_content">
+                        <span>February 18, 2017</span>
+                        <h3><a href="single-blog.html">We giving Amazing special spa and message service for vip.</a></h3>
+                        <a class="lr_more" href="single-blog.html">
+                            Learn More
+                            <svg width="300%" height="100%" viewBox="0 0 1200 60" preserveAspectRatio="none">
+                            <path d="M0,56.5c0,0,298.666,0,399.333,0C448.336,56.5,513.994,46,597,46c77.327,0,135,10.5,200.999,10.5c95.996,0,402.001,0,402.001,0"></path>
+                            </svg>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-4 col-md-6">
+                <div class="blog_item_03">
+                    <img src="{{ asset('frontend/images/blog/3.jpg') }}" alt=""/>
+                    <div class="bp_content">
+                        <span>February 18, 2017</span>
+                        <h3><a href="single-blog.html">We also offer outside special spa and message catering; take-away</a></h3>
+                        <a class="lr_more" href="single-blog.html">
+                            Learn More
+                            <svg width="300%" height="100%" viewBox="0 0 1200 60" preserveAspectRatio="none">
+                            <path d="M0,56.5c0,0,298.666,0,399.333,0C448.336,56.5,513.994,46,597,46c77.327,0,135,10.5,200.999,10.5c95.996,0,402.001,0,402.001,0"></path>
+                            </svg>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
 <!-- Begin:: About Section -->
 <section class="commonSection aboutSection2">
     <div class="layer_img move_anim">
@@ -348,62 +411,7 @@
 </div>
 <!-- End:: Service Section -->
 
-<!-- Begin:: Appointment Section -->
-<section class="commonSection apointmentSection2 as3">
-    <div class="container">
-        <div class="row no-gutters">
-            <div class="col-lg-5 col-md-5">
-                <div class="cta">
-                    <div class="cta_center">
-                        <p>Come</p>
-                        <p><span>Experience</span></p>
-                        <p>The Real</p>
-                        <p>Delight</p>
-                        <a href="booking.html" class="mo_btn"><i class="icofont-cart-alt"></i>Book Now</a>
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg-7 col-md-7">
-                <div class="appointment_form">
-                    <h3>Make Appointment</h3>
-                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt.</p>
-                    <form action="#" method="post" class="row">
-                        <div class="input-field col-lg-6">
-                            <input type="text" name="name" placeholder="Name"/>
-                        </div>
-                        <div class="input-field col-lg-6">
-                            <input type="email" name="email" placeholder="E-mail"/>
-                        </div>
-                        <div class="input-field col-lg-6">
-                            <input type="number" name="phone" placeholder="Phone Number"/>
-                        </div>
-                        <div class="input-field col-lg-6">
-                            <select name="select_subject">
-                                <option selected="selected">Select Subject</option>
-                                <option>Sports Massage</option>
-                                <option>Stone Massage</option>
-                                <option>Body Massage</option>
-                                <option>Head Massage</option>
-                                <option>Facial & Massage</option>
-                            </select>
-                        </div>
-                        <div class="input-field col-lg-12">
-                            <input type="text" name="date_time" class="datetime-picker" placeholder="Select Date & Time"/>
-                            <i class="icofont-ui-calendar"></i>
-                        </div>
-                        <div class="input-field col-lg-12">
-                            <textarea name="message" placeholder="Your Message"></textarea>
-                        </div>
-                        <div class="input-field col-lg-12">
-                            <button type="submit" class="mo_btn"><i class="icofont-calendar"></i>Make  An Appointment</button>
-                        </div>
-                    </form>
-                </div>
-            </div>
-        </div>
-    </div>
-</section>
-<!-- End:: Appointment Section -->
+
 
 <!-- Begin:: Feature Section -->
 <section class="commonSection featureSection">
@@ -1237,68 +1245,5 @@
 <!-- End:: Package Section -->
 
 <!-- Begin:: Blog Section -->
-<section class="commonSection blogSection3">
-    <div class="container">
-        <div class="row">
-            <div class="col-lg-10 offset-lg-1">
-                <div class="sectionTitle text-center">
-                    <img src="{{ asset('frontend/images/icons/2.png') }}" alt="">
-                    <h5 class="primaryFont">News About Our Company</h5>
-                    <h2>News <span class="colorPrimary fontWeight400">Feed</span></h2>
-                    <p>
-                        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
-                        Quis ipsum suspendisse ultrices gravida. Risus commodo viverra maecenas accumsan lacus vel facilisis.
-                    </p>
-                </div>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-lg-4 col-md-6">
-                <div class="blog_item_03">
-                    <img src="{{ asset('frontend/images/blog/1.jpg') }}" alt=""/>
-                    <div class="bp_content">
-                        <span>February 18, 2017</span>
-                        <h3><a href="single-blog.html">Spring is in the Air and and So Our These Amazing Spa Offers</a></h3>
-                        <a class="lr_more" href="single-blog.html">
-                            Learn More
-                            <svg width="300%" height="100%" viewBox="0 0 1200 60" preserveAspectRatio="none">
-                            <path d="M0,56.5c0,0,298.666,0,399.333,0C448.336,56.5,513.994,46,597,46c77.327,0,135,10.5,200.999,10.5c95.996,0,402.001,0,402.001,0"></path>
-                            </svg>
-                        </a>
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg-4 col-md-6">
-                <div class="blog_item_03">
-                    <img src="{{ asset('frontend/images/blog/2.jpg') }}" alt=""/>
-                    <div class="bp_content">
-                        <span>February 18, 2017</span>
-                        <h3><a href="single-blog.html">We giving Amazing special spa and message service for vip.</a></h3>
-                        <a class="lr_more" href="single-blog.html">
-                            Learn More
-                            <svg width="300%" height="100%" viewBox="0 0 1200 60" preserveAspectRatio="none">
-                            <path d="M0,56.5c0,0,298.666,0,399.333,0C448.336,56.5,513.994,46,597,46c77.327,0,135,10.5,200.999,10.5c95.996,0,402.001,0,402.001,0"></path>
-                            </svg>
-                        </a>
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg-4 col-md-6">
-                <div class="blog_item_03">
-                    <img src="{{ asset('frontend/images/blog/3.jpg') }}" alt=""/>
-                    <div class="bp_content">
-                        <span>February 18, 2017</span>
-                        <h3><a href="single-blog.html">We also offer outside special spa and message catering; take-away</a></h3>
-                        <a class="lr_more" href="single-blog.html">
-                            Learn More
-                            <svg width="300%" height="100%" viewBox="0 0 1200 60" preserveAspectRatio="none">
-                            <path d="M0,56.5c0,0,298.666,0,399.333,0C448.336,56.5,513.994,46,597,46c77.327,0,135,10.5,200.999,10.5c95.996,0,402.001,0,402.001,0"></path>
-                            </svg>
-                        </a>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</section>
+
 @endsection

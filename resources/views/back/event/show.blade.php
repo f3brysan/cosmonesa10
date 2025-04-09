@@ -16,7 +16,7 @@
                             <a href="{{ URL::to('back/master/dashboard') }}">Home</a>
                         </li>
                         <li class="breadcrumb-item">
-                            <a href="{{ URL::to('back/workshop') }}">Workshop</a>
+                            <a href="{{ URL::to('back/event') }}">Event</a>
                         </li>
                         <li class="breadcrumb-item active">{{ $event->title }}</li>
                     </ol>
@@ -35,6 +35,10 @@
                     <div class="card-body">
                         <h5 class="card-title">{{ $event->title }}</h5>
                         <table class="table table-bordered table-hover">
+                            <tr>
+                                <td><b>Jenis Acara</b></td>
+                                <td><span class="badge bg-info">{{ ucfirst($event->eventtype->name) }}</span></td>
+                            </tr>
                             <tr>
                                 <td><b>Tanggal Event</b></td>
                                 <td>

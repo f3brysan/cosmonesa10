@@ -19,7 +19,7 @@ class B_EventController extends Controller
     {
         try {
             // Fetch workshops that are not certifications
-            $events = Events::with('eventtype')->get();            
+            $events = Events::with('eventtype')->orderBy('event_date')->get();            
 
             // Handle AJAX request for data tables
             if ($request->ajax()) {
@@ -133,7 +133,7 @@ class B_EventController extends Controller
     {
         try {
             // Retrieve the event by slug
-            $event = Events::where('slug', $slug)->first();
+            $event = Events::with('eventtype')->where('slug', $slug)->first();
         } catch (\Throwable $th) {
             // If an error occurs, abort with a 404 error
             abort(404);

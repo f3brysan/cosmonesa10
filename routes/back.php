@@ -2,9 +2,9 @@
 
 use App\Http\Controllers\API\ApiRajaOngkirController;
 use App\Http\Controllers\Backend\B_DashboardController;
+use App\Http\Controllers\Backend\B_EventController;
 use App\Http\Controllers\Backend\B_UsersController;
 use App\Http\Controllers\Backend\B_UserSettingsController;
-use App\Http\Controllers\Backend\B_WorkshopController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -21,11 +21,11 @@ Route::group(['middleware' => ['auth', 'role:superadmin|pengelola|seller']], fun
 
 // Workshop
 Route::group(['middleware' => ['auth', 'role:superadmin|pengelola']], function () {
-    Route::get('workshop', [B_WorkshopController::class, 'index']);
-    Route::get('workshop/create', [B_WorkshopController::class, 'create']);
-    Route::post('workshop/store', [B_WorkshopController::class, 'store']);
-    Route::get('workshop/detail/{slug}', [B_WorkshopController::class, 'show']);
-    Route::get('workshop/edit/{id}', [B_WorkshopController::class, 'edit']);
+    Route::get('event', [B_EventController::class, 'index']);
+    Route::get('event/create', [B_EventController::class, 'create']);
+    Route::post('event/store', [B_EventController::class, 'store']);
+    Route::get('event/detail/{slug}', [B_EventController::class, 'show']);
+    Route::get('event/edit/{id}', [B_EventController::class, 'edit']);
     
 
 });

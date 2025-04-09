@@ -3,8 +3,7 @@
 namespace App\Http\Controllers\Backend;
 
 use Carbon\Carbon;
-use Carbon\CarbonPeriod;
-use App\Models\Workshops;
+use App\Models\Events;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use Yajra\DataTables\DataTables;
@@ -13,23 +12,17 @@ use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Facades\Storage;
 
-class B_WorkshopController extends Controller
+class B_EventController extends Controller
 {
-    /**
-     * Display a listing of the workshops.
-     *
-     * @param Request $request
-     * @return \Illuminate\Http\JsonResponse|\Illuminate\View\View
-     */
     public function index(Request $request)
     {
         try {
             // Fetch workshops that are not certifications
-            $workshops = Workshops::where('is_certication', false)->get();
+            $events = Events::where('is_certication', false)->get();
 
             // Handle AJAX request for data tables
             if ($request->ajax()) {
-                return DataTables::of($workshops)
+                return DataTables::of($events)
                     ->addIndexColumn()
                     ->addColumn('register', function ($item) {
                         $result = $item->start_date . ' s/d ' . $item->end_date;
@@ -47,11 +40,11 @@ class B_WorkshopController extends Controller
                         return $result ?? '';
                     })
                     ->addColumn('action', function ($item) {
-                        // Generate action buttons for each workshop
+                        // Generate action buttons for each event
                         $btn = '<button type="button" class="btn p-0 dropdown-toggle hide-arrow" data-bs-toggle="dropdown"><i class="icon-base bx bx-dots-vertical-rounded"></i></button>
                         <div class="dropdown-menu">
-                          <a class="dropdown-item" href="' . URL::to('back/workshop/detail/' . $item->slug) . '"><i class="icon-base bx bx-show me-1"></i> Detil</a>
-                          <a class="dropdown-item" target="_blank" href="' . URL::to('back/workshop/edit/' . Crypt::encrypt($item->id) . '') . '"><i class="icon-base bx bx-edit-alt me-1"></i> Ubah</a>
+                          <a class="dropdown-item" href="' . URL::to('back/event/detail/' . $item->slug) . '"><i class="icon-base bx bx-show me-1"></i> Detil</a>
+                          <a class="dropdown-item" target="_blank" href="' . URL::to('back/event/edit/' . Crypt::encrypt($item->id) . '') . '"><i class="icon-base bx bx-edit-alt me-1"></i> Ubah</a>
                           <a class="dropdown-item destroy" data-id="' . Crypt::encrypt($item->id) . '" href="javascript:void(0);" ><i class="icon-base bx bx-trash me-1"></i> Hapus</a>
                         </div>
                       </div>';
@@ -69,13 +62,13 @@ class B_WorkshopController extends Controller
             ]);
         }
 
-        // Return the view for the workshop index page
-        return view('back.workshop.index');
+        // Return the view for the event index page
+        return view('back.event.index');
     }
 
     public function create()
     {
-        return view('back.workshop.create');
+        return view('back.event.create');
     }
 
     public function store(Request $request)
@@ -93,7 +86,7 @@ class B_WorkshopController extends Controller
             $id = Crypt::decrypt($request->id);
         }
 
-        $checkOldImage = Workshops::where('id', $id)->first();
+        $checkOldImage = Events::where('id', $id)->first();
         $path = '';
         if ($request->file('image') != null) {
             if (!empty($checkOldImage->picture)) {
@@ -103,14 +96,14 @@ class B_WorkshopController extends Controller
             $file = $request->file('image');
             $type = Str::limit(Str::slug($request->title, '_'), 100);
             $filename = date('YmdHis') . '_' . $type . '.' . $file->getClientOriginalExtension();
-            $path = $file->storeAs('workshop', $filename, 'public');
+            $path = $file->storeAs('event', $filename, 'public');
         } else {
             $path = $checkOldImage->picture;
         }
 
 
         $price = str_replace('.', '', $request->price);
-        $store = Workshops::updateOrCreate(
+        $store = Events::updateOrCreate(
             ['id' => $id],
             [
                 'title' => $request->title,
@@ -127,35 +120,23 @@ class B_WorkshopController extends Controller
             ]
         );
 
-        return redirect()->intended(URL::to('back/workshop'))->with('success', 'Data Berhasil Disimpan');
+        return redirect()->intended(URL::to('back/event'))->with('success', 'Data Berhasil Disimpan');
     }
 
-    /**
-     * Display the specified workshop.
-     *
-     * @param string $slug
-     * @return \Illuminate\View\View
-     */
     public function show($slug)
     {
         try {
-            // Retrieve the workshop by slug
-            $workshop = Workshops::where('slug', $slug)->first();
+            // Retrieve the event by slug
+            $event = Events::where('slug', $slug)->first();
         } catch (\Throwable $th) {
             // If an error occurs, abort with a 404 error
             abort(404);
         }
 
-        // Return the view for displaying the workshop
-        return view('back.workshop.show', compact('workshop'));
+        // Return the view for displaying the event
+        return view('back.event.show', compact('event'));
     }
 
-    /**
-     * Edit the specified workshop.
-     *
-     * @param string $id The id of the workshop
-     * @return \Illuminate\View\View
-     */
     public function edit($id)
     {
         // Decrypt the id
@@ -166,15 +147,15 @@ class B_WorkshopController extends Controller
             abort(404);
         }
 
-        // Retrieve the workshop by id
+        // Retrieve the event by id
         try {
-            $workshop = Workshops::where('id', $id)->first();
+            $event = Events::where('id', $id)->first();
         } catch (\Throwable $th) {
-            // If the workshop is not found, abort with a 404 error
+            // If the event is not found, abort with a 404 error
             abort(404);
         }
 
-        // Return the view for editing the workshop
-        return view('back.workshop.edit', compact('workshop'));
+        // Return the view for editing the event
+        return view('back.event.edit', compact('event'));
     }
 }

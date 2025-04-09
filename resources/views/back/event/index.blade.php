@@ -16,7 +16,7 @@
                         <li class="breadcrumb-item">
                             <a href="{{ URL::to('back/master/dashboard') }}">Home</a>
                         </li>
-                        <li class="breadcrumb-item active">Daftar Workshop & Seminar</li>
+                        <li class="breadcrumb-item active">Daftar Acara</li>
                     </ol>
                 </nav>
             </div>
@@ -27,7 +27,7 @@
             <div class="col-xl-12 mb-6">
                 <div class="card">
                     <div class="card-header">
-                        <h5>Daftar Workshop & Seminar</h5>
+                        <h5>Daftar Acara</h5>
                     </div>
                     <div class="card-body">
                         <div class="row">
@@ -74,7 +74,7 @@
                 processing: true,
                 serverSide: true, //aktifkan server-side 
                 ajax: {
-                    url: "{{ URL::to('back/workshop') }}", 
+                    url: "{{ URL::to('back/event') }}", 
                     type: 'GET'
                 },
                 columns: [

@@ -32,7 +32,7 @@
                     <div class="card-body">
                         <div class="row">
                             <div class="col-md-12 mb-6">
-                                <a href="{{ URL::to('back/workshop/create') }}" class="btn btn-primary"><i class="icon-base bx bx-plus me-1"></i> Tambah</a>
+                                <a href="{{ URL::to('back/event/create') }}" class="btn btn-primary"><i class="icon-base bx bx-plus me-1"></i> Tambah</a>
                             </div>
                         </div>
                         <div class="card-datatable">

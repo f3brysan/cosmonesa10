@@ -16,7 +16,7 @@
                             <a href="{{ URL::to('back/master/dashboard') }}">Home</a>
                         </li>
                         <li class="breadcrumb-item">
-                            <a href="{{ URL::to('back/workshop') }}">Workshop</a>
+                            <a href="{{ URL::to('back/workshop') }}">Event</a>
                         </li>
                         <li class="breadcrumb-item active">Data Baru</li>
                     </ol>
@@ -29,16 +29,16 @@
             <div class="col-xl-12 mb-6">
                 <div class="card">
                     <div class="card-header">
-                        <h5>Tambah Workshop dan Seminar Baru</h5>
+                        <h5>Tambah Acara</h5>
                     </div>
-                    <form action="{{ URL('back/workshop/store') }}" enctype="multipart/form-data" method="POST">
+                    <form action="{{ URL('back/event/store') }}" enctype="multipart/form-data" method="POST">
                         @csrf
-                        <input type="hidden" name="id" id="id" value="{{ Crypt::encrypt($workshop->id) }}">
+                        <input type="hidden" name="id" id="id" value="{{ Crypt::encrypt($event->id) }}">
                         <div class="card-body">
                             <div class="mb-4">
                                 <label for="exampleFormControlInput1" class="form-label">Judul</label>
                                 <input type="text" class="form-control" id="title" name="title" required
-                                    value="{{ old('title', $workshop->title) }}" />
+                                    value="{{ old('title', $event->title) }}" />
                             </div>
                             <div class="mb-4">
                                 <label for="exampleFormControlTextarea1" class="form-label">Detail</label>
@@ -47,34 +47,34 @@
                             <div class="mb-4">
                                 <label for="exampleFormControlTextarea1" class="form-label">Harga</label>
                                 <input type="text" class="form-control" id="price" name="price" required
-                                value="{{ old('price', number_format($workshop->price, 0)) }}" />
+                                value="{{ old('price', number_format($event->price, 0)) }}" />
                             </div>
                             <div class="mb-4">
                                 <label for="exampleFormControlTextarea1" class="form-label">Kuota</label>
                                 <input type="numeric" class="form-control" id="quota" name="quota" required
-                                value="{{ old('quota', $workshop->quota) }}" max="10000" />
+                                value="{{ old('quota', $event->quota) }}" max="10000" />
                             </div>
                             <div class="row mb-4">
                                 <p><b>Tanggal Pendaftaran</b></p>
                                 <div class="col-md-6">
                                     <label for="exampleFormControlInput1" class="form-label">Tanggal Mulai</label>
                                     <input type="date" class="form-control" id="register_date_start"
-                                        name="register_date_start" required value="{{ old('register_date_start', $workshop->start_date) }}" />
+                                        name="register_date_start" required value="{{ old('register_date_start', $event->start_date) }}" />
                                 </div>
                                 <div class="col-md-6">
                                     <label for="exampleFormControlInput1" class="form-label">Tanggal Selesai</label>
                                     <input type="date" class="form-control" id="register_date_end"
-                                        name="register_date_end" required value="{{ old('register_date_end', $workshop->end_date) }}" />
+                                        name="register_date_end" required value="{{ old('register_date_end', $event->end_date) }}" />
                                 </div>
                             </div>
                             <div class="mb-4">
                                 <label for="exampleFormControlInput1" class="form-label">Tanggal Event</label>
                                 <input type="date" class="form-control" id="event_date" name="event_date" required
-                                    value="{{ old('event_date', $workshop->event_date) }}" />
+                                    value="{{ old('event_date', $event->event_date) }}" />
                             </div>
                             <div class="mb-4">
                                 <div class="col-md-12">
-                                    <img id="preview-image-before-upload" src="{{ asset('storage/' . $workshop->picture) ?? 'https://placehold.co/1200x800'}}"
+                                    <img id="preview-image-before-upload" src="{{ asset('storage/' . $event->picture) ?? 'https://placehold.co/1200x800'}}"
                                         alt="preview image" style="max-width: 100%; width: 400px;">
                                 </div>
                                 <div class="col-md-12">
@@ -111,7 +111,7 @@
                 height: 200,
             });
             
-            var htmlString = "{!! $workshop->description !!}";
+            var htmlString = "{!! $event->description !!}";
             $("#summernote").summernote("pasteHTML", htmlString);
 
             $('#image').change(function() {

@@ -18,7 +18,7 @@
                         <li class="breadcrumb-item">
                             <a href="{{ URL::to('back/workshop') }}">Workshop</a>
                         </li>
-                        <li class="breadcrumb-item active">{{ $workshop->title }}</li>
+                        <li class="breadcrumb-item active">{{ $event->title }}</li>
                     </ol>
                 </nav>
             </div>
@@ -29,28 +29,28 @@
             <div class="col-xl-12 mb-6">
                 <div class="card h-100">
                     <img class="card-img-top mt-5"
-                        src="{{ asset('storage/' . $workshop->picture) ?? 'https://via.placeholder.com/150' }}"
+                        src="{{ asset('storage/' . $event->picture) ?? 'https://via.placeholder.com/150' }}"
                         style="max-width: 100%; display: block; margin: auto;"
-                        alt="Banner {{ $workshop->title }}" />
+                        alt="Banner {{ $event->title }}" />
                     <div class="card-body">
-                        <h5 class="card-title">{{ $workshop->title }}</h5>
+                        <h5 class="card-title">{{ $event->title }}</h5>
                         <table class="table table-bordered table-hover">
                             <tr>
                                 <td><b>Tanggal Event</b></td>
                                 <td>
                                     @php
-                                        $date = Carbon\Carbon::parse($workshop->event_date);
+                                        $date = Carbon\Carbon::parse($event->event_date);
                                         echo $date->translatedFormat('l, d F Y');
                                     @endphp
                                 </td>
                             </tr>
                             <tr>
                                 <td><b>HTM</b></td>
-                                <td>Rp {{ number_format($workshop->price, 2) }}</td>
+                                <td>Rp {{ number_format($event->price, 2) }}</td>
                             </tr>
                             <tr>
                                 <td><b>Kuota</b></td>
-                                <td>{{ $workshop->quota }} Kursi</td>
+                                <td>{{ $event->quota }} Kursi</td>
                             </tr>
                             <tr>
                                 <td><b>Status</b></td>
@@ -58,14 +58,14 @@
                                     @php
                                         $status = true;
 
-                                        $status = $workshop->event_date <= Carbon\Carbon::now() ? false : $status;
+                                        $status = $event->event_date <= Carbon\Carbon::now() ? false : $status;
 
                                         if ($status == true) {
-                                            $status = $workshop->quota < 1 ? false : true;
+                                            $status = $event->quota < 1 ? false : true;
                                         }
 
                                         if ($status == true) {
-                                            $status = $workshop->end_date <= Carbon\Carbon::now() ? false : true;
+                                            $status = $event->end_date <= Carbon\Carbon::now() ? false : true;
                                         }
                                     @endphp
 
@@ -74,7 +74,7 @@
                             </tr>
                         </table>
                         <div style="text-align: justify; text-justify: inter-word;">
-                            <p class="card-text" >{!! $workshop->description !!}</p>
+                            <p class="card-text" >{!! $event->description !!}</p>
                         </div>
 
                     </div>

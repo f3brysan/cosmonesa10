@@ -17,9 +17,9 @@
       </li> --}}
       <li><a href="{{ '/' }}">Home</a></li>
       <li><a href="{{ '/shop' }}">Product</a></li>
+      <li><a href="{{ '/services' }}">Services</a></li>
       <li><a href="{{ '/ws' }}">Workshop</a></li>
       <li><a href="contact.html">Contact</a></li>
-      <li><a href="{{ '/book' }}">Booking</a></li>
       <li><a href="login.html">Login</a></li>
     </ul>
   </nav>

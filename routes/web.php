@@ -5,7 +5,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\API\APIOauthController;
 use App\Http\Controllers\Frontend\F_DashboardController;
 use App\Http\Controllers\Frontend\F_ServicesController;
-use App\Http\Controllers\Frontend\F_WorkshopController;
+use App\Http\Controllers\Frontend\F_EventsController;
 use App\Http\Controllers\Frontend\F_ProductController;
 
 /*
@@ -22,7 +22,9 @@ use App\Http\Controllers\Frontend\F_ProductController;
 Route::get('/', [F_DashboardController::class, 'index']);
 
 //event page
-Route::get('/ws', [F_WorkshopController::class, 'index']);
+Route::get('/events', [F_EventsController::class, 'index']);
+Route::get('/detail-event', [F_EventsController::class, 'detail']);
+Route::get('/join', [F_EventsController::class, 'join']);
 
 
 // service page

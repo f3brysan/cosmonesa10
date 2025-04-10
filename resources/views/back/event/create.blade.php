@@ -31,7 +31,7 @@
                     <div class="card-header">
                         <h5>Tambah Workshop dan Seminar Baru</h5>
                     </div>
-                    <form action="{{ URL('back/workshop/store') }}" enctype="multipart/form-data" method="POST">
+                    <form action="{{ URL('back/event/store') }}" enctype="multipart/form-data" method="POST">
                         @csrf
                         <input type="hidden" name="id" id="id">
                         <div class="card-body">
@@ -39,6 +39,15 @@
                                 <label for="exampleFormControlInput1" class="form-label">Judul</label>
                                 <input type="text" class="form-control" id="title" name="title" required
                                     value="{{ old('title') }}" />
+                            </div>
+                            <div class="mb-4">
+                                <label for="exampleFormControlInput1" class="form-label">Jenis Acara</label>
+                                <select name="event_type" id="event_type" class="form-control" required>
+                                    <option value="">Silahkan Pilih</option>
+                                    @foreach ($eventTypes as $item)
+                                        <option value="{{ $item->id }}">{{ ucfirst($item->name) }}</option>
+                                    @endforeach
+                                </select>
                             </div>
                             <div class="mb-4">
                                 <label for="exampleFormControlTextarea1" class="form-label">Detail</label>

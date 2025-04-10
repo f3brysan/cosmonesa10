@@ -65,25 +65,18 @@
 
             <ul class="menu-sub">
                 <li class="menu-item">
-                    <a href="" class="menu-link">
-                        <div class="text-truncate" data-i18n="Produk">Produk</div>
+                    <a href="{{ URL::to('back/product') }}" class="menu-link">
+                        <div class="text-truncate" data-i18n="Produk">Product</div>
                     </a>
                 </li>
             </ul>
             <ul class="menu-sub">
                 <li class="menu-item">
-                    <a href="{{ URL::to('back/workshop') }}" class="menu-link">
-                        <div class="text-truncate" data-i18n="Workshop">Workshop</div>
+                    <a href="{{ URL::to('back/event') }}" class="menu-link">
+                        <div class="text-truncate" data-i18n="Workshop">Event</div>
                     </a>
                 </li>
-            </ul>
-            <ul class="menu-sub">
-                <li class="menu-item">
-                    <a href="" class="menu-link">
-                        <div class="text-truncate" data-i18n="Sertifikasi">Sertifikasi</div>
-                    </a>
-                </li>
-            </ul>
+            </ul>            
         </li>
         @endrole
 

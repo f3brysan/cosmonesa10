@@ -16,7 +16,7 @@
                         <li class="breadcrumb-item">
                             <a href="{{ URL::to('back/master/dashboard') }}">Home</a>
                         </li>
-                        <li class="breadcrumb-item active">Daftar Workshop & Seminar</li>
+                        <li class="breadcrumb-item active">Daftar Acara</li>
                     </ol>
                 </nav>
             </div>
@@ -27,12 +27,12 @@
             <div class="col-xl-12 mb-6">
                 <div class="card">
                     <div class="card-header">
-                        <h5>Daftar Workshop & Seminar</h5>
+                        <h5>Daftar Acara</h5>
                     </div>
                     <div class="card-body">
                         <div class="row">
                             <div class="col-md-12 mb-6">
-                                <a href="{{ URL::to('back/workshop/create') }}" class="btn btn-primary"><i class="icon-base bx bx-plus me-1"></i> Tambah</a>
+                                <a href="{{ URL::to('back/event/create') }}" class="btn btn-primary"><i class="icon-base bx bx-plus me-1"></i> Tambah</a>
                             </div>
                         </div>
                         <div class="card-datatable">
@@ -40,6 +40,7 @@
                                 <thead>
                                     <tr>                                        
                                         <th class="text-center">Judul</th>
+                                        <th class="text-center">Jenis Acara</th>
                                         <th class="text-center">Waktu Daftar</th>
                                         <th class="text-center">Tanggal Acara</th>
                                         <th class="text-center">HTM</th>
@@ -74,13 +75,18 @@
                 processing: true,
                 serverSide: true, //aktifkan server-side 
                 ajax: {
-                    url: "{{ URL::to('back/workshop') }}", 
+                    url: "{{ URL::to('back/event') }}", 
                     type: 'GET'
                 },
                 columns: [
                     {
                         data: 'title',
                         name: 'title',
+                    },
+                    {
+                        data: 'event_type',
+                        name: 'event_type',
+                        className: 'text-center'
                     },
                     {
                         data: 'register',
@@ -112,7 +118,7 @@
                     },
                 ],
                 order: [
-                    [0, 'asc']
+                    [3, 'desc']
                 ]
             });
 

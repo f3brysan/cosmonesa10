@@ -7,7 +7,7 @@
         <meta name="description" content="Clean Beauty Spa with predefined web elements which helps you to build your own site. These template is suitable for spa, beauty, care, girly, hair, health, beauty parlour, massage, skincare, saloon, make up, physiotherapy, salon, wellness, yoga website. Yoga & Meditation centers, Barbershop, Health & Wellness Centers, Medical, Physiotherapy, Cosmetic Treatment centers, ayurvedic treatments, pedicure, manicure procedures.">
         <meta name="keywords" content="spa, beauty, care, girly, hair, health, beauty parlour, massage, skincare, saloon, make up, physiotherapy, salon, wellness, yoga website. Yoga & Meditation centers, Barbershop, Health & Wellness Centers, Medical, Physiotherapy, Cosmetic Treatment centers, ayurvedic treatments, pedicure, manicure procedures">
         <meta name="author" content="ThemeWar">
-
+        <meta name="csrf-token" content="{{ csrf_token() }}">
         <!-- Start Include All CSS -->
         <link rel="stylesheet" href="{{ asset('frontend/css/bootstrap.css') }}"/>
         <link rel="stylesheet" href="{{ asset('frontend/css/owl.theme.default.min.css') }}"/>
@@ -113,5 +113,7 @@
 
         <script src="{{ asset('frontend/js/theme.js') }}"></script>
         <!-- End Include All JS -->
+
+        @stack('js')
     </body>
 </html>

@@ -6,6 +6,7 @@ use App\Http\Controllers\API\APIOauthController;
 use App\Http\Controllers\Frontend\F_DashboardController;
 use App\Http\Controllers\Frontend\F_AppointmentController;
 use App\Http\Controllers\Frontend\F_WorkshopController;
+use App\Http\Controllers\Frontend\F_ProductController;
 
 /*
 |--------------------------------------------------------------------------
@@ -21,6 +22,10 @@ use App\Http\Controllers\Frontend\F_WorkshopController;
 Route::get('/', [F_DashboardController::class, 'index']);
 Route::get('/book', [F_AppointmentController::class, 'index']);
 Route::get('/ws', [F_WorkshopController::class, 'index']);
+Route::get('/shop', [F_ProductController::class, 'index']);
+Route::get('/check', [F_ProductController::class, 'product']);
+Route::get('/cart', [F_ProductController::class, 'cart']);
+Route::get('/co', [F_ProductController::class, 'checkout']);
 
 Route::get('/login', function () {
     return view('front.page.login.login');

@@ -20,7 +20,7 @@
                             <a href="{{ URL::to('back/master/dashboard') }}">Home</a>
                         </li>
                         <li class="breadcrumb-item">
-                            <a href="{{ URL::to('back/workshop') }}">Product</a>
+                            <a href="{{ URL::to('back/product') }}">Product</a>
                         </li>
                         <li class="breadcrumb-item active">Data Produk Baru</li>
                     </ol>

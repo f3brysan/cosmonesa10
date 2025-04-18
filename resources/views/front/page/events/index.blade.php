@@ -28,13 +28,18 @@
     <section class="blogPage">
         <div class="container">
             <div class="row">
+                @foreach ($events as $event)                    
                 <div class="col-lg-4 col-md-6">
                     <div class="blog_item_01">
-                        <img src="{{ asset('frontend') }}/images/blog/1.jpg" alt="" />
+                        <img src="{{ 'https://picsum.photos/1280/780/?blur' }}" alt="" />
                         <div class="bp_content">
-                            <span>February 18, 2017</span>
-                            <h3><a href="{{ '/detail-event' }}">Spring is in the Air and and So Our These Amazing Spa
-                                    Offers</a></h3>
+                            <span>
+                                @php
+                                $date = Carbon\Carbon::parse($event->event_date);
+                                echo $date->translatedFormat('l, d F Y');
+                            @endphp
+                            </span>
+                            <h3><a href="{{ '/detail-event' }}">{{ $event->title }}</a></h3>
                             <a class="lr_more" href="{{ '/detail-event' }}">
                                 Learn More
                                 <svg width="300%" height="100%" viewBox="0 0 1200 60" preserveAspectRatio="none">
@@ -45,14 +50,21 @@
                             </a>
                         </div>
                     </div>
-                </div>
+                </div>                
+                @endforeach
+                @foreach ($lastEvents as $event)                    
                 <div class="col-lg-4 col-md-6">
                     <div class="blog_item_01">
-                        <img src="{{ asset('frontend') }}/images/blog/2.jpg" alt="" />
+                        <img src="{{ 'https://picsum.photos/1280/780/?blur' }}" alt="" />
                         <div class="bp_content">
-                            <span>February 18, 2017</span>
-                            <h3><a href="{{ '/detail-event' }}">We giving Amazing special spa and message service for
-                                    vip.</a></h3>
+                            <span class="badge bg-danger">Closed</span>
+                            <span>
+                                @php
+                                $date = Carbon\Carbon::parse($event->event_date);
+                                echo $date->translatedFormat('l, d F Y');
+                            @endphp
+                            </span>
+                            <h3><a href="{{ '/detail-event' }}">{{ $event->title }}</a></h3>
                             <a class="lr_more" href="{{ '/detail-event' }}">
                                 Learn More
                                 <svg width="300%" height="100%" viewBox="0 0 1200 60" preserveAspectRatio="none">
@@ -63,79 +75,8 @@
                             </a>
                         </div>
                     </div>
-                </div>
-                <div class="col-lg-4 col-md-6">
-                    <div class="blog_item_01">
-                        <img src="{{ asset('frontend') }}/images/blog/3.jpg" alt="" />
-                        <div class="bp_content">
-                            <span>February 18, 2017</span>
-                            <h3><a href="{{ '/detail-event' }}">We also offer outside special spa and message catering;
-                                    take-away</a></h3>
-                            <a class="lr_more" href="{{ '/detail-event' }}">
-                                Learn More
-                                <svg width="300%" height="100%" viewBox="0 0 1200 60" preserveAspectRatio="none">
-                                    <path
-                                        d="M0,56.5c0,0,298.666,0,399.333,0C448.336,56.5,513.994,46,597,46c77.327,0,135,10.5,200.999,10.5c95.996,0,402.001,0,402.001,0">
-                                    </path>
-                                </svg>
-                            </a>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-4 col-md-6">
-                    <div class="blog_item_01">
-                        <img src="{{ asset('frontend') }}/images/blog/4.jpg" alt="" />
-                        <div class="bp_content">
-                            <span>February 18, 2017</span>
-                            <h3><a href="{{ '/detail-event' }}">If you are going to use a you need to be sure can do
-                                    it.</a></h3>
-                            <a class="lr_more" href="{{ '/detail-event' }}">
-                                Learn More
-                                <svg width="300%" height="100%" viewBox="0 0 1200 60" preserveAspectRatio="none">
-                                    <path
-                                        d="M0,56.5c0,0,298.666,0,399.333,0C448.336,56.5,513.994,46,597,46c77.327,0,135,10.5,200.999,10.5c95.996,0,402.001,0,402.001,0">
-                                    </path>
-                                </svg>
-                            </a>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-4 col-md-6">
-                    <div class="blog_item_01">
-                        <img src="{{ asset('frontend') }}/images/blog/5.jpg" alt="" />
-                        <div class="bp_content">
-                            <span>February 18, 2017</span>
-                            <h3><a href="{{ '/detail-event' }}">Looks reasonable. The generate is therefore always.</a>
-                            </h3>
-                            <a class="lr_more" href="{{ '/detail-event' }}">
-                                Learn More
-                                <svg width="300%" height="100%" viewBox="0 0 1200 60" preserveAspectRatio="none">
-                                    <path
-                                        d="M0,56.5c0,0,298.666,0,399.333,0C448.336,56.5,513.994,46,597,46c77.327,0,135,10.5,200.999,10.5c95.996,0,402.001,0,402.001,0">
-                                    </path>
-                                </svg>
-                            </a>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-4 col-md-6">
-                    <div class="blog_item_01">
-                        <img src="{{ asset('frontend') }}/images/blog/6.jpg" alt="" />
-                        <div class="bp_content">
-                            <span>February 18, 2017</span>
-                            <h3><a href="{{ '/detail-event' }}">There are many variations spa & Saloon body massage
-                                    available.</a></h3>
-                            <a class="lr_more" href="{{ '/detail-event' }}">
-                                Learn More
-                                <svg width="300%" height="100%" viewBox="0 0 1200 60" preserveAspectRatio="none">
-                                    <path
-                                        d="M0,56.5c0,0,298.666,0,399.333,0C448.336,56.5,513.994,46,597,46c77.327,0,135,10.5,200.999,10.5c95.996,0,402.001,0,402.001,0">
-                                    </path>
-                                </svg>
-                            </a>
-                        </div>
-                    </div>
-                </div>
+                </div>                
+                @endforeach
             </div>
             <div class="row">
                 <div class="col-lg-12">

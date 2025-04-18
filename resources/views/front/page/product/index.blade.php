@@ -1,6 +1,25 @@
 @extends('front.layouts.main')
 @section('title', 'Product Shop')
 @section('body')
+
+<style>
+     .frame {
+      width: 100%;              /* responsive width */
+      max-width: 1280px;        /* limit max size */
+      aspect-ratio: 1280 / 780; /* force 1280:780 aspect ratio */
+      overflow: hidden;
+      border-radius: 12px;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    }
+
+    .frame img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;        /* crop top/bottom to fit */
+      object-position: center;  /* center the image */
+      display: block;
+    }
+</style>
     <!-- Begin:: Banner Section -->
     <section class="page_banner">
         <div class="layer_img move_anim animated">
@@ -10,7 +29,7 @@
             <div class="row">
                 <div class="col-lg-5 offset-lg-1">
                     <h2 class="banner-title">Products</h2>
-                    <p class="breadcrumbs"><a href="index.html">Home</a><span>/</span>Products</p>
+                    <p class="breadcrumbs"><a href="{{ URL::to('/') }}">Home</a><span>/</span>Products</p>
                 </div>
                 <div class="col-lg-6 animated pnl">
                     <div class="page_layer">
@@ -43,181 +62,34 @@
                 </div>
             </div>
             <div class="row">
+                @foreach ($products as $product)                    
                 <div class="col-lg-3 col-md-6">
                     <div class="product_item text-center">
                         <div class="pi_thumb">
-                            <img src="{{ asset('frontend/') }}/images/product/2.jpg" alt="" />
+                            <div class="frame">
+                                <img src="{{ !empty($productImage[$product->id]) ? asset('storage/' . $productImage[$product->id]->filename) : 'https://picsum.photos/1280/780/?blur'}}" alt=""/>
+                            </div>
                             <div class="pi_01_actions">
                                 <a href="{{ '/cart' }}"><i class="icofont-cart-alt"></i></a>
                                 <a href="{{ '/check' }}"><i class="icofont-eye"></i></a>
                             </div>
                             <div class="prLabels">
-                                <p class="justin">New</p>
+                                @if ($product->stock < 1)                                    
+                                <span class="badge badge-info">Out of Stock</span>                                
+                                @endif
                             </div>
                         </div>
                         <div class="pi_content">
-                            <p><a href="shop.html">Cosmetics</a></p>
-                            <h3><a href="{{ '/check' }}">Nautral Oliver</a></h3>
+                            <p>{{ $product->category->name }}</p>
+                            <h3><a href="{{ '/check' }}">{{ $product->name }}</a></h3>
                             <div class="product_price clearfix">
                                 <span class="price"><span class="woocommerce-Price-amount amount"><bdi><span
-                                                class="woocommerce-Price-currencySymbol">$</span>87.00</bdi></span></span>
+                                                class="woocommerce-Price-currencySymbol">Rp</span>{{ number_format($product->price, 0, '.', '.') }}</bdi></span></span>
                             </div>
                         </div>
                     </div>
-                </div>
-                <div class="col-lg-3 col-md-6">
-                    <div class="product_item text-center">
-                        <div class="pi_thumb">
-                            <img src="{{ asset('frontend/') }}/images/product/3.jpg" alt="" />
-                            <div class="pi_01_actions">
-                                <a href="{{ '/cart' }}"><i class="icofont-cart-alt"></i></a>
-                                <a href="{{ '/check' }}"><i class="icofont-eye"></i></a>
-                            </div>
-                            <div class="prLabels">
-                                <p class="outofstock">Out of Stock</p>
-                            </div>
-                        </div>
-                        <div class="pi_content">
-                            <p><a href="shop.html">Cosmetics</a></p>
-                            <h3><a href="{{ '/check' }}">Mackup Creams</a></h3>
-                            <div class="product_price clearfix">
-                                <span class="price"><span class="woocommerce-Price-amount amount"><bdi><span
-                                                class="woocommerce-Price-currencySymbol">$</span>65.00</bdi></span></span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-3 col-md-6">
-                    <div class="product_item text-center">
-                        <div class="pi_thumb">
-                            <img src="{{ asset('frontend/') }}/images/product/4.jpg" alt="" />
-                            <div class="pi_01_actions">
-                                <a href="{{ '/cart' }}"><i class="icofont-cart-alt"></i></a>
-                                <a href="{{ '/check' }}"><i class="icofont-eye"></i></a>
-                            </div>
-                            <div class="prLabels">
-                                <p class="bestseller">Sale</p>
-                            </div>
-                        </div>
-                        <div class="pi_content">
-                            <p><a href="shop.html">Cosmetics</a></p>
-                            <h3><a href="{{ '/check' }}">Beauty Harbal Soap</a></h3>
-                            <div class="product_price clearfix">
-                                <span class="price">
-                                    <del><span class="woocommerce-Price-amount amount"><bdi><span
-                                                    class="woocommerce-Price-currencySymbol">$</span>105.00</bdi></span></del>
-                                    <ins><span class="woocommerce-Price-amount amount"><bdi><span
-                                                    class="woocommerce-Price-currencySymbol">$</span>99.00</bdi></span></ins>
-                                </span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-3 col-md-6">
-                    <div class="product_item text-center">
-                        <div class="pi_thumb">
-                            <img src="{{ asset('frontend/') }}/images/product/5.jpg" alt="" />
-                            <div class="pi_01_actions">
-                                <a href="{{ '/cart' }}"><i class="icofont-cart-alt"></i></a>
-                                <a href="{{ '/check' }}"><i class="icofont-eye"></i></a>
-                            </div>
-                            <div class="prLabels">
-                                <p class="featured">Featured</p>
-                            </div>
-                        </div>
-                        <div class="pi_content">
-                            <p><a href="shop.html">Cosmetics</a></p>
-                            <h3><a href="{{ '/check' }}">Cream & Brush</a></h3>
-                            <div class="product_price clearfix">
-                                <span class="price"><span class="woocommerce-Price-amount amount"><bdi><span
-                                                class="woocommerce-Price-currencySymbol">$</span>73.00</bdi></span></span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-3 col-md-6">
-                    <div class="product_item text-center">
-                        <div class="pi_thumb">
-                            <img src="{{ asset('frontend/') }}/images/product/6.jpg" alt="" />
-                            <div class="pi_01_actions">
-                                <a href="{{ '/cart' }}"><i class="icofont-cart-alt"></i></a>
-                                <a href="{{ '/check' }}"><i class="icofont-eye"></i></a>
-                            </div>
-                            <div class="prLabels">
-                                <p class="bestseller">Sale</p>
-                            </div>
-                        </div>
-                        <div class="pi_content">
-                            <p><a href="shop.html">Cosmetics</a></p>
-                            <h3><a href="{{ '/check' }}">Makeover Hair Spa</a></h3>
-                            <div class="product_price clearfix">
-                                <span class="price">
-                                    <del><span class="woocommerce-Price-amount amount"><bdi><span
-                                                    class="woocommerce-Price-currencySymbol">$</span>59.00</bdi></span></del>
-                                    <ins><span class="woocommerce-Price-amount amount"><bdi><span
-                                                    class="woocommerce-Price-currencySymbol">$</span>49.00</bdi></span></ins>
-                                </span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-3 col-md-6">
-                    <div class="product_item text-center">
-                        <div class="pi_thumb">
-                            <img src="{{ asset('frontend/') }}/images/product/7.jpg" alt="" />
-                            <div class="pi_01_actions">
-                                <a href="{{ '/cart' }}"><i class="icofont-cart-alt"></i></a>
-                                <a href="{{ '/check' }}"><i class="icofont-eye"></i></a>
-                            </div>
-                        </div>
-                        <div class="pi_content">
-                            <p><a href="shop.html">Cosmetics</a></p>
-                            <h3><a href="{{ '/check' }}">Face Makeup Collection</a></h3>
-                            <div class="product_price clearfix">
-                                <span class="price"><span class="woocommerce-Price-amount amount"><bdi><span
-                                                class="woocommerce-Price-currencySymbol">$</span>33.00</bdi></span></span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-3 col-md-6">
-                    <div class="product_item text-center">
-                        <div class="pi_thumb">
-                            <img src="{{ asset('frontend/') }}/images/product/8.jpg" alt="" />
-                            <div class="pi_01_actions">
-                                <a href="{{ '/cart' }}"><i class="icofont-cart-alt"></i></a>
-                                <a href="{{ '/check' }}"><i class="icofont-eye"></i></a>
-                            </div>
-                        </div>
-                        <div class="pi_content">
-                            <p><a href="shop.html">Cosmetics</a></p>
-                            <h3><a href="{{ '/check' }}">Special Feawash</a></h3>
-                            <div class="product_price clearfix">
-                                <span class="price"><span class="woocommerce-Price-amount amount"><bdi><span
-                                                class="woocommerce-Price-currencySymbol">$</span>19.00</bdi></span></span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-3 col-md-6">
-                    <div class="product_item text-center">
-                        <div class="pi_thumb">
-                            <img src="{{ asset('frontend/') }}/images/product/9.jpg" alt="" />
-                            <div class="pi_01_actions">
-                                <a href="{{ '/cart' }}"><i class="icofont-cart-alt"></i></a>
-                                <a href="{{ '/check' }}"><i class="icofont-eye"></i></a>
-                            </div>
-                        </div>
-                        <div class="pi_content">
-                            <p><a href="shop.html">Cosmetics</a></p>
-                            <h3><a href="{{ '/check' }}">Face Makeup Brush</a></h3>
-                            <div class="product_price clearfix">
-                                <span class="price"><span class="woocommerce-Price-amount amount"><bdi><span
-                                                class="woocommerce-Price-currencySymbol">$</span>59.00</bdi></span></span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                </div>                
+                @endforeach
             </div>
             <div class="row">
                 <div class="col-lg-12">

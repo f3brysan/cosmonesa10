@@ -1,5 +1,5 @@
 @extends('front.layouts.main')
-@section('title', 'Product Shop')
+@section('title', 'Product Details '.$product->name)
 @section('body')
 
     <!-- popup sidebar widget -->
@@ -52,7 +52,7 @@
             <div class="row">
                 <div class="col-lg-5 offset-lg-1">
                     <h2 class="banner-title">Product Details</h2>
-                    <p class="breadcrumbs"><a href="index.html">Home</a><span>/</span>Product Details</p>
+                    <p class="breadcrumbs"><a href="{{ URL::to('/') }}">Home</a><span>/</span><a href="{{ URL::to('shop') }}">Products</a><span>/</span>Product Details</p>
                 </div>
                 <div class="col-lg-6 animated pnl">
                     <div class="page_layer">
@@ -71,37 +71,32 @@
                 <div class="col-md-6">
                     <div class="product_gallery">
                         <ul id="product_gallery" class="gallery_sliders cS-hidden">
-                            <li data-thumb="{{ asset('frontend/') }}/images/product/ss1.jpg">
-                                <div class="pg_item"><img src="{{ asset('frontend/') }}/images/product/s1.jpg"
-                                        alt="" /></div>
-                            </li>
+                            @if ($productImages->count() > 0)
+                                @foreach ($productImages as $image)
+                                <li data-thumb="{{ asset('frontend/') }}/images/product/ss1.jpg">
+                                    <div class="pg_item"><img src="{{ asset('frontend/') }}/images/product/s1.jpg"
+                                            alt="" /></div>
+                                </li>
+                                @endforeach
+                            @else
                             <li data-thumb="{{ asset('frontend/') }}/images/product/ss2.jpg">
-                                <div class="pg_item"><img src="{{ asset('frontend/') }}/images/product/s2.jpg"
+                                <div class="pg_item"><img src="https://picsum.photos/1280/780/?blur"
                                         alt="" /></div>
-                            </li>
-                            <li data-thumb="{{ asset('frontend/') }}/images/product/ss3.jpg">
-                                <div class="pg_item"><img src="{{ asset('frontend/') }}/images/product/s3.jpg"
-                                        alt="" /></div>
-                            </li>
-                            <li data-thumb="{{ asset('frontend/') }}/images/product/ss4.jpg">
-                                <div class="pg_item"><img src="{{ asset('frontend/') }}/images/product/s4.jpg"
-                                        alt="" /></div>
-                            </li>
+                            @endif                                                        
                         </ul>
                     </div>
                 </div>
                 <div class="col-md-6">
                     <div class="product_details">
-                        <h3>Cream & Brush</h3>
+                        <h3>{{ $product->name }}</h3>
                         <div class="product_price clearfix">
-                            <span class="price">
-                                <del><span class="woocommerce-Price-amount amount"><bdi><span
-                                                class="woocommerce-Price-currencySymbol">$</span>105.00</bdi></span></del>
+                            <span class="price">                                
                                 <ins><span class="woocommerce-Price-amount amount"><bdi><span
-                                                class="woocommerce-Price-currencySymbol">$</span>99.00</bdi></span></ins>
+                                                class="woocommerce-Price-currencySymbol">Rp</span>{{ number_format($product->price, 0, '.', '.') }}</bdi></span></ins>
                             </span>
+                            <span><p><b>Stock : {{ $product->stock }} items</b></p></span>
                         </div>
-                        <div class="woocommerce-product-rating">
+                        {{-- <div class="woocommerce-product-rating">
                             <div class="star-rating" role="img" aria-label="Rated 4.50 out of 5">
                                 <span class="w80">
                                     Rated
@@ -113,15 +108,7 @@
                             </div>
                             <a href="#reviews" class="woocommerce-review-link" rel="nofollow">(<span class="count">2</span>
                                 customer reviews)</a>
-                        </div>
-                        <div class="pd_excrpt">
-                            <p>
-                                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut
-                                labore et dolore magna aliqua.
-                                Quis ipsum suspendisse ultrices gravida. Risus commodo viverra mae-cenas accumsan lacus vel
-                                facilisis.
-                            </p>
-                        </div>
+                        </div> --}}                        
                         <div class="cart_quantity clearfix">
                             <div class="quantity quantityd clearfix">
                                 <button type="button" class="minus qtyBtn btnMinus">-</button>
@@ -131,20 +118,7 @@
                             {{-- <button type="submit" class="mo_btn"><i class="icofont-cart-alt"></i>Add to cart</button> --}}
                             <a href="{{ '/cart' }}" type="submit" class="mo_btn"><i class="icofont-cart-alt"></i>Add
                                 to cart</a>
-                        </div>
-                        <div class="pro_meta clearfix">
-                            <h5>Info</h5>
-                            <div class="mtItem">
-                                SKU: 01
-                            </div>
-                            <div class="mtItem">
-                                Category: <a href="shop.html">Design</a>
-                            </div>
-                            <div class="mtItem">
-                                Tags: <a href="shop.html">Design</a>, <a href="shop.html">Ideas</a>, <a
-                                    href="shop.html">Innovative</a>, <a href="shop.html">New</a>
-                            </div>
-                        </div>
+                        </div>                        
                         <div class="pro_m_social">
                             <h5>Share:</h5>
                             <a target="_blank" href="https://www.facebook.com/"><i class="icofont-facebook"></i></a>
@@ -167,10 +141,10 @@
                                 <a id="additionalinfo-tab" data-toggle="tab" href="#additionalinfo" role="tab"
                                     aria-controls="additionalinfo" aria-selected="false">Additional Information</a>
                             </li>
-                            <li class="nav-item" role="presentation">
+                            {{-- <li class="nav-item" role="presentation">
                                 <a id="reviews-tab" data-toggle="tab" href="#reviews" role="tab"
                                     aria-controls="reviews" aria-selected="false">Review (3)</a>
-                            </li>
+                            </li> --}}
                         </ul>
                         <div class="tab-content">
                             <div class="tab-pane fade show active" id="description" role="tabpanel"
@@ -185,19 +159,7 @@
                                         pariatur. Excepteur sint occaecat cupidatat non
                                         proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
                                     </p>
-                                    <p>
-                                        Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor
-                                        incididunt ut labore et dolore magna aliqua.
-                                        Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip
-                                        ex ea commodo consequat. Duis aute irure
-                                        dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla
-                                        pariatur. Excepteur sint occaecat cupidatat non
-                                        proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Sed ut
-                                        perspiciatis unde omnis iste natus error sit
-                                        voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab
-                                        illo inventore veritatis et quasi architecto
-                                        beatae vitae dicta sunt explicabo.
-                                    </p>
+                                    {!! $product->description !!}
                                 </div>
                             </div>
                             <div class="tab-pane fade" id="additionalinfo" role="tabpanel"
@@ -207,25 +169,13 @@
                                         <tbody>
                                             <tr>
                                                 <th>Weight:</th>
-                                                <td>0.15 kg</td>
-                                            </tr>
-                                            <tr>
-                                                <th>Dim:</th>
-                                                <td>15 x 15 x 10 cm</td>
-                                            </tr>
-                                            <tr>
-                                                <th>Color:</th>
-                                                <td>Black, Green, Mixed, Red, White</td>
-                                            </tr>
-                                            <tr>
-                                                <th>Size:</th>
-                                                <td>Extra Large, Extra Small, Medium, Small</td>
-                                            </tr>
+                                                <td>{{ $product->weight }} gram</td>
+                                            </tr>                                            
                                         </tbody>
                                     </table>
                                 </div>
                             </div>
-                            <div class="tab-pane fade" id="reviews" role="tabpanel" aria-labelledby="reviews-tab">
+                            {{-- <div class="tab-pane fade" id="reviews" role="tabpanel" aria-labelledby="reviews-tab">
                                 <div class="pdtci_content">
                                     <div class="comment_area">
                                         <div class="sic_comments">
@@ -337,7 +287,7 @@
                                         </div>
                                     </div>
                                 </div>
-                            </div>
+                            </div> --}}
                         </div>
                     </div>
                 </div>
@@ -347,131 +297,30 @@
                     <div class="related_area">
                         <h2>Related Products</h2>
                         <div class="related_carousel owl-carousel">
+                            @foreach ($relatedProducts as $rProduct)                             
                             <div class="product_item text-center">
                                 <div class="pi_thumb">
-                                    <img src="{{ asset('frontend/') }}/images/product/2.jpg" alt="" />
+                                    <img src="{{ !empty($productImage[$product->id]) ? asset('storage/' . $productImage[$product->id]->filename) : 'https://picsum.photos/1280/780/?blur'}}" alt="" />
                                     <div class="pi_01_actions">
                                         <a href="cart.html"><i class="icofont-cart-alt"></i></a>
-                                        <a href="single-product.html"><i class="icofont-eye"></i></a>
+                                        <a href="{{ URL::to('product-detail/' . $rProduct->slug . '/') }}"><i class="icofont-eye"></i></a>
                                     </div>
                                     <div class="prLabels">
-                                        <p class="justin">New</p>
+                                        @if ($product->stock < 1)                                    
+                                        <span class="badge badge-info">Out of Stock</span>                                
+                                        @endif
                                     </div>
                                 </div>
                                 <div class="pi_content">
-                                    <p><a href="shop.html">Cosmetics</a></p>
-                                    <h3><a href="single-product.html">Nautral Oliver</a></h3>
+                                    <p>{{ $rProduct->category->name }}</p>
+                                    <h3><a href="{{ URL::to('product-detail/' . $rProduct->slug . '/') }}">{{ $rProduct->name }}</a></h3>
                                     <div class="product_price clearfix">
                                         <span class="price"><span class="woocommerce-Price-amount amount"><bdi><span
-                                                        class="woocommerce-Price-currencySymbol">$</span>87.00</bdi></span></span>
+                                                        class="woocommerce-Price-currencySymbol">Rp</span>{{ number_format($rProduct->price, 0, '.', '.') }}</bdi></span></span>
                                     </div>
                                 </div>
-                            </div>
-                            <div class="product_item text-center">
-                                <div class="pi_thumb">
-                                    <img src="{{ asset('frontend/') }}/images/product/3.jpg" alt="" />
-                                    <div class="pi_01_actions">
-                                        <a href="cart.html"><i class="icofont-cart-alt"></i></a>
-                                        <a href="single-product.html"><i class="icofont-eye"></i></a>
-                                    </div>
-                                    <div class="prLabels">
-                                        <p class="outofstock">Out of Stock</p>
-                                    </div>
-                                </div>
-                                <div class="pi_content">
-                                    <p><a href="shop.html">Cosmetics</a></p>
-                                    <h3><a href="single-product.html">Mackup Creams</a></h3>
-                                    <div class="product_price clearfix">
-                                        <span class="price"><span class="woocommerce-Price-amount amount"><bdi><span
-                                                        class="woocommerce-Price-currencySymbol">$</span>65.00</bdi></span></span>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="product_item text-center">
-                                <div class="pi_thumb">
-                                    <img src="{{ asset('frontend/') }}/images/product/4.jpg" alt="" />
-                                    <div class="pi_01_actions">
-                                        <a href="cart.html"><i class="icofont-cart-alt"></i></a>
-                                        <a href="single-product.html"><i class="icofont-eye"></i></a>
-                                    </div>
-                                    <div class="prLabels">
-                                        <p class="bestseller">Sale</p>
-                                    </div>
-                                </div>
-                                <div class="pi_content">
-                                    <p><a href="shop.html">Cosmetics</a></p>
-                                    <h3><a href="single-product.html">Beauty Harbal Soap</a></h3>
-                                    <div class="product_price clearfix">
-                                        <span class="price">
-                                            <del><span class="woocommerce-Price-amount amount"><bdi><span
-                                                            class="woocommerce-Price-currencySymbol">$</span>105.00</bdi></span></del>
-                                            <ins><span class="woocommerce-Price-amount amount"><bdi><span
-                                                            class="woocommerce-Price-currencySymbol">$</span>99.00</bdi></span></ins>
-                                        </span>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="product_item text-center">
-                                <div class="pi_thumb">
-                                    <img src="{{ asset('frontend/') }}/images/product/5.jpg" alt="" />
-                                    <div class="pi_01_actions">
-                                        <a href="cart.html"><i class="icofont-cart-alt"></i></a>
-                                        <a href="single-product.html"><i class="icofont-eye"></i></a>
-                                    </div>
-                                    <div class="prLabels">
-                                        <p class="featured">Featured</p>
-                                    </div>
-                                </div>
-                                <div class="pi_content">
-                                    <p><a href="shop.html">Cosmetics</a></p>
-                                    <h3><a href="single-product.html">Cream & Brush</a></h3>
-                                    <div class="product_price clearfix">
-                                        <span class="price"><span class="woocommerce-Price-amount amount"><bdi><span
-                                                        class="woocommerce-Price-currencySymbol">$</span>73.00</bdi></span></span>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="product_item text-center">
-                                <div class="pi_thumb">
-                                    <img src="{{ asset('frontend/') }}/images/product/6.jpg" alt="" />
-                                    <div class="pi_01_actions">
-                                        <a href="cart.html"><i class="icofont-cart-alt"></i></a>
-                                        <a href="single-product.html"><i class="icofont-eye"></i></a>
-                                    </div>
-                                    <div class="prLabels">
-                                        <p class="bestseller">Sale</p>
-                                    </div>
-                                </div>
-                                <div class="pi_content">
-                                    <p><a href="shop.html">Cosmetics</a></p>
-                                    <h3><a href="single-product.html">Makeover Hair Spa</a></h3>
-                                    <div class="product_price clearfix">
-                                        <span class="price">
-                                            <del><span class="woocommerce-Price-amount amount"><bdi><span
-                                                            class="woocommerce-Price-currencySymbol">$</span>59.00</bdi></span></del>
-                                            <ins><span class="woocommerce-Price-amount amount"><bdi><span
-                                                            class="woocommerce-Price-currencySymbol">$</span>49.00</bdi></span></ins>
-                                        </span>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="product_item text-center">
-                                <div class="pi_thumb">
-                                    <img src="{{ asset('frontend/') }}/images/product/7.jpg" alt="" />
-                                    <div class="pi_01_actions">
-                                        <a href="cart.html"><i class="icofont-cart-alt"></i></a>
-                                        <a href="single-product.html"><i class="icofont-eye"></i></a>
-                                    </div>
-                                </div>
-                                <div class="pi_content">
-                                    <p><a href="shop.html">Cosmetics</a></p>
-                                    <h3><a href="single-product.html">Face Makeup Collection</a></h3>
-                                    <div class="product_price clearfix">
-                                        <span class="price"><span class="woocommerce-Price-amount amount"><bdi><span
-                                                        class="woocommerce-Price-currencySymbol">$</span>33.00</bdi></span></span>
-                                    </div>
-                                </div>
-                            </div>
+                            </div>                            
+                            @endforeach
                         </div>
                     </div>
                 </div>

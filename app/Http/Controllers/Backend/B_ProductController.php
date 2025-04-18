@@ -91,6 +91,46 @@ class B_ProductController extends Controller
         return redirect()->intended(URL::to('back/product'))->with('success', 'Data Berhasil Disimpan');
     }
 
+    public function storeImages(Request $request)
+    {
+        try {
+            $request->validate([
+                'files.*' => 'required|image|mimes:jpg,jpeg,png|max:2048'
+            ]);
+
+            $product_id = Crypt::decrypt($request->product_id);
+
+            foreach ($request->file('files') as $file) {
+                $filename = $product_id . '_' . time() . '_' . Str::random(10) . '.' . $file->getClientOriginalExtension();
+                $path = $file->storeAs('images/product', $filename, 'public');
+
+                ProductImages::create([
+                    'id' => Str::orderedUuid(),
+                    'product_id' => $product_id,
+                    'filename' => $path,
+                ]);
+            }
+
+            // check cover
+            $productImages = ProductImages::where('product_id', $product_id)->where('is_cover', 1)->exists();
+
+            if (!$productImages) {
+                $update = ProductImages::where('product_id', $product_id)->first();
+                $update->is_cover = 1;
+                $update->save();
+            }
+
+            return response()->json([
+                'success' => true,
+            ]);
+        } catch (\Exception $th) {
+            return response()->json([
+                'status' => 'error',
+                'message' => $th->getMessage()
+            ], 500);
+        }
+    }
+
     public function show($slug)
     {
         $product = Products::with(['category'])->where('slug', $slug)->first();
@@ -106,19 +146,20 @@ class B_ProductController extends Controller
             if ($request->ajax()) {
                 return DataTables::of($producImages)
                     ->addIndexColumn()
+                    ->addColumn('image', function ($item) {
+                        $pathImage = asset('storage/' . $item->filename);
+                        $result = '<div style=" width: 200px; height: 200px; overflow: hidden; border-radius: 10px; box-shadow: 0 4px 6px rgba(0,0,0,0.1);">
+                            <img src="'.$pathImage.'" alt="Contoh Thumbnail" style="width: 100%; height: 100%; object-fit: cover; display: block;">
+                        </div>';
+
+                        return $result;
+                    })
                     ->addColumn('action', function ($item) {
                         // Generate action buttons for each event
-                        $btn = '<button type="button" class="btn p-0 dropdown-toggle hide-arrow" data-bs-toggle="dropdown"><i class="icon-base bx bx-dots-vertical-rounded"></i></button>
-                    <div class="dropdown-menu">';
-                        if ($item->is_cover != true) {
-                            $btn .= '<a class="dropdown-item cover" data-id="' . Crypt::encrypt($item->id) . '" href="javascript:void(0);" ><i class="icon-base bx bx-image me-1"></i> Jadikan Cover</a>';
-                        }
-                        $btn .= '<a class="dropdown-item destroy" data-id="' . Crypt::encrypt($item->id) . '" href="javascript:void(0);" ><i class="icon-base bx bx-trash me-1"></i> Hapus</a>
-                      </div>
-                    </div>';
+                        $btn = '<a class="dropdown-item destroy" data-id="' . Crypt::encrypt($item->id) . '" href="javascript:void(0);" ><i class="icon-base bx bx-trash me-1"></i> Hapus</a>';
                         return $btn;
                     })
-                    ->rawColumns(['action'])
+                    ->rawColumns(['action', 'image'])
                     ->make(true);
             }
         } catch (\Throwable $th) {

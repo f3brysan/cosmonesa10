@@ -13,6 +13,21 @@
 
     <script src="https://unpkg.com/dropzone@5/dist/min/dropzone.min.js"></script>
     <link rel="stylesheet" href="https://unpkg.com/dropzone@5/dist/min/dropzone.min.css" type="text/css" />
+
+    <style>
+        <style>.dz-filename {
+            visibility: hidden;
+        }
+
+        .dz-size {
+            visibility: hidden;
+        }
+
+        .dz-error-message {
+            visibility: hidden;
+        }
+    </style>
+    </style>
 @endpush
 
 @section('content')
@@ -130,11 +145,15 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <form action="{{ URL::to('back/product/upload-images') }}" method="post"
+                    <form action="{{ URL('back/product/store-images') }}" method="post"
                         enctype="multipart/form-data" class="dropzone" id="image-upload">
-                        <input type="hidden" name="id" id="id">
                         @csrf
+                        <input type="hidden" name="product_id" id="product_id" value="{{ Crypt::encrypt($product->id) }}">                    
                     </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button id="uploadFile" class="btn btn-primary">Upload Images</button>
                 </div>
             </div>
         </div>
@@ -187,7 +206,7 @@
                 reverse: true
             });
 
-            $('#myTable').DataTable({
+           table = $('#myTable').DataTable({
                 responsive: true,
                 processing: true,
                 serverSide: true, //aktifkan server-side 
@@ -198,6 +217,7 @@
                 columns: [{
                         data: 'image',
                         name: 'image',
+                        className: 'text-center'
                     },
                     {
                         data: 'action',
@@ -220,12 +240,54 @@
                 $('#crudModal').modal('show');
 
             });
+
+            $(document).on('click', '.destroy', function () {
+                var id = $(this).data('id');
+                console.log(id);
+            });
         });
     </script>
-    <script type="text/javascript">
-        Dropzone.options.imageUpload = {
-            maxFilesize: 1,
-            acceptedFiles: ".jpeg,.jpg,.png,.gif"
-        };
+    <script>
+        Dropzone.autoDiscover = false;
+
+        var images = [];
+
+        var myDropzone = new Dropzone(".dropzone", {
+            init: function() {
+                myDropzone = this;
+
+                $.each(images, function(key, value) {
+                    var mockFile = {
+                        name: value.name,
+                        size: value.filesize
+                    };
+
+                    myDropzone.emit("addedfile", mockFile);
+                    myDropzone.emit("thumbnail", mockFile, value.path);
+                    myDropzone.emit("complete", mockFile);
+
+                });
+
+                this.on("success", function(file, responseText) {
+                    console.log(responseText);
+                    $('#crudModal').modal('hide');
+                    myDropzone.removeAllFiles();
+                    table.ajax.reload(null, false);
+                });
+            },
+            autoProcessQueue: false,
+            paramName: "files",
+            uploadMultiple: true,
+            acceptedFiles: ".jpeg,.jpg,.png,.gif",
+            addRemoveLinks: true,
+        });
+
+        $('#uploadFile').click(function() {
+            myDropzone.processQueue({
+                success: function(files, response) {
+                    console.log(response);
+                }
+            });
+        });
     </script>
 @endpush

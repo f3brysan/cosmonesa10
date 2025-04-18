@@ -32,6 +32,7 @@ Route::group(['middleware' => ['auth', 'role:superadmin|pengelola']], function (
     Route::get('product', [B_ProductController::class, 'index']);
     Route::get('product/create', [B_ProductController::class, 'create']);
     Route::post('product/store', [B_ProductController::class, 'store']);
+    Route::post('product/store-images', [B_ProductController::class, 'storeImages']);
     Route::get('product/detail/{slug}', [B_ProductController::class, 'show']);
     Route::get('product/images/{id}', [B_ProductController::class, 'imagesShow']);
     Route::get('product/edit/{slug}', [B_ProductController::class, 'edit']);

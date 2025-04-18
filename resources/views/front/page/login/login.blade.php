@@ -72,13 +72,13 @@
                 <p style="margin: 10px">or</p>
 
                 <div class="social-login">
-                    <a href="{{ route('oauth.google') }}">
+                    {{-- <a href="{{ route('oauth.google') }}">
                         <div class="fb">
                             <i class="fab fa-facebook-f"></i>
                             <p>Login with Facebook</p>
                         </div>
-                    </a>
-                    <a href="#">
+                    </a> --}}
+                    <a href="{{ route('oauth.google') }}">
                         <div class="gg">
                             <i class="fab fa-google"></i>
                             <p>Login with Google</p>

@@ -9,7 +9,6 @@ class F_DashboardController extends Controller
 {
     public function index()
     {
-        dd('wkwk');
         // $users = User::all(); // Example: Retrieve data from the database
         return view('front.page.dashboard.index');
     }

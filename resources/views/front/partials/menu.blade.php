@@ -1,6 +1,6 @@
 <nav class="mainMenu">
     <ul>
-      {{-- <li class="current-menu-item menu-item-has-children">
+        {{-- <li class="current-menu-item menu-item-has-children">
         <a href="javascript:void(0);">Home</a>
         <ul class="sub-menu">
           <li><a href="index.html">Home One</a></li>
@@ -15,22 +15,34 @@
           <li><a href="single-gallery.html">Gallery Details</a></li>
         </ul>
       </li> --}}
-      <li><a href="{{ '/' }}">Home</a></li>
-      <li><a href="{{ '/shop' }}">Product</a></li>
-      <li><a href="{{ '/services' }}">Services</a></li>
-      <li><a href="{{ '/events' }}">Events & Workshop</a></li>
-      <li><a href="contact.html">Contact</a></li>
-      <li><a href="login.html">Login</a></li>
+        <li><a href="{{ '/' }}">Home</a></li>
+        <li><a href="{{ '/shop' }}">Product</a></li>
+        <li><a href="{{ '/services' }}">Services</a></li>
+        <li><a href="{{ '/events' }}">Events & Workshop</a></li>
+        <li><a href="contact.html">Contact</a></li>
+        @if (Auth::check())
+        <li class="menu-item-has-children">
+            <a href="javascript:void(0);">Account</a>
+            <ul class="sub-menu">
+                <li><a href="/account">My Account</a></li>
+                <li><a href="{{ URL::to('logout') }}">Logout</a></li>
+
+            </ul>
+        </li>
+        @else
+            <li><a href="/login">Login</a></li>
+        @endif
+
     </ul>
-  </nav>
-  <section class="popup_sidebar_sec">
+</nav>
+<section class="popup_sidebar_sec">
     <div class="popup_sidebar_overlay"></div>
     <div class="widget_area">
         <a href="javascript:void(0);" class="widget_closer"><i class="icofont-close-line"></i></a>
         <div class="center_align">
             <div class="about_widget_area">
                 <div class="wd_logo">
-                    <a href="index.html"><img src="{{ asset('frontend/images/logo.png') }}" alt="makeover"/></a>
+                    <a href="index.html"><img src="{{ asset('frontend/images/logo.png') }}" alt="makeover" /></a>
                 </div>
                 <p>
                     We take a bottom-line approach to each project. Our clients consistently see increased traffic,

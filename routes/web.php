@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\API\APIOauthController;
 use App\Http\Controllers\Frontend\F_DashboardController;
+use App\Http\Controllers\Frontend\F_AccountController;
 use App\Http\Controllers\Frontend\F_ServicesController;
 use App\Http\Controllers\Frontend\F_EventsController;
 use App\Http\Controllers\Frontend\F_ProductController;
@@ -20,7 +21,8 @@ use App\Http\Controllers\Frontend\F_ProductController;
 */
 
 Route::get('/', [F_DashboardController::class, 'index']);
-
+//account page
+Route::get('/account', [F_AccountController::class, 'index']);
 //event page
 Route::get('/events', [F_EventsController::class, 'index']);
 Route::get('/detail-event', [F_EventsController::class, 'detail']);

@@ -71,7 +71,7 @@
                             </div>
                             <div class="pi_01_actions">
                                 <a href="{{ '/cart' }}"><i class="icofont-cart-alt"></i></a>
-                                <a href="{{ '/check' }}"><i class="icofont-eye"></i></a>
+                                <a href="{{ URL::to('product-detail/' . $product->slug . '/') }}"><i class="icofont-eye"></i></a>
                             </div>
                             <div class="prLabels">
                                 @if ($product->stock < 1)                                    
@@ -81,7 +81,7 @@
                         </div>
                         <div class="pi_content">
                             <p>{{ $product->category->name }}</p>
-                            <h3><a href="{{ '/check' }}">{{ $product->name }}</a></h3>
+                            <h3><a href="{{ URL::to('product-detail/' . $product->slug . '/') }}">{{ $product->name }}</a></h3>
                             <div class="product_price clearfix">
                                 <span class="price"><span class="woocommerce-Price-amount amount"><bdi><span
                                                 class="woocommerce-Price-currencySymbol">Rp</span>{{ number_format($product->price, 0, '.', '.') }}</bdi></span></span>

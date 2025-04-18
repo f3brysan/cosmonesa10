@@ -36,7 +36,7 @@ Route::get('/book', [F_ServicesController::class, 'schedule']);
 
 // selling page
 Route::get('/shop', [F_ProductController::class, 'index']);
-Route::get('/check', [F_ProductController::class, 'product']);
+Route::get('/product-detail/{slug}', [F_ProductController::class, 'product']);
 Route::get('/cart', [F_ProductController::class, 'cart']);
 Route::get('/co', [F_ProductController::class, 'checkout']);
 

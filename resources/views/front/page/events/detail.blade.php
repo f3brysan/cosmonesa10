@@ -44,11 +44,26 @@
                             {{-- Description --}}
                             <div class="commentForm">
                                 <form>
-                                    <div class="col-md-12">
-                                        <a href="{{ '/join' }}" class="mo_btn" type="submit"><i
-                                                class="icofont-long-arrow-right"></i>Join
-                                            Now</a>
-                                    </div>
+                                    @php
+                                        $status = true;
+
+                                        $status = $event->event_date <= Carbon\Carbon::now() ? false : $status;
+
+                                        if ($status == true) {
+                                            $status = $event->quota < 1 ? false : true;
+                                        }
+
+                                        if ($status == true) {
+                                            $status = $event->end_date <= Carbon\Carbon::now() ? false : true;
+                                        }
+                                    @endphp
+                                    @if ($status == true)
+                                        <div class="col-md-12">
+                                            <a href="{{ '/join' }}" class="mo_btn" type="submit"><i
+                                                    class="icofont-long-arrow-right"></i>Join
+                                                Now</a>
+                                        </div>
+                                    @endif
                                 </form>
 
                             </div>
@@ -73,17 +88,18 @@
                     </div>
                 </div>
                 <div class="col-lg-4">
-                    <div class="sidebar">                       
+                    <div class="sidebar">
                         <aside class="widget">
                             <h3 class="widget_title">Related Events</h3>
-                            @foreach ($relatedEvents as $rEvent)                                
-                            <div class="pp_post_item">
-                                <img src="{{ asset('storage/' . $rEvent->picture) ?? 'https://picsum.photos/1280/780/?blur' }}" alt="" />
-                                <h5><a href="single-blog.html">{{ Str::limit($rEvent->title, 30, '...') }}</a></h5>
-                                <span>{{ Carbon\Carbon::parse($rEvent->event_date)->translatedFormat('l, d F Y') }}</span>
-                            </div>                            
+                            @foreach ($relatedEvents as $rEvent)
+                                <div class="pp_post_item">
+                                    <img src="{{ asset('storage/' . $rEvent->picture) ?? 'https://picsum.photos/1280/780/?blur' }}"
+                                        alt="" />
+                                    <h5><a href="{{ URL::to('detail-event/' . $rEvent->slug . '/') }}">{{ Str::limit($rEvent->title, 30, '...') }}</a></h5>
+                                    <span>{{ Carbon\Carbon::parse($rEvent->event_date)->translatedFormat('l, d F Y') }}</span>
+                                </div>
                             @endforeach
-                        </aside>                        
+                        </aside>
                     </div>
                 </div>
             </div>

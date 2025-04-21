@@ -25,7 +25,7 @@ Route::get('/', [F_DashboardController::class, 'index']);
 Route::get('/account', [F_AccountController::class, 'index']);
 //event page
 Route::get('/events', [F_EventsController::class, 'index']);
-Route::get('/detail-event', [F_EventsController::class, 'detail']);
+Route::get('/detail-event/{slug}', [F_EventsController::class, 'detail']);
 Route::get('/join', [F_EventsController::class, 'join']);
 
 

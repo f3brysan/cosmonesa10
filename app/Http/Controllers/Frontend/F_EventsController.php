@@ -9,7 +9,7 @@ use App\Http\Controllers\Controller;
 
 class F_EventsController extends Controller
 {
-    
+
     public function index()
     {
         // Retrieve the list of events
@@ -33,10 +33,22 @@ class F_EventsController extends Controller
         // Return the view with the events and last events
         return view('front.page.events.index', compact('events', 'lastEvents'));
     }
-    public function detail()
+    /**
+     * Detail page for an event
+     *
+     * @param string $slug The slug for the event
+     * @return \Illuminate\Contracts\View\View
+     */
+    public function detail($slug)
     {
-        // $users = User::all(); // Example: Retrieve data from the database
-        return view('front.page.events.detail');
+        // Retrieve the event with the given slug        
+        $event = Events::with('eventtype')->where('slug', $slug)->first();
+
+        // Retrieve the related events
+        $relatedEvents = Events::with('eventtype')->where('id', '!=', $event->id)->limit(3)->get();
+        
+        // Return the view with the event and the related events
+        return view('front.page.events.detail', compact('event', 'relatedEvents'));
     }
     public function join()
     {

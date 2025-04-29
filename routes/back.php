@@ -5,6 +5,7 @@ use App\Http\Controllers\Backend\B_DashboardController;
 use App\Http\Controllers\Backend\B_EventController;
 use App\Http\Controllers\Backend\B_ProductCategoryController;
 use App\Http\Controllers\Backend\B_ProductController;
+use App\Http\Controllers\Backend\B_ServiceCategoryController;
 use App\Http\Controllers\Backend\B_UsersController;
 use App\Http\Controllers\Backend\B_UserSettingsController;
 use Illuminate\Support\Facades\Route;
@@ -41,6 +42,8 @@ Route::group(['middleware' => ['auth', 'role:superadmin|pengelola']], function (
     Route::get('product-categories/edit/{id}', [B_ProductCategoryController::class, 'edit']);
     Route::post('product-categories/store', [B_ProductCategoryController::class, 'store']);
     Route::post('product-categories/destroy', [B_ProductCategoryController::class, 'destroy']);
+
+    Route::get('service-categories', [B_ServiceCategoryController::class, 'index']);
 });
 
 Route::group(['middleware' => ['auth', 'role:superadmin|pengelola']], function () {

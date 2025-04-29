@@ -78,7 +78,19 @@
                             <a href="{{ URL::to('back/product') }}" class="menu-link">
                                 <div class="text-truncate" data-i18n="Produk">Product Items</div>
                             </a>
-                        </li>
+                        </li>                        
+                    </ul>
+                </li>                
+                <li class="menu-item">
+                    <a href="javascript:void(0);" class="menu-link menu-toggle">                        
+                        <div class="text-truncate" data-i18n="Master Tools">Service</div>                
+                    </a>
+                    <ul class="menu-sub">
+                        <li class="menu-item">
+                            <a href="{{ URL::to('back/service-categories') }}" class="menu-link">
+                                <div class="text-truncate" data-i18n="Produk">Service Categories</div>
+                            </a>
+                        </li>                       
                     </ul>
                 </li>                
             </ul>

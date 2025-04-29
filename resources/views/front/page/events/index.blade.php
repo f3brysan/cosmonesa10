@@ -39,8 +39,8 @@
                                 echo $date->translatedFormat('l, d F Y');
                             @endphp
                             </span>
-                            <h3><a href="{{ '/detail-event' }}">{{ $event->title }}</a></h3>
-                            <a class="lr_more" href="{{ '/detail-event' }}">
+                            <h3><a href="{{ URL::to('detail-event/'.$event->slug )}}">{{ $event->title }}</a></h3>
+                            <a class="lr_more" href="{{ URL::to('detail-event/'.$event->slug )}}">
                                 Learn More
                                 <svg width="300%" height="100%" viewBox="0 0 1200 60" preserveAspectRatio="none">
                                     <path
@@ -64,8 +64,8 @@
                                 echo $date->translatedFormat('l, d F Y');
                             @endphp
                             </span>
-                            <h3><a href="{{ '/detail-event' }}">{{ $event->title }}</a></h3>
-                            <a class="lr_more" href="{{ '/detail-event' }}">
+                            <h3><a href="{{ URL::to('detail-event/'.$event->slug )}}">{{ $event->title }}</a></h3>
+                            <a class="lr_more" href="{{ URL::to('detail-event/'.$event->slug )}}">
                                 Learn More
                                 <svg width="300%" height="100%" viewBox="0 0 1200 60" preserveAspectRatio="none">
                                     <path

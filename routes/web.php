@@ -27,7 +27,7 @@ Route::get('/profile', [F_AccountController::class, 'profile']);
 Route::post('/savebio', [F_AccountController::class, 'save']);
 //event page
 Route::get('/events', [F_EventsController::class, 'index']);
-Route::get('/detail-event', [F_EventsController::class, 'detail']);
+Route::get('/detail-event/{slug}', [F_EventsController::class, 'detail']);
 Route::get('/join', [F_EventsController::class, 'join']);
 
 

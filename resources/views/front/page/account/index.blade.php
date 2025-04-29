@@ -155,6 +155,10 @@
                                             <label for="provinsi"></label>
                                             <select name="provinces" id="provinces"></select>
                                         </div>
+                                        <div class="col-sm-12" id="citySelectContainer">
+                                            <label for="cities"></label>
+                                            <select name="cities" id="citySelect"></select>
+                                        </div>
                                         <div class="col-sm-12">
                                             <textarea name="address" id="" cols="30" rows="10">Tulis Alamat Lengkap</textarea>
                                         </div>
@@ -238,7 +242,7 @@
 
             let provinceData = [];
 
-            function fetchProvinces(callback) {
+            function fetchProvinces() {
                 $.ajax({
                     url: "{{ URL::to('back/api/provinces') }}",
                     dataType: "json",
@@ -246,12 +250,22 @@
                         console.log("API Response:", response);
 
                         if (response.success && Array.isArray(response.data)) {
-                            provinceData = response.data.map(item => ({
-                                id: item.province_id,
-                                text: item.province
-                            }));
+                            let $select = $('#provinces');
 
-                            if (callback) callback(); // Trigger callback after data is loaded
+                            // Clear existing options
+                            $select.empty();
+                            $select.append(
+                                `<option value="">--Pilih Provinsi--</option>`
+                            );
+                            // Append new options
+                            response.data.forEach(item => {
+                                $select.append(
+                                    `<option value="${item.province_id}">${item.province}</option>`
+                                );
+                            });
+
+                            // Refresh Nice Select after updating options
+                            $select.niceSelect('update');
                         }
                     },
                     error: function(xhr, status, error) {
@@ -259,32 +273,49 @@
                     }
                 });
             }
-            // Fetch provinces once on page load
-            console.log("Parsed Data:", provinceData); // Verify parsed results
 
-            $(document).ajaxComplete(function() {
-                $('#provinces').select2({
-                    placeholder: "Select a Province",
-                    allowClear: true,
-                    data: provinceData
+            function fetchCities(provinceId) {
+                $.ajax({
+                    url: `{{ URL::to('back/api/cities') }}/${provinceId}`, // Replace with your actual API route
+                    dataType: 'json',
+                    success: function(response) {
+                        console.log("City Data:", response); // Debugging output
+
+                        let $citySelect = $('#citySelect'); // Target city dropdown
+                        $citySelect.empty(); // Clear previous options
+                        $citySelect.append(
+                                `<option value="">--Pilih Kab./Kota--</option>`
+                            );
+                        if (response.success && Array.isArray(response.data)) {
+                            response.data.forEach(city => {
+                                $citySelect.append(
+                                    `<option value="${city.city_id}">${city.city_name}</option>`);
+                            });
+
+                            $citySelect.niceSelect('update'); // Refresh Nice Select
+                        }
+                    },
+                    error: function(xhr, status, error) {
+                        console.error("AJAX Error:", status, error);
+                    }
                 });
-            });
+            }
+            // Run the function to fetch and populate the select box
             fetchProvinces();
 
+            // Initially hide city select
+            $('#citySelectContainer').hide();
 
-
-
-
-
-            // $.ajax({
-            //     type: "get",
-            //     url: "{{ URL::to('back/api/provinces') }}",
-            //     dataType: "json",
-            //     success: function(response) {
-            //         console.log(response)
-            //     }
-            // });
-
+            $('#provinces').on('change', function() {
+                let selectedProvinceId = $(this).val(); // Get selected province ID
+                // console.log(selectedProvinceId);
+                if (selectedProvinceId) {
+                    $('#citySelectContainer').show(); // Show city select when province is selected
+                    fetchCities(selectedProvinceId); // Load city options dynamically
+                } else {
+                    $('#citySelectContainer').hide(); // Hide if no province is selected
+                }
+            });
 
 
 

@@ -15,4 +15,9 @@ class ServiceCategories extends Model
     protected $guarded = [
         
     ];
+
+    public function service()
+    {
+        return $this->hasMany(Services::class, 'category_id','id');
+    }
 }

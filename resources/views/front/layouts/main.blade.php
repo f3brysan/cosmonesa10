@@ -16,7 +16,7 @@
         <link rel="stylesheet" href="{{ asset('frontend/css/icofont.css') }}"/>
         <link rel="stylesheet" href="{{ asset('frontend/css/nounicon.css') }}"/>
         <link rel="stylesheet" href="{{ asset('frontend/css/makeover-icon.css') }}"/>
-        <link rel="stylesheet" href="{{ asset('frontend/css/nice-select.css') }}"/>
+        {{-- <link rel="stylesheet" href="{{ asset('frontend/css/nice-select.css') }}"/> --}}
         <link rel="stylesheet" href="{{ asset('frontend/css/jquery.datetimepicker.min.css') }}"/>
         <link rel="stylesheet" href="{{ asset('frontend/css/slick.css') }}"/>
         <link rel="stylesheet" href="{{ asset('frontend/css/lightcase.css') }}"/>
@@ -87,7 +87,7 @@
         <script src="{{ asset('frontend/js/jquery.appear.js') }}"></script>
         <script src="https://maps.google.com/maps/api/js?key=AIzaSyBJtPMZ_LWZKuHTLq5o08KSncQufIhPU3o"></script>
         <script src="{{ asset('frontend/js/gmaps.js') }}"></script>
-        <script src="{{ asset('frontend/js/jquery.nice-select.min.js') }}"></script>
+        {{-- <script src="{{ asset('frontend/js/jquery.nice-select.min.js') }}"></script> --}}
         <script src="{{ asset('frontend/js/jquery.datetimepicker.full.min.js') }}"></script>
         <script src="{{ asset('frontend/js/slick.js') }}"></script>
         <script src="{{ asset('frontend/js/lightcase.js') }}"></script>

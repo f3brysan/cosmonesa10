@@ -26,4 +26,5 @@ class B_KioskController extends Controller
         $services = Services::with('category')->where('kiosk_id', $kiosk->id)->get();
         $user = User::find(auth()->user()->id);
         $active = 'service';
+    }
 }

@@ -7,7 +7,7 @@
                     <li class="breadcrumb-item">
                         <a href="{{ URL::to('back/master/dashboard') }}">Home</a>
                     </li>
-                    <li class="breadcrumb-item active">Profil Pengguna</li>
+                    <li class="breadcrumb-item active">Kiosk {{ ucfirst($active) }}</li>
                 </ol>
             </nav>
         </div>
@@ -50,7 +50,7 @@
                                     @endif
                                 </ul>
                             </div>
-                            <a href="javascript:void(0)" class="btn btn-primary mb-1"> <i
+                            <a href="javascript:void(0)" id="edit-btn-kiosk" class="btn btn-primary mb-1"> <i
                                     class="icon-base bx bx-cog icon-sm me-2"></i>Edit </a>
                         </div>
                     </div>
@@ -84,3 +84,36 @@
         </div>
     </div>
     <!--/ Navbar pills -->
+
+    <!-- Large Modal -->
+    <div class="modal fade" id="edit-kiosk" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel3">Perbarui Kiosk</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="formTambahJasa">
+                        <div class="col-md-12 mb-6">
+                            <label for="nameLarge" class="form-label">Nama Jasa</label>
+                            <input type="text" id="nameLarge" name="name" class="form-control" placeholder="Enter Name"
+                                value="{{ $kiosk->name ?? '' }}" required />
+                        </div>
+                        <div class="col-md-12 mb-6">
+                            <label for="nameLarge" class="form-label">Phone</label>
+                            <input type="text" id="nameLarge" name="phone" class="form-control" placeholder="Enter Name"
+                                value="{{ $kiosk->phone ?? '' }}" required />
+                        </div>
+                        <div class="col-md-12 mb-6">
+                            <label for="nameLarge" class="form-label">Alamat</label>
+                            
+                            <textarea name="address" class="form-control" id="">{{ $kiosk->address ?? '' }}</textarea>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+   

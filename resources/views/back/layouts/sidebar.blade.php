@@ -123,17 +123,17 @@
         <li class="menu-item">
             <a href="javascript:void(0);" class="menu-link menu-toggle">
                 <i class="menu-icon tf-icons bx bx-layout"></i>
-                <div class="text-truncate" data-i18n="Menu">Menu</div>
+                <div class="text-truncate" data-i18n="Menu">Kiosku</div>
             </a>            
             <ul class="menu-sub">
                 <li class="menu-item">
-                    <a href="{{ URL::to('back/kiosku') }}" class="menu-link">
-                        <div class="text-truncate" data-i18n="Workshop">Kiosku</div>
+                    <a href="{{ URL::to('back/kiosku/service') }}" class="menu-link">
+                        <div class="text-truncate" data-i18n="Workshop">Service</div>
                     </a>
                 </li>
                 <li class="menu-item">
                     <a href="{{ URL::to('back/seller/service-list') }}" class="menu-link">
-                        <div class="text-truncate" data-i18n="Workshop">Daftar Layanan</div>
+                        <div class="text-truncate" data-i18n="Workshop">Riwayat Service</div>
                     </a>
                 </li>
             </ul>

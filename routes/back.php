@@ -7,6 +7,7 @@ use App\Http\Controllers\Backend\B_KioskController;
 use App\Http\Controllers\Backend\B_ProductCategoryController;
 use App\Http\Controllers\Backend\B_ProductController;
 use App\Http\Controllers\Backend\B_ServiceCategoryController;
+use App\Http\Controllers\Backend\B_ServiceController;
 use App\Http\Controllers\Backend\B_UsersController;
 use App\Http\Controllers\Backend\B_UserSettingsController;
 use Illuminate\Support\Facades\Route;
@@ -56,7 +57,9 @@ Route::group(['middleware' => ['auth', 'role:superadmin|pengelola']], function (
 
 
 Route::group(['middleware' => ['auth', 'role:seller']], function () {
-    Route::get('kiosku', [B_KioskController::class, 'myKiosk']);
+    Route::get('kiosku/service', [B_KioskController::class, 'sellerService']);
+    Route::get('kiosku/service-history', [B_KioskController::class, 'serviceHistory']);
+    
 });
 
 // API RAJA ONGKIR

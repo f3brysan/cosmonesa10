@@ -53,6 +53,11 @@ Route::group(['middleware' => ['auth', 'role:superadmin|pengelola']], function (
     Route::get('master/pengguna', [B_UsersController::class, 'index']);
 });
 
+
+Route::group(['middleware' => ['auth', 'role:seller']], function () {
+    Route::get('kiosku', [B_UsersController::class, 'index']);
+});
+
 // API RAJA ONGKIR
 Route::get('api/provinces', [APIRajaOngkirController::class, 'getProvinces']);
 Route::get('api/cities/{id}', [APIRajaOngkirController::class, 'getCities']);

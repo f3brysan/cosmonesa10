@@ -16,7 +16,7 @@
                         <li class="breadcrumb-item">
                             <a href="{{ URL::to('back/master/dashboard') }}">Home</a>
                         </li>
-                        <li class="breadcrumb-item active">Daftar Kateogri Produk</li>
+                        <li class="breadcrumb-item active">Daftar Kategori Produk</li>
                     </ol>
                 </nav>
             </div>
@@ -27,7 +27,7 @@
             <div class="col-xl-12 mb-6">
                 <div class="card">
                     <div class="card-header">
-                        <h5>Daftar Kateogri Produk</h5>
+                        <h5>Daftar Kategori Produk</h5>
                     </div>
                     <div class="card-body">
                         <div class="row">

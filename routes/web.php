@@ -25,6 +25,9 @@ Route::get('/', [F_DashboardController::class, 'index']);
 Route::get('/account', [F_AccountController::class, 'index']);
 Route::get('/profile', [F_AccountController::class, 'profile']);
 Route::post('/savebio', [F_AccountController::class, 'save']);
+// Route::post('/savebio', [F_AccountController::class, 'save'])->name('savebio');
+
+
 //event page
 Route::get('/events', [F_EventsController::class, 'index']);
 Route::get('/detail-event/{slug}', [F_EventsController::class, 'detail']);

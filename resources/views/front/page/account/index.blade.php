@@ -51,97 +51,14 @@
                     <div class="tab-pane fade show  active" id="personalinfo" role="tabpanel"
                         aria-labelledby="personalinfo-tab">
                         <div class="col-lg-12">
-                            <table class="table table-light">
-                                <tbody>
-                                    <tr>
-                                        <th>
-                                            <p style="text-align:right;" class="nama">Nama :</p>
-                                        </th>
-                                        <td>
-                                            <p class="name" style="display: inline;">Nama</p> -
-                                            <a style="font-weight: bold; display: inline;" data-target="#my-modal"
-                                                data-toggle="modal" href="#" data-type="nama">
-                                                <i class="icofont-pencil-alt-5"></i> Ubah Nama
-                                            </a>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <th>
-                                            <p style="text-align:right;" class="email">Email :</p>
-                                        </th>
-                                        <td>
-                                            <p class="email" style="display: inline;">Email</p> -
-                                            <a style="font-weight: bold; display: inline;" data-target="#my-modal"
-                                                data-toggle="modal" href="#" data-type="email">
-                                                <i class="icofont-pencil-alt-5"></i> Ubah Email
-                                            </a>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <th>
-                                            <p style="text-align:right;" class="nama">Jenis Kelamin :</p>
-                                        </th>
-                                        <td>
-                                            <p class="jk" style="display: inline;">Laki-Laki</p> -
-                                            <a style="font-weight: bold; display: inline;" data-target="#my-modal"
-                                                data-toggle="modal" href="#" data-type="jk">
-                                                <i class="icofont-pencil-alt-5"></i> Ubah Jenis Kelamin
-                                            </a>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <th>
-                                            <p style="text-align:right;" class="nama">Tanggal Lahir :</p>
-                                        </th>
-                                        <td>
-                                            <p class="tgl" style="display: inline;">Tanggal Lahir</p> -
-                                            <a style="font-weight: bold; display: inline;" data-target="#my-modal"
-                                                data-toggle="modal" href="#" data-type="tgl">
-                                                <i class="icofont-pencil-alt-5"></i> Ubah Tanggal Lahir
-                                            </a>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <th>
-                                            <p style="text-align:right;" class="nama">No. HP :</p>
-                                        </th>
-                                        <td>
-                                            <p class="hp" style="display: inline;">Nomor HP</p> -
-                                            <a style="font-weight: bold; display: inline;" data-target="#my-modal"
-                                                data-toggle="modal" href="#" data-type="hp">
-                                                <i class="icofont-pencil-alt-5"></i> Ubah Nomor HP
-                                            </a>
-                                        </td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </div>
 
-
-                        <div id="my-modal" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
-                            <div class="modal-dialog" role="document">
-                                <div class="modal-content">
-                                    <div class="modal-header">
-                                        <h5 class="modal-title">Edit Data</h5>
-                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                            <span aria-hidden="true">&times;</span>
-                                        </button>
-                                    </div>
-                                    <div class="modal-body">
-                                        <form id="edit" method="POST" action="${actionUrl}"
-                                            enctype="multipart/form-data">
-                                            <input class="form-control" type="text" name="">
-                                        </form>
-                                    </div>
-                                </div>
-                            </div>
                         </div>
                     </div>
                     <div class="tab-pane fade show" id="profile" role="tabpanel" aria-labelledby="profile-tab">
                         <div class="col-lg-12">
                             <div class="authWrap authLogin">
                                 <h2 class="authTitle">My Personal Data</h2>
-                                <form class="woocommerce-form-login" action="#" method="post">
+                                <form class="woocommerce-form-login" action="#" >
                                     <div class="row">
                                         <div class="col-sm-12">
                                             <input placeholder="Full Name *" type="text" name="name"
@@ -170,7 +87,7 @@
                                                 name="confirm_password">
                                         </div>
                                         <div class="col-sm-12">
-                                            <button type="submit"
+                                            <button id="save-btn"  type="submit"
                                                 class="woocommerce-button button woocommerce-form-login__submit mo_btn"
                                                 name="login" value="Log in">
                                                 <i class="icofont-user-alt-7"></i>Register Now
@@ -184,7 +101,23 @@
                 </div>
             </div>
 
-
+            <div id="my-modal" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title">Edit Data</h5>
+                            <button id="save-btn"  type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <form id="edit">
+                                <input class="form-control" type="text" name="">
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
 
 
 
@@ -195,196 +128,29 @@
     <!-- End:: Account Section -->
 @endsection
 @push('js')
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.min.js"></script>
+    {{-- <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.min.js"></script>
 
     <!-- Select2 JS -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script> --}}
     <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js"></script>
+
 
     <script>
         $(document).ready(function() {
-
-            // Function to update profile fields
-            function updateProfileFields(data) {
-                data = JSON.parse(data); // Parse the JSON response
-                // Update each field, allowing empty strings to pass through
-                $('.name').text(data.nama !== undefined && data.nama !== null ? data.nama :
-                    "Masih Kosong");
-                $('.email').text(data.email !== undefined && data.email !== null ? data.email :
-                    "Masih Kosong");
-                $('.jk').text(data.jk !== "" ? data.jk : "Masih Kosong"); // Empty string fallback
-                $('.tgl').text(data.tgl !== "" ? data.tgl :
-                    "Masih Kosong"); // Empty string fallback
-                $('.hp').text(data.hp !== "" ? data.hp : "Masih Kosong"); // Empty string fallback
-
-                // // Log the updated values for verification
-                // console.log("Updated name:", $('.name').text());
-                // console.log("Updated email:", $('.email').text());
-                // console.log("Updated jk:", $('.jk').text());
-                // console.log("Updated tgl:", $('.tgl').text());
-                // console.log("Updated hp:", $('.hp').text());
-            }
-
-            // Make the AJAX request
-            $.ajax({
-                url: `{{ URL::to('/profile') }}`,
-                type: 'GET',
-                success: function(response) {
-                    updateProfileFields(response); // Directly pass the JSON response
-                },
-                error: function(xhr, status, error) {
-                    console.error(`AJAX Error: ${status} - ${error}`);
+            $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                 }
             });
 
-
-
-
-            let provinceData = [];
-
-            function fetchProvinces() {
-                $.ajax({
-                    url: "{{ URL::to('back/api/provinces') }}",
-                    dataType: "json",
-                    success: function(response) {
-                        console.log("API Response:", response);
-
-                        if (response.success && Array.isArray(response.data)) {
-                            let $select = $('#provinces');
-
-                            // Clear existing options
-                            $select.empty();
-                            $select.append(
-                                `<option value="">--Pilih Provinsi--</option>`
-                            );
-                            // Append new options
-                            response.data.forEach(item => {
-                                $select.append(
-                                    `<option value="${item.province_id}">${item.province}</option>`
-                                );
-                            });
-
-                            // Refresh Nice Select after updating options
-                            $select.niceSelect('update');
-                        }
-                    },
-                    error: function(xhr, status, error) {
-                        console.error("AJAX Error:", status, error);
-                    }
-                });
-            }
-
-            function fetchCities(provinceId) {
-                $.ajax({
-                    url: `{{ URL::to('back/api/cities') }}/${provinceId}`, // Replace with your actual API route
-                    dataType: 'json',
-                    success: function(response) {
-                        console.log("City Data:", response); // Debugging output
-
-                        let $citySelect = $('#citySelect'); // Target city dropdown
-                        $citySelect.empty(); // Clear previous options
-                        $citySelect.append(
-                                `<option value="">--Pilih Kab./Kota--</option>`
-                            );
-                        if (response.success && Array.isArray(response.data)) {
-                            response.data.forEach(city => {
-                                $citySelect.append(
-                                    `<option value="${city.city_id}">${city.city_name}</option>`);
-                            });
-
-                            $citySelect.niceSelect('update'); // Refresh Nice Select
-                        }
-                    },
-                    error: function(xhr, status, error) {
-                        console.error("AJAX Error:", status, error);
-                    }
-                });
-            }
-            // Run the function to fetch and populate the select box
-            fetchProvinces();
-
-            // Initially hide city select
-            $('#citySelectContainer').hide();
-
-            $('#provinces').on('change', function() {
-                let selectedProvinceId = $(this).val(); // Get selected province ID
-                // console.log(selectedProvinceId);
-                if (selectedProvinceId) {
-                    $('#citySelectContainer').show(); // Show city select when province is selected
-                    fetchCities(selectedProvinceId); // Load city options dynamically
-                } else {
-                    $('#citySelectContainer').hide(); // Hide if no province is selected
-                }
-            });
-
-
-
-
-
-
-            // Add a click event listener to all "ubah" links
-            $('a[data-type]').on('click', function(event) {
-                event.preventDefault(); // Prevent default behavior
-
-                // Get the type from the data-type attribute
-                let type = $(this).data('type');
-
-                // Extract the text content from the sibling <p> element
-                let textToSend = $(this).siblings('p').text().trim();
-                let actionUrl = `/savebio`;
-                // Set up the modal content based on the type
-                if (type === 'jk') {
-                    $('.modal-body').html(`
-                <form id="edit" method="POST" action="${actionUrl}">
-                    <select class="form-control" name="${type}">
-                        <option value="P">Laki-Laki</option>
-                        <option value="W">Perempuan</option>
-                    </select>
-                    <button type="submit" class="btn btn-primary">Save</button>
-                </form>
-            `);
-                } else if (type === 'tgl') {
-                    $('.modal-body').html(`
-                <form id="edit" method="POST" action="${actionUrl}">
-                    <input class="form-control" type="text" id="datepicker" name="${type}" value="${textToSend}">
-                    <button type="submit" class="btn btn-primary">Save</button>
-                </form>
-            `);
-                    // Initialize the date picker for the newly added input
-                    $('#datepicker').datetimepicker({
-                        format: 'Y-m-d',
-                        timepicker: false,
-                        maxDate: new Date(),
-                        yearStart: 1900,
-                        yearEnd: new Date().getFullYear()
-                    });
-                } else {
-                    $('.modal-body').html(`
-                <form id="edit" method="POST" action="${actionUrl}">
-                    <input class="form-control" type="text" name="${type}" value="${textToSend}">
-                    <button type="submit" class="btn btn-primary">Save</button>
-                </form>
-            `);
-                }
-
-                // Set the modal title dynamically
-                $('.modal-title').text(`Edit ${type}`);
-
-                // Show the modal
-                $('#myModal').modal('show');
-            });
-            let csrfToken = $('meta[name="csrf-token"]').attr('content');
-            let headers = {
-                'X-CSRF-TOKEN': csrfToken,
-                'Content-Type': 'application/json'
-            };
             $('#edit').submit(function(event) {
                 event.preventDefault(); // Prevent the default form submission
+                console.log("Submitting form via AJAX");
 
                 var data = $(this).serialize(); // Serialize the form data
 
                 $.ajax({
-                    url: $(this).attr('action'), // Use the form's action attribute dynamically
+                    url: "{{ URL::to('/savebio') }}", // Use the form's action attribute dynamically
                     method: 'POST', // Ensure it's POST for form submission
                     data: data, // Send the serialized form data
                     headers: headers,
@@ -400,6 +166,172 @@
             });
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+            // Function to update profile fields
+            function updateProfileFields(data) {
+                data = JSON.parse(data); // Parse the JSON response
+                // Update each field, allowing empty strings to pass through
+
+                $('.name').text(data.nama !== undefined && data.nama !== null ? data.nama :
+                    "Masih Kosong");
+                $('.email').text(data.email !== undefined && data.email !== null ? data.email :
+                    "Masih Kosong");
+                $('.jk').text(data.jk !== "" ? data.jk : "Masih Kosong"); // Empty string fallback
+                $('.tgl').text(data.tgl !== "" ? data.tgl :
+                    "Masih Kosong"); // Empty string fallback
+                $('.hp').text(data.hp !== "" ? data.hp : "Masih Kosong"); // Empty string fallback
+            }
+
+            // Make the AJAX request
+            $.ajax({
+                url: `{{ URL::to('/profile') }}`,
+                type: 'GET',
+                success: function(response) {
+                    updateProfileFields(response); // Directly pass the JSON response
+                },
+                error: function(xhr, status, error) {
+                    console.error(`AJAX Error: ${status} - ${error}`);
+                }
+            });
+
+
+            // Add a click event listener to all "ubah" links
+            $('a[data-type]').on('click', function(event) {
+                event.preventDefault(); // Prevent default behavior
+
+                // Get the type from the data-type attribute
+                let type = $(this).data('type');
+
+                // Extract the text content from the sibling <p> element
+                let textToSend = $(this).siblings('p').text().trim();
+                let actionUrl = `/savebio`;
+                // Set up the modal content based on the type
+                if (type === 'jk') {
+                    $('.modal-body').html(`
+                            <form id="edit">
+                                <select class="form-control" name="${type}">
+                                    <option value="P">Laki-Laki</option>
+                                    <option value="W">Perempuan</option>
+                                </select>
+                                <button id="save-btn"  type="submit" class="btn btn-primary">Save</button>
+                            </form>
+                        `);
+                } else if (type === 'tgl') {
+                    $('.modal-body').html(`
+                            <form id="edit">
+                                <input class="form-control" type="text" id="datepicker" name="${type}" value="${textToSend}">
+                                <button id="save-btn"  type="submit" class="btn btn-primary">Save</button>
+                            </form>
+                        `);
+                    // Initialize the date picker for the newly added input
+                    $('#datepicker').datetimepicker({
+                        format: 'Y-m-d',
+                        timepicker: false,
+                        maxDate: new Date(),
+                        yearStart: 1900,
+                        yearEnd: new Date().getFullYear()
+                    });
+                } else {
+                    $('.modal-body').html(`
+                            <form id="edit">
+                                <input class="form-control" type="text" name="${type}" value="${textToSend}">
+                                <button id="save-btn"  type="submit" class="btn btn-primary">Save</button>
+                            </form>
+                        `);
+                }
+
+                // Set the modal title dynamically
+                $('.modal-title').text(`Edit ${type}`);
+
+
+            });
+            // let provinceData = [];
+
+            // function fetchProvinces() {
+            //     $.ajax({
+            //         url: "{{ URL::to('back/api/provinces') }}",
+            //         dataType: "json",
+            //         success: function(response) {
+            //             if (response.success && Array.isArray(response.data)) {
+            //                 let $select = $('#provinces');
+
+            //                 // Clear existing options
+            //                 $select.empty();
+            //                 $select.append(
+            //                     `<option value="">--Pilih Provinsi--</option>`
+            //                 );
+            //                 // Append new options
+            //                 response.data.forEach(item => {
+            //                     $select.append(
+            //                         `<option value="${item.province_id}">${item.province}</option>`
+            //                     );
+            //                 });
+
+            //                 // // Refresh Nice Select after updating options
+            //                 // $select.niceSelect('update');
+            //             }
+            //         },
+            //         error: function(xhr, status, error) {
+            //             console.error("AJAX Error:", status, error);
+            //         }
+            //     });
+            // }
+
+            // function fetchCities(provinceId) {
+            //     $.ajax({
+            //         url: `{{ URL::to('back/api/cities') }}/${provinceId}`, // Replace with your actual API route
+            //         dataType: 'json',
+            //         success: function(response) {
+            //             let $citySelect = $('#citySelect'); // Target city dropdown
+            //             $citySelect.empty(); // Clear previous options
+            //             $citySelect.append(
+            //                 `<option value="">--Pilih Kab./Kota--</option>`
+            //             );
+            //             if (response.success && Array.isArray(response.data)) {
+            //                 response.data.forEach(city => {
+            //                     $citySelect.append(
+            //                         `<option value="${city.city_id}">${city.city_name}</option>`
+            //                         );
+            //                 });
+
+            //                 $citySelect.niceSelect('update'); // Refresh Nice Select
+            //             }
+            //         },
+            //         error: function(xhr, status, error) {
+            //             console.error("AJAX Error:", status, error);
+            //         }
+            //     });
+            // }
+            // // Run the function to fetch and populate the select box
+            // fetchProvinces();
+
+            // // Initially hide city select
+            // $('#citySelectContainer').hide();
+
+            // $('#provinces').on('change', function() {
+            //     let selectedProvinceId = $(this).val(); // Get selected province ID
+            //     // console.log(selectedProvinceId);
+            //     if (selectedProvinceId) {
+            //         $('#citySelectContainer').show(); // Show city select when province is selected
+            //         fetchCities(selectedProvinceId); // Load city options dynamically
+            //     } else {
+            //         $('#citySelectContainer').hide(); // Hide if no province is selected
+            //     }
+            // });
         });
     </script>
 @endpush

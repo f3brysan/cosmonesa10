@@ -95,6 +95,7 @@
         <script src="{{ asset('frontend/js/tweenmax.min.js') }}"></script>
         <script src="{{ asset('frontend/js/theia-sticky-sidebar.min.js') }}"></script>
         <script src="{{ asset('frontend/js/ResizeSensor.min.js') }}"></script>
+        @stack('js')
 
         <!-- Slider Revolution Main Files -->
         <script src="{{ asset('frontend/js/jquery.themepunch.tools.min.js') }}"></script>
@@ -114,6 +115,5 @@
         <script src="{{ asset('frontend/js/theme.js') }}"></script>
         <!-- End Include All JS -->
 
-        @stack('js')
     </body>
 </html>

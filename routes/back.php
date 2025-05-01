@@ -3,6 +3,7 @@
 use App\Http\Controllers\API\ApiRajaOngkirController;
 use App\Http\Controllers\Backend\B_DashboardController;
 use App\Http\Controllers\Backend\B_EventController;
+use App\Http\Controllers\Backend\B_KioskController;
 use App\Http\Controllers\Backend\B_ProductCategoryController;
 use App\Http\Controllers\Backend\B_ProductController;
 use App\Http\Controllers\Backend\B_ServiceCategoryController;
@@ -55,7 +56,7 @@ Route::group(['middleware' => ['auth', 'role:superadmin|pengelola']], function (
 
 
 Route::group(['middleware' => ['auth', 'role:seller']], function () {
-    Route::get('kiosku', [B_UsersController::class, 'index']);
+    Route::get('kiosku', [B_KioskController::class, 'myKiosk']);
 });
 
 // API RAJA ONGKIR

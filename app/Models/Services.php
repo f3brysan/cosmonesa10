@@ -15,4 +15,9 @@ class Services extends Model
     protected $guarded = [
         
     ];
+
+    public function category()
+    {
+        return $this->belongsTo(ServiceCategories::class, 'category_id');
+    }
 }

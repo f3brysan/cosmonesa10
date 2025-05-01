@@ -16,7 +16,7 @@
                         <li class="breadcrumb-item">
                             <a href="{{ URL::to('back/master/dashboard') }}">Home</a>
                         </li>
-                        <li class="breadcrumb-item active">Daftar Kateogri Produk</li>
+                        <li class="breadcrumb-item active">Daftar Kategori Service</li>
                     </ol>
                 </nav>
             </div>
@@ -27,7 +27,7 @@
             <div class="col-xl-12 mb-6">
                 <div class="card">
                     <div class="card-header">
-                        <h5>Daftar Kateogri Produk</h5>
+                        <h5>Daftar Kategori Service</h5>
                     </div>
                     <div class="card-body">
                         <div class="row">
@@ -41,7 +41,7 @@
                                 <thead>
                                     <tr>
                                         <th class="text-center">Nama Kategori</th>
-                                        <th class="text-center">Jumlah Produk</th>
+                                        <th class="text-center">Jumlah Service</th>
                                         <th class="text-center">Aksi</th>
                                     </tr>
                                 </thead>
@@ -143,7 +143,7 @@
 
             $(document).on('click', '.edit', function() {
                 var id = $(this).data('id');
-                $.get("{{ URL::to('back/product-categories/edit') }}/" + id,
+                $.get("{{ URL::to('back/service-categories/edit') }}/" + id,
                     function(ress) {
                         $("#name").val(ress.data.name);
                         $("#id").val(ress.data.id);
@@ -160,7 +160,7 @@
 
                         $.ajax({
                             type: "POST",
-                            url: "{{ URL::to('back/product-categories/store') }}",
+                            url: "{{ URL::to('back/service-categories/store') }}",
                             data: $('#crudForm').serialize(),
                             dataType: 'json',
                             success: function(data) {
@@ -199,7 +199,7 @@
                     if (result.isConfirmed) {
                         $.ajax({
                             type: "POST",
-                            url: "{{ URL::to('back/product-categories/destroy') }}",
+                            url: "{{ URL::to('back/service-categories/destroy') }}",
                             data: {
                                 id: id
                             },

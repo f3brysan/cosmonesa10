@@ -41,4 +41,49 @@ class B_ServiceCategoryController extends Controller
             ], 500);
         }
     }
+
+    public function store(Request $request) 
+    {
+        try {            
+            // Update or create a new product category
+            $exec = ServiceCategories::updateOrCreate([
+                'id' => $request->id
+            ], [
+                'name' => $request->name
+            ]);
+
+            // Return a success response with a message
+            return response()->json([
+                'status' => 'success',
+                'message' => 'Data berhasil disimpan'
+            ], 200);
+        } catch (\Exception $th) {
+            // Return an error response if an exception is caught
+            return response()->json([
+                'status' => 'error',
+                'message' => $th->getMessage()
+            ], 500);
+        }
+    }
+
+    public function edit($id) 
+    {
+        try {
+            // Decrypt the category ID from the request
+            $id = Crypt::decrypt($id);
+            // Retrieve the product category with the specified ID
+            $category = ServiceCategories::where('id', $id)->first();
+            // Return a success response with the category data
+            return response()->json([
+                'status' => 'success',
+                'data' => $category
+            ], 200);
+        } catch (\Exception $th) {
+            // Return an error response if an exception occurs
+            return response()->json([
+                'status' => 'error',
+                'message' => $th->getMessage()
+            ], 500);
+        }
+    }
 }

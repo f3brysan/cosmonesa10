@@ -44,6 +44,9 @@ Route::group(['middleware' => ['auth', 'role:superadmin|pengelola']], function (
     Route::post('product-categories/destroy', [B_ProductCategoryController::class, 'destroy']);
 
     Route::get('service-categories', [B_ServiceCategoryController::class, 'index']);
+    Route::get('service-categories/edit/{id}', [B_ServiceCategoryController::class, 'edit']);
+    Route::post('service-categories/store', [B_ServiceCategoryController::class, 'store']);
+    Route::post('service-categories/destroy', [B_ServiceCategoryController::class, 'destroy']);
 });
 
 Route::group(['middleware' => ['auth', 'role:superadmin|pengelola']], function () {

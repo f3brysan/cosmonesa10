@@ -93,7 +93,7 @@
     top: 1px;
     margin-left: 5px;
 }
-.mainMenu ul li:hover > a, 
+.mainMenu ul li:hover > a,
 .mainMenu ul li.current-menu-item > a {
     color: #f7a392;
 }
@@ -512,7 +512,7 @@
     width: 201px;
     height: 360px;
     z-index: 2;
-}  
+}
 .abContent{
     position: relative;
     padding-left: 112px;
@@ -684,12 +684,13 @@
     padding-right: 10px;
     position: relative;
 }
-input[type="email"], 
-input[type="text"], 
-input[type="number"], 
-input[type="url"], 
-input[type="tel"], 
-input[type="password"], 
+input[type="email"],
+input[type="text"],
+input[type="number"],
+input[type="url"],
+input[type="tel"],
+input[type="date"],
+input[type="password"],
 textarea,
 select,
 .nice-select{
@@ -2302,7 +2303,7 @@ footer .widget.mailchimp{
     font-size: 30px;
     border-radius: 0;
 }
-.header_03 .humBurger span:before, 
+.header_03 .humBurger span:before,
 .header_03 .humBurger span:after {
     background: #fff;
 }
@@ -2310,7 +2311,7 @@ footer .widget.mailchimp{
     background: #f7a392;
     color: #fff;
 }
-.header_03 .humBurger span:before, 
+.header_03 .humBurger span:before,
 .header_03 .humBurger span:after {
     background: #fff;
 }
@@ -2417,7 +2418,7 @@ footer .widget.mailchimp{
 .aboutImg2 .shape1 img{
     width: 100%;
     height: 100%;
-} 
+}
 
 /*-- Team Section ---*/
 .tm_col_4 .tm_social a{
@@ -2551,7 +2552,7 @@ footer .widget.mailchimp{
 }
 .pnl{
     animation-delay: 1.1s;
-    animation-name: fadeInUp;  
+    animation-name: fadeInUp;
 }
 .page_layer{
     width: 800px;
@@ -4795,10 +4796,10 @@ form.woocommerce-form-login .button.mo_btn i {
     margin: 0 0 22px;
 }
 
-.commentForm input[type="email"], 
-.commentForm input[type="text"], 
-.commentForm input[type="url"], 
-.commentForm input[type="tel"], 
+.commentForm input[type="email"],
+.commentForm input[type="text"],
+.commentForm input[type="url"],
+.commentForm input[type="tel"],
 .commentForm textarea{
     display: block;
     width: 100%;
@@ -5342,13 +5343,13 @@ body table.booked-calendar thead {
     color: #fff;
     text-transform: uppercase;
 }
-#ui-datepicker-div.booked_custom_date_picker table.ui-datepicker-calendar tbody td a.ui-state-active, 
-#ui-datepicker-div.booked_custom_date_picker table.ui-datepicker-calendar tbody td a.ui-state-active:hover, 
-body #booked-profile-page input[type=submit].button-primary:hover, body .booked-list-view button.button:hover, 
-body .booked-list-view input[type=submit].button-primary:hover, body table.booked-calendar input[type=submit].button-primary:hover, 
-body .booked-modal input[type=submit].button-primary:hover, body table.booked-calendar th, body table.booked-calendar thead, 
-body table.booked-calendar thead th, 
-body #booked-profile-page .booked-profile-header, body #booked-profile-page .booked-tabs li.active a, body #booked-profile-page .booked-tabs li.active a:hover, 
+#ui-datepicker-div.booked_custom_date_picker table.ui-datepicker-calendar tbody td a.ui-state-active,
+#ui-datepicker-div.booked_custom_date_picker table.ui-datepicker-calendar tbody td a.ui-state-active:hover,
+body #booked-profile-page input[type=submit].button-primary:hover, body .booked-list-view button.button:hover,
+body .booked-list-view input[type=submit].button-primary:hover, body table.booked-calendar input[type=submit].button-primary:hover,
+body .booked-modal input[type=submit].button-primary:hover, body table.booked-calendar th, body table.booked-calendar thead,
+body table.booked-calendar thead th,
+body #booked-profile-page .booked-profile-header, body #booked-profile-page .booked-tabs li.active a, body #booked-profile-page .booked-tabs li.active a:hover,
 body #booked-profile-page .appt-block .google-cal-button > a:hover, #ui-datepicker-div.booked_custom_date_picker .ui-datepicker-header {
     background: #f7a392 !important;
 }
@@ -5391,8 +5392,8 @@ body table.booked-calendar th .monthName a{
 body table.booked-calendar th .monthName a:hover{
     color: #FFF;
 }
-body table.booked-calendar tr.days, body table.booked-calendar tr.days th, body .booked-calendarSwitcher.calendar, 
-body #booked-profile-page .booked-tabs, #ui-datepicker-div.booked_custom_date_picker table.ui-datepicker-calendar thead, 
+body table.booked-calendar tr.days, body table.booked-calendar tr.days th, body .booked-calendarSwitcher.calendar,
+body #booked-profile-page .booked-tabs, #ui-datepicker-div.booked_custom_date_picker table.ui-datepicker-calendar thead,
 #ui-datepicker-div.booked_custom_date_picker table.ui-datepicker-calendar thead th {
     background: rgb(228, 146, 130) !important;
 }
@@ -5501,14 +5502,14 @@ body table.booked-calendar td .date .number {
 body table.booked-calendar td:hover .date span {
     color: #fff;
 }
-#ui-datepicker-div.booked_custom_date_picker table.ui-datepicker-calendar tbody td.ui-datepicker-today a, 
-#ui-datepicker-div.booked_custom_date_picker table.ui-datepicker-calendar tbody td.ui-datepicker-today a:hover, 
-body #booked-profile-page input[type=submit].button-primary, body table.booked-calendar input[type=submit].button-primary, 
-body .booked-list-view button.button, body .booked-list-view input[type=submit].button-primary, body .booked-list-view button.button, 
-body .booked-list-view input[type=submit].button-primary, body .booked-modal input[type=submit].button-primary, 
-body table.booked-calendar .booked-appt-list .timeslot .timeslot-people button, body #booked-profile-page .booked-profile-appt-list .appt-block.approved .status-block, 
-body #booked-profile-page .appt-block .google-cal-button > a, body .booked-modal p.booked-title-bar, 
-body table.booked-calendar td:hover .date span, body .booked-list-view a.booked_list_date_picker_trigger.booked-dp-active, 
+#ui-datepicker-div.booked_custom_date_picker table.ui-datepicker-calendar tbody td.ui-datepicker-today a,
+#ui-datepicker-div.booked_custom_date_picker table.ui-datepicker-calendar tbody td.ui-datepicker-today a:hover,
+body #booked-profile-page input[type=submit].button-primary, body table.booked-calendar input[type=submit].button-primary,
+body .booked-list-view button.button, body .booked-list-view input[type=submit].button-primary, body .booked-list-view button.button,
+body .booked-list-view input[type=submit].button-primary, body .booked-modal input[type=submit].button-primary,
+body table.booked-calendar .booked-appt-list .timeslot .timeslot-people button, body #booked-profile-page .booked-profile-appt-list .appt-block.approved .status-block,
+body #booked-profile-page .appt-block .google-cal-button > a, body .booked-modal p.booked-title-bar,
+body table.booked-calendar td:hover .date span, body .booked-list-view a.booked_list_date_picker_trigger.booked-dp-active,
 body .booked-list-view a.booked_list_date_picker_trigger.booked-dp-active:hover, .booked-ms-modal .booked-book-appt {
     background: #f7a392;
 }

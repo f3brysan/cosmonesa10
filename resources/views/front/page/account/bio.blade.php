@@ -127,7 +127,6 @@
                     <div class="card">
                         <div class="card-body">
                             <form id="editForm">
-                                @csrf
                                 <div class="mb-3">
                                     <label for="name" class="form-label">Nama</label>
                                     <input type="text" class="form-control" id="name" name="name"
@@ -262,7 +261,79 @@
 
             // Add a click event listener to all "ubah" links
 
+// let provinceData = [];
 
+            // function fetchProvinces() {
+            //     $.ajax({
+            //         url: "{{ URL::to('back/api/provinces') }}",
+            //         dataType: "json",
+            //         success: function(response) {
+            //             if (response.success && Array.isArray(response.data)) {
+            //                 let $select = $('#provinces');
+
+            //                 // Clear existing options
+            //                 $select.empty();
+            //                 $select.append(
+            //                     `<option value="">--Pilih Provinsi--</option>`
+            //                 );
+            //                 // Append new options
+            //                 response.data.forEach(item => {
+            //                     $select.append(
+            //                         `<option value="${item.province_id}">${item.province}</option>`
+            //                     );
+            //                 });
+
+            //                 // // Refresh Nice Select after updating options
+            //                 // $select.niceSelect('update');
+            //             }
+            //         },
+            //         error: function(xhr, status, error) {
+            //             console.error("AJAX Error:", status, error);
+            //         }
+            //     });
+            // }
+
+            // function fetchCities(provinceId) {
+            //     $.ajax({
+            //         url: `{{ URL::to('back/api/cities') }}/${provinceId}`, // Replace with your actual API route
+            //         dataType: 'json',
+            //         success: function(response) {
+            //             let $citySelect = $('#citySelect'); // Target city dropdown
+            //             $citySelect.empty(); // Clear previous options
+            //             $citySelect.append(
+            //                 `<option value="">--Pilih Kab./Kota--</option>`
+            //             );
+            //             if (response.success && Array.isArray(response.data)) {
+            //                 response.data.forEach(city => {
+            //                     $citySelect.append(
+            //                         `<option value="${city.city_id}">${city.city_name}</option>`
+            //                         );
+            //                 });
+
+            //                 $citySelect.niceSelect('update'); // Refresh Nice Select
+            //             }
+            //         },
+            //         error: function(xhr, status, error) {
+            //             console.error("AJAX Error:", status, error);
+            //         }
+            //     });
+            // }
+            // // Run the function to fetch and populate the select box
+            // fetchProvinces();
+
+            // // Initially hide city select
+            // $('#citySelectContainer').hide();
+
+            // $('#provinces').on('change', function() {
+            //     let selectedProvinceId = $(this).val(); // Get selected province ID
+            //     // console.log(selectedProvinceId);
+            //     if (selectedProvinceId) {
+            //         $('#citySelectContainer').show(); // Show city select when province is selected
+            //         fetchCities(selectedProvinceId); // Load city options dynamically
+            //     } else {
+            //         $('#citySelectContainer').hide(); // Hide if no province is selected
+            //     }
+            // });
 
         });
     </script>

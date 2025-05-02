@@ -16,7 +16,7 @@ class F_AccountController extends Controller
     {
 
         // $users = User::all(); // Example: Retrieve data from the database
-        return view('front.page.account.bio');
+        return view('front.page.account.index');
     }
     public function profile()
     {

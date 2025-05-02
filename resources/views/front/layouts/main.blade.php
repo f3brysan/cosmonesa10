@@ -95,12 +95,11 @@
         <script src="{{ asset('frontend/js/tweenmax.min.js') }}"></script>
         <script src="{{ asset('frontend/js/theia-sticky-sidebar.min.js') }}"></script>
         <script src="{{ asset('frontend/js/ResizeSensor.min.js') }}"></script>
-        @stack('js')
 
         <!-- Slider Revolution Main Files -->
         <script src="{{ asset('frontend/js/jquery.themepunch.tools.min.js') }}"></script>
         <script src="{{ asset('frontend/js/jquery.themepunch.revolution.min.js') }}"></script>
-
+        @stack('js')
         <!-- Slider Revolution Extension -->
         <script src="{{ asset('frontend/js/extensions/revolution.extension.actions.min.js') }}"></script>
         <script src="{{ asset('frontend/js/extensions/revolution.extension.carousel.min.js') }}"></script>
@@ -111,6 +110,7 @@
         <script src="{{ asset('frontend/js/extensions/revolution.extension.parallax.min.js') }}"></script>
         <script src="{{ asset('frontend/js/extensions/revolution.extension.slideanims.min.js') }}"></script>
         <script src="{{ asset('frontend/js/extensions/revolution.extension.video.min.js') }}"></script>
+
 
         <script src="{{ asset('frontend/js/theme.js') }}"></script>
         <!-- End Include All JS -->

@@ -39,26 +39,89 @@
                             aria-controls="personalinfo" aria-selected="false">Personal Information</a>
                     </li>
                     <li class="nav-item" role="presentation">
-                        <a id="profile-tab" data-toggle="tab" href="#profile" role="tab" aria-controls="profile"
-                            aria-selected="true">Profile</a>
+                        <a id="alamat-tab" data-toggle="tab" href="#alamat" role="tab" aria-controls="alamat"
+                            aria-selected="true">Alamat</a>
                     </li>
-                    <li class="nav-item" role="presentation">
+                    {{-- <li class="nav-item" role="presentation">
                         <a id="reviews-tab" data-toggle="tab" href="#reviews" role="tab" aria-controls="reviews"
                             aria-selected="false">Review (3)</a>
-                    </li>
+                    </li> --}}
                 </ul>
                 <div class="tab-content">
                     <div class="tab-pane fade show  active" id="personalinfo" role="tabpanel"
                         aria-labelledby="personalinfo-tab">
                         <div class="col-lg-12">
+                            <div class="row">
+                                <div class="col-lg-6">
+                                    <table class="table">
+                                        <tbody>
+                                            <tr>
+                                                <th>
+                                                    <p style="text-align:right;" class="nama">Nama :</p>
+                                                </th>
+                                                <td>
+                                                    <p class="name" style="display: inline;">Nama</p>
 
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <th>
+                                                    <p style="text-align:right;">Email :</p>
+                                                </th>
+                                                <td>
+                                                    <p class="email" style="display: inline;">Email</p>
+
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <th>
+                                                    <p style="text-align:right;" class="nama">Jenis Kelamin :</p>
+                                                </th>
+                                                <td>
+                                                    <p class="jk" style="display: inline;">Laki-Laki</p>
+
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <th>
+                                                    <p style="text-align:right;" class="nama">Tanggal Lahir :</p>
+                                                </th>
+                                                <td>
+                                                    <p class="tgl" style="display: inline;">Tanggal Lahir</p>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <th>
+                                                    <p style="text-align:right;" class="nama">No. HP :</p>
+                                                </th>
+                                                <td>
+                                                    <p class="hp" style="display: inline;">Nomor HP</p>
+
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <div class="col-lg-6">
+                                    {{-- <button id="edit-data" type="button" class="btn btn-primary" data-toggle="modal"
+                                        data-target="#my-modal">
+                                        Edit Data
+                                    </button> --}}
+                                    <button id="edit-data" type="submit"
+                                        class="woocommerce-button button woocommerce-form-login__submit mo_btn"
+                                        data-toggle="modal"
+                                        data-target="#my-modal">
+                                        <i class="icofont-user-alt-7"></i>Edit Data Personal
+                                    </button>
+                                </div>
+                            </div>
                         </div>
                     </div>
-                    <div class="tab-pane fade show" id="profile" role="tabpanel" aria-labelledby="profile-tab">
+                    <div class="tab-pane fade show" id="alamat" role="tabpanel" aria-labelledby="alamat-tab">
                         <div class="col-lg-12">
                             <div class="authWrap authLogin">
                                 <h2 class="authTitle">My Personal Data</h2>
-                                <form class="woocommerce-form-login" action="#" >
+                                <form class="woocommerce-form-login" action="#">
                                     <div class="row">
                                         <div class="col-sm-12">
                                             <input placeholder="Full Name *" type="text" name="name"
@@ -87,7 +150,7 @@
                                                 name="confirm_password">
                                         </div>
                                         <div class="col-sm-12">
-                                            <button id="save-btn"  type="submit"
+                                            <button id="save-btn" type="submit"
                                                 class="woocommerce-button button woocommerce-form-login__submit mo_btn"
                                                 name="login" value="Log in">
                                                 <i class="icofont-user-alt-7"></i>Register Now
@@ -100,25 +163,60 @@
                     </div>
                 </div>
             </div>
-
-            <div id="my-modal" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
-                <div class="modal-dialog" role="document">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h5 class="modal-title">Edit Data</h5>
-                            <button id="save-btn"  type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                <span aria-hidden="true">&times;</span>
-                            </button>
-                        </div>
-                        <div class="modal-body">
-                            <form id="edit">
-                                <input class="form-control" type="text" name="">
-                            </form>
+        </div>
+        <div id="my-modal" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Edit Data</h5>
+                        <button id="save-btn" type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="col-lg-12">
+                            <div class="authWrap authLogin">
+                                <h2 class="authTitle">My Personal Data</h2>
+                                <form class="woocommerce-form-login" id="edit">
+                                    <div class="row">
+                                        <div class="col-sm-12">
+                                            <input placeholder="Nama *" id="name" type="text" name="nama"
+                                                value="">
+                                        </div>
+                                        <div class="col-sm-12">
+                                            <input placeholder="Email *" id="email" type="email" name="email"
+                                                value="">
+                                        </div>
+                                        <div class="col-sm-12">
+                                            <select name="jk" id="jk">
+                                                <option value="">Pilih Jenis Kelamin</option>
+                                                <option value="L">Laki-Laki</option>
+                                                <option value="W">Perempuan</option>
+                                            </select>
+                                        </div>
+                                        <div class="col-sm-12">
+                                            <input placeholder="Tanggal Lahir *" id="datepicker" type="date"
+                                                name="tgl" value="">
+                                        </div>
+                                        <div class="col-sm-12">
+                                            <input placeholder="No. HP *" id="hp" type="text" name="hp"
+                                                value="">
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-12">
+                                        <button id="save-btn" type="submit"
+                                            class="woocommerce-button button woocommerce-form-login__submit mo_btn"
+                                            name="login" value="Log in">
+                                            <i class="icofont-user-alt-7"></i>Submit
+                                        </button>
+                                    </div>
+                                </form>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
-
+        </div>
 
 
 
@@ -143,42 +241,63 @@
                 }
             });
 
-            $('#edit').submit(function(event) {
-                event.preventDefault(); // Prevent the default form submission
-                console.log("Submitting form via AJAX");
+            if ($("#editForm").length > 0) {
+                $("#editForm").validate({
+                    submitHandler: function(form) {
+                        var actionType = $('#save-btn').val();
+                        $('#save-btn').html('Menyimpan . .');
 
-                var data = $(this).serialize(); // Serialize the form data
+                        $.ajax({
+                            type: "POST",
+                            url: "{{ URL::to('/savebio') }}",
+                            data: $('#editForm').serialize(),
+                            dataType: 'json',
+                            success: function(data) {
+                                $('#editForm').trigger("reset");
+                                $('#my-modal').modal("hide");
+                                $('#save-btn').html('Simpan');
 
-                $.ajax({
-                    url: "{{ URL::to('/savebio') }}", // Use the form's action attribute dynamically
-                    method: 'POST', // Ensure it's POST for form submission
-                    data: data, // Send the serialized form data
-                    headers: headers,
-                    success: function(response) {
-                        console.log("Server Response: ", response);
-                        alert('Data updated successfully!');
-                    },
-                    error: function(error) {
-                        console.error("Error: ", error);
-                        alert('An error occurred while updating the data.');
+                                table.ajax.reload(null, false);
+                                Swal.fire({
+                                    title: "Berhsil!",
+                                    text: data.message,
+                                    icon: "success"
+                                });
+                            },
+                            error: function(data) {
+                                console.log('Error', data);
+                                $('#save-btn').html('Simpan');
+                            }
+                        });
                     }
-                });
-            });
+                })
+            }
 
+            function convertIndonesianDate(dateString) {
+                // Create a mapping of month names to numbers
+                const months = {
+                    "Januari": "01",
+                    "Februari": "02",
+                    "Maret": "03",
+                    "April": "04",
+                    "Mei": "05",
+                    "Juni": "06",
+                    "Juli": "07",
+                    "Agustus": "08",
+                    "September": "09",
+                    "Oktober": "10",
+                    "November": "11",
+                    "Desember": "12"
+                };
 
+                // Extract the day, month, and year from the string
+                let parts = dateString.split(", ")[1].split(" ");
+                let day = parts[0].padStart(2, '0'); // Ensure two-digit format
+                let month = months[parts[1]]; // Convert month name to number
+                let year = parts[2];
 
-
-
-
-
-
-
-
-
-
-
-
-
+                return `${year}-${month}-${day}`; // Return the formatted date
+            }
 
 
             // Function to update profile fields
@@ -207,131 +326,113 @@
                     console.error(`AJAX Error: ${status} - ${error}`);
                 }
             });
+            $('#edit-data').click(function() {
+                // Show the modal
+                $('#my-modal').modal('show');
 
+
+                $.ajax({
+                    url: `{{ URL::to('/profile') }}`,
+                    type: 'GET',
+                    success: function(response) {
+                        data = JSON.parse(response);
+                        // console.log(data);
+                        // Populate the form fields with the response data
+                        formattedDate = convertIndonesianDate(data.tgl);
+                        $('#name').val(data.nama);
+                        $('#email').val(data.email);
+
+                        if (data.jk == "Laki-laki") {
+                            $('#jk option[value="L"]').prop('selected', true);
+                        } else {
+                            $('#jk option[value="W"]').prop('selected', true);
+                        }
+                        // $('#jk').val();
+                        // $('#tgl').val(data.tgl);
+                        $('#datepicker').val(formattedDate);
+                        $('#hp').val(data.hp);
+                    },
+                    error: function(xhr, status, error) {
+                        console.error(`AJAX Error: ${status} - ${error}`);
+                    }
+                });
+            });
 
             // Add a click event listener to all "ubah" links
-            $('a[data-type]').on('click', function(event) {
-                event.preventDefault(); // Prevent default behavior
 
-                // Get the type from the data-type attribute
-                let type = $(this).data('type');
+            let provinceData = [];
 
-                // Extract the text content from the sibling <p> element
-                let textToSend = $(this).siblings('p').text().trim();
-                let actionUrl = `/savebio`;
-                // Set up the modal content based on the type
-                if (type === 'jk') {
-                    $('.modal-body').html(`
-                            <form id="edit">
-                                <select class="form-control" name="${type}">
-                                    <option value="P">Laki-Laki</option>
-                                    <option value="W">Perempuan</option>
-                                </select>
-                                <button id="save-btn"  type="submit" class="btn btn-primary">Save</button>
-                            </form>
-                        `);
-                } else if (type === 'tgl') {
-                    $('.modal-body').html(`
-                            <form id="edit">
-                                <input class="form-control" type="text" id="datepicker" name="${type}" value="${textToSend}">
-                                <button id="save-btn"  type="submit" class="btn btn-primary">Save</button>
-                            </form>
-                        `);
-                    // Initialize the date picker for the newly added input
-                    $('#datepicker').datetimepicker({
-                        format: 'Y-m-d',
-                        timepicker: false,
-                        maxDate: new Date(),
-                        yearStart: 1900,
-                        yearEnd: new Date().getFullYear()
-                    });
+            function fetchProvinces() {
+                $.ajax({
+                    url: "{{ URL::to('back/api/provinces') }}",
+                    dataType: "json",
+                    success: function(response) {
+                        if (response.success && Array.isArray(response.data)) {
+                            let $select = $('#provinces');
+
+                            // Clear existing options
+                            $select.empty();
+                            $select.append(
+                                `<option value="">--Pilih Provinsi--</option>`
+                            );
+                            // Append new options
+                            response.data.forEach(item => {
+                                $select.append(
+                                    `<option value="${item.province_id}">${item.province}</option>`
+                                );
+                            });
+
+                            // // Refresh Nice Select after updating options
+                            // $select.niceSelect('update');
+                        }
+                    },
+                    error: function(xhr, status, error) {
+                        console.error("AJAX Error:", status, error);
+                    }
+                });
+            }
+
+            function fetchCities(provinceId) {
+                $.ajax({
+                    url: `{{ URL::to('back/api/cities') }}/${provinceId}`, // Replace with your actual API route
+                    dataType: 'json',
+                    success: function(response) {
+                        let $citySelect = $('#citySelect'); // Target city dropdown
+                        $citySelect.empty(); // Clear previous options
+                        $citySelect.append(
+                            `<option value="">--Pilih Kab./Kota--</option>`
+                        );
+                        if (response.success && Array.isArray(response.data)) {
+                            response.data.forEach(city => {
+                                $citySelect.append(
+                                    `<option value="${city.city_id}">${city.city_name}</option>`
+                                );
+                            });
+
+                            $citySelect.niceSelect('update'); // Refresh Nice Select
+                        }
+                    },
+                    error: function(xhr, status, error) {
+                        console.error("AJAX Error:", status, error);
+                    }
+                });
+            }
+            // Run the function to fetch and populate the select box
+            fetchProvinces();
+
+            // Initially hide city select
+            $('#citySelectContainer').hide();
+
+            $('#provinces').on('change', function() {
+                let selectedProvinceId = $(this).val(); // Get selected province ID
+                // console.log(selectedProvinceId);
+                if (selectedProvinceId) {
+                    $('#citySelectContainer').show(); // Show city select when province is selected
+                    fetchCities(selectedProvinceId); // Load city options dynamically
                 } else {
-                    $('.modal-body').html(`
-                            <form id="edit">
-                                <input class="form-control" type="text" name="${type}" value="${textToSend}">
-                                <button id="save-btn"  type="submit" class="btn btn-primary">Save</button>
-                            </form>
-                        `);
+                    $('#citySelectContainer').hide(); // Hide if no province is selected
                 }
-
-                // Set the modal title dynamically
-                $('.modal-title').text(`Edit ${type}`);
-
-
             });
-            // let provinceData = [];
-
-            // function fetchProvinces() {
-            //     $.ajax({
-            //         url: "{{ URL::to('back/api/provinces') }}",
-            //         dataType: "json",
-            //         success: function(response) {
-            //             if (response.success && Array.isArray(response.data)) {
-            //                 let $select = $('#provinces');
-
-            //                 // Clear existing options
-            //                 $select.empty();
-            //                 $select.append(
-            //                     `<option value="">--Pilih Provinsi--</option>`
-            //                 );
-            //                 // Append new options
-            //                 response.data.forEach(item => {
-            //                     $select.append(
-            //                         `<option value="${item.province_id}">${item.province}</option>`
-            //                     );
-            //                 });
-
-            //                 // // Refresh Nice Select after updating options
-            //                 // $select.niceSelect('update');
-            //             }
-            //         },
-            //         error: function(xhr, status, error) {
-            //             console.error("AJAX Error:", status, error);
-            //         }
-            //     });
-            // }
-
-            // function fetchCities(provinceId) {
-            //     $.ajax({
-            //         url: `{{ URL::to('back/api/cities') }}/${provinceId}`, // Replace with your actual API route
-            //         dataType: 'json',
-            //         success: function(response) {
-            //             let $citySelect = $('#citySelect'); // Target city dropdown
-            //             $citySelect.empty(); // Clear previous options
-            //             $citySelect.append(
-            //                 `<option value="">--Pilih Kab./Kota--</option>`
-            //             );
-            //             if (response.success && Array.isArray(response.data)) {
-            //                 response.data.forEach(city => {
-            //                     $citySelect.append(
-            //                         `<option value="${city.city_id}">${city.city_name}</option>`
-            //                         );
-            //                 });
-
-            //                 $citySelect.niceSelect('update'); // Refresh Nice Select
-            //             }
-            //         },
-            //         error: function(xhr, status, error) {
-            //             console.error("AJAX Error:", status, error);
-            //         }
-            //     });
-            // }
-            // // Run the function to fetch and populate the select box
-            // fetchProvinces();
-
-            // // Initially hide city select
-            // $('#citySelectContainer').hide();
-
-            // $('#provinces').on('change', function() {
-            //     let selectedProvinceId = $(this).val(); // Get selected province ID
-            //     // console.log(selectedProvinceId);
-            //     if (selectedProvinceId) {
-            //         $('#citySelectContainer').show(); // Show city select when province is selected
-            //         fetchCities(selectedProvinceId); // Load city options dynamically
-            //     } else {
-            //         $('#citySelectContainer').hide(); // Hide if no province is selected
-            //     }
-            // });
         });
     </script>
 @endpush

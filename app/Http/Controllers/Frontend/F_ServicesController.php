@@ -24,4 +24,9 @@ class F_ServicesController
         // $users = User::all(); // Example: Retrieve data from the database
         return view('front.page.services.schedule');
     }
+    public function categories()
+    {
+        // $users = User::all(); // Example: Retrieve data from the database
+        return view('front.page.services.categories');
+    }
 }

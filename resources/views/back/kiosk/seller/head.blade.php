@@ -1,4 +1,4 @@
-<div class="container-xxl flex-grow-1 container-p-y">
+
     {{-- Breadcrumb --}}
     <div class="row">
         <div class="col-xl-12">
@@ -72,11 +72,13 @@
             <div class="nav-align-top">
                 <ul class="nav nav-pills flex-column flex-sm-row mb-6 gap-sm-0 gap-2">
                     <li class="nav-item">
-                        <a class="nav-link {{ $active == 'service' ? 'active' : '' }}" href="{{ URL::to('back/kiosku/service') }}"><i
+                        <a class="nav-link {{ $active == 'service' ? 'active' : '' }}"
+                            href="{{ URL::to('back/kiosku/service') }}"><i
                                 class="icon-base bx bx-archive icon-sm me-1_5"></i> Daftar Jasa</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link {{ $active == 'history-service' ? 'active' : '' }}" href="{{ URL::to('back/kiosku/service-history') }}"><i
+                        <a class="nav-link {{ $active == 'history-service' ? 'active' : '' }}"
+                            href="{{ URL::to('back/kiosku/service-history') }}"><i
                                 class="icon-base bx bxs-store-alt icon-sm me-1_5"></i> Riwayat Pesanan</a>
                     </li>
                 </ul>
@@ -87,33 +89,39 @@
 
     <!-- Large Modal -->
     <div class="modal fade" id="edit-kiosk" tabindex="-1" aria-hidden="true">
-        <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-dialog modal-xl" role="document">
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title" id="exampleModalLabel3">Perbarui Kiosk</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <form id="formTambahJasa">
+                    <form id="formTambahJasa" action="{{ URL::to('back/kiosku/about/update') }}" method="post">
+                        @csrf
                         <div class="col-md-12 mb-6">
-                            <label for="nameLarge" class="form-label">Nama Jasa</label>
-                            <input type="text" id="nameLarge" name="name" class="form-control" placeholder="Enter Name"
-                                value="{{ $kiosk->name ?? '' }}" required />
+                            <label for="nameLarge" class="form-label">Nama Kios</label>
+                            <input type="text" id="nameLarge" name="name" class="form-control"
+                                placeholder="Enter Name" value="{{ $kiosk->name ?? '' }}" required />
                         </div>
                         <div class="col-md-12 mb-6">
                             <label for="nameLarge" class="form-label">Phone</label>
-                            <input type="text" id="nameLarge" name="phone" class="form-control" placeholder="Enter Name"
-                                value="{{ $kiosk->phone ?? '' }}" required />
+                            <input type="text" id="nameLarge" name="phone" class="form-control"
+                                placeholder="Enter Name" value="{{ $kiosk->phone ?? '' }}" required />
                         </div>
                         <div class="col-md-12 mb-6">
                             <label for="nameLarge" class="form-label">Alamat</label>
-                            
                             <textarea name="address" class="form-control" id="">{{ $kiosk->address ?? '' }}</textarea>
+                        </div>
+                        <div class="col-md-12 mb-6">
+                            <label for="nameLarge" class="form-label">Deskripsi Kios</label>
+                            <textarea class="form-control" id="summernote" name="description" rows="10">{{ old('description') }}</textarea>
+                        </div>
+                        <div class="col-md-12 mb-4 text-end">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Tutup</button>
+                            <button type="submit" class="btn btn-primary">Simpan</button>
                         </div>
                     </form>
                 </div>
             </div>
         </div>
     </div>
-
-   

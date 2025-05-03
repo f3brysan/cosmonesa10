@@ -59,6 +59,8 @@ Route::group(['middleware' => ['auth', 'role:superadmin|pengelola']], function (
 Route::group(['middleware' => ['auth', 'role:seller']], function () {
     Route::get('kiosku/service', [B_KioskController::class, 'sellerService']);
     Route::get('kiosku/service-history', [B_KioskController::class, 'serviceHistory']);
+    Route::post('kiosku/about/update', [B_KioskController::class, 'aboutUpdate']);
+    
     
 });
 

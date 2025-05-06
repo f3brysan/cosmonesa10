@@ -2,13 +2,15 @@
 
 namespace App\Http\Controllers\Frontend;
 
-use App\Http\Controllers\Controller;
-
 use Illuminate\Http\Request;
+
+use App\Models\ServiceCategories;
+use App\Http\Controllers\Controller;
 
 class F_ServicesController
 {
     //
+
     public function index()
     {
         // $users = User::all(); // Example: Retrieve data from the database
@@ -28,5 +30,16 @@ class F_ServicesController
     {
         // $users = User::all(); // Example: Retrieve data from the database
         return view('front.page.services.categories');
+    }
+    public function getServiceCat()
+
+    {
+        // $users = User::all(); // Example: Retrieve data from the database
+        $categories = ServiceCategories::withCount('service')->get();
+        return response()->json([
+            'status' => true,
+            'message' => 'Berhasil',
+            'data' => $categories
+        ]);
     }
 }

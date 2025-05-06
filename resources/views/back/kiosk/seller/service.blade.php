@@ -37,7 +37,7 @@
                                             <td>{{ $service->name }}</td>
                                             <td>{{ $service->category->name }}</td>
                                             <td>{{ number_format($service->price, 0, '.', '.') }}</td>
-                                            <td><a href="javascript:void(0);" class="btn btn-sm btn-info">Edit"></a></td>
+                                            <td class="text-center"><a href="{{ URL::to('back/kiosku/service/edit/'.Crypt::encrypt($service->id)) }}" class="btn btn-sm btn-info">Edit</a></td>
                                     @endforeach
                                 </tbody>
                             </table>

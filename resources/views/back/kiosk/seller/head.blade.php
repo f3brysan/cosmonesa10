@@ -32,9 +32,9 @@
                                     class="list-inline mb-0 d-flex align-items-center flex-wrap justify-content-sm-start justify-content-center gap-4 mt-4">
                                     <li class="list-inline-item"><i
                                             class="icon-base bx bx-palette me-2 align-top"></i><span
-                                            class="fw-medium">081234567</span></li>
+                                            class="fw-medium">{{ $kiosk->phone ?? 'Belum diset' }}</span></li>
                                     <li class="list-inline-item"><i class="icon-base bx bx-map me-2 align-top"></i><span
-                                            class="fw-medium">Alamat</span></li>
+                                            class="fw-medium">{{ $kiosk->address ?? 'Belum diset' }}</span></li>
                                     <li class="list-inline-item"><i
                                             class="icon-base bx bx-calendar me-2 align-top"></i><span class="fw-medium">
                                             Since {{ Carbon\Carbon::parse($kiosk->created_at)->format('d F Y') }}</span>
@@ -114,7 +114,7 @@
                         </div>
                         <div class="col-md-12 mb-6">
                             <label for="nameLarge" class="form-label">Deskripsi Kios</label>
-                            <textarea class="form-control" id="summernote" name="description" rows="10">{{ old('description') }}</textarea>
+                            <textarea class="form-control" id="summernote" name="description" rows="10">{{ old('description', $kiosk->description) }}</textarea>
                         </div>
                         <div class="col-md-12 mb-4 text-end">
                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Tutup</button>

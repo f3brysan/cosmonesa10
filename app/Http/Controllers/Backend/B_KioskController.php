@@ -12,8 +12,26 @@ class B_KioskController extends Controller
 {
 
     public function aboutUpdate(Request $request)
-    {
-        dd($request->all());
+    {        
+        try {
+
+            $validated = $request->validate([
+                'name' => 'required|unique:kiosks|max:255',                
+            ]);
+
+            $kiosk = Kiosks::where('user_id', auth()->user()->id)->update([
+                'name' => $request->name,
+                'phone' => $request->phone,
+                'description' => $request->description,
+                'address' => $request->address,            
+            ]);
+
+            return redirect()->back()->with('success', 'Data Berhasil Disimpan');
+        } catch (\Throwable $th) {
+            return redirect()->back()->with('error', $th->getMessage());
+        }
+        
+        
     }
     public function sellerService()
     {

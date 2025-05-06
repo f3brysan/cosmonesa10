@@ -122,6 +122,39 @@
         integrity="sha512-b+nQTCdtTBIRIbraqNEwsjB6UvL3UEMkXnhzd8awtCYh0Kcsjl9uEgwVFVbhoj3uu1DO1ZMacNvLoyJJiNfcvg=="
         crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+    @if (session()->has('success'))
+        <script>
+            $(document).ready(function() {
+                Swal.fire({
+                    position: "top-end",
+                    icon: "success",
+                    title: "Success",
+                    text: "{{ session()->get('success') }}",
+                    showConfirmButton: false,
+                    timer: 1500
+                });
+            });
+        </script>
+    @endif
+
+    @if (session()->has('error'))
+        <script>
+            $(document).ready(function() {
+                Swal.fire({
+                    position: "top-end",
+                    icon: "warning",
+                    title: "Failed",
+                    text: "{{ session()->get('error') }}",
+                    showConfirmButton: false,
+                    timer: 1500
+                });
+            });
+        </script>
+    @endif
+
+
     @stack('js')
 </body>
 

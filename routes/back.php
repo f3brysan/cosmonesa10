@@ -61,6 +61,7 @@ Route::group(['middleware' => ['auth', 'role:seller']], function () {
     Route::get('kiosku/service-history', [B_KioskController::class, 'serviceHistory']);
     Route::post('kiosku/about/update', [B_KioskController::class, 'aboutUpdate']);
     
+    Route::get('kiosku/service/create', [B_ServiceController::class, 'create']);
     
 });
 

@@ -20,7 +20,7 @@
                                 class="icon-base bx bxs-user-detail icon-lg text-body me-4"></i>Daftar Jasa</h5>
                     </div>
                     <div class="card-body">
-                        <button class="btn btn-sm btn-primary mb-4" id="add-jasa">Tambah Jasa</button>
+                        <a href="{{ URL::to('back/kiosku/service/create') }}" class="btn btn-primary mb-4" id="add-jasa"><i class="icon-base bx bx-plus me-1"></i> Tambah Jasa</a>
                         <div class="table-responsive text-nowrap">
                             <table class="table table-bordered table-hover" id="myTable">
                                 <thead>
@@ -68,7 +68,8 @@
 
             $('#summernote').summernote({
                 height: 200,
-            });
+            });            
+
         });
 
         function editProfile() {

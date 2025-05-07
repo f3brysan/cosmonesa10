@@ -44,7 +44,6 @@ class B_ServiceController extends Controller
     public function store(Request $request)
     {
         try {
-
             $kiosk = Kiosks::where('user_id', auth()->user()->id)->first();
             $service = Services::updateOrCreate(
                 [
@@ -55,6 +54,7 @@ class B_ServiceController extends Controller
                     'category_id' => $request->category,
                     'name' => $request->title,
                     'description' => $request->detail,
+                    'is_active' => 1,
                     'price' => str_replace('.', '', $request->price),
                 ]
             );
@@ -63,6 +63,38 @@ class B_ServiceController extends Controller
 
         } catch (\Throwable $th) {
             return redirect()->back()->with('error', $th->getMessage());
+        }
+    }
+
+    /**
+     * Deletes a service.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function destroy(Request $request)
+    {
+        try {
+            // Decrypt the ID from the request
+            $id = Crypt::decrypt($request->id);
+
+            // Update the service by setting its is_active property to 0
+            $service = Services::where('id', $id)->update([
+                'is_active' => 0
+            ]);
+
+            // Return a success response
+            return response()->json([
+                'status' => 'success',
+                'message' => 'Data berhasil dihapus'
+            ]);
+
+        } catch (\Throwable $th) {
+            // Return an error response if an exception occurs
+            return response()->json([
+                'status' => 'error',
+                'message' => $th->getMessage()
+            ]);
         }
     }
 }

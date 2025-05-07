@@ -54,7 +54,7 @@ class B_ServiceController extends Controller
                     'kiosk_id' => $kiosk->id,
                     'category_id' => $request->category,
                     'name' => $request->title,
-                    'description' => $request->description,
+                    'description' => $request->detail,
                     'price' => str_replace('.', '', $request->price),
                 ]
             );

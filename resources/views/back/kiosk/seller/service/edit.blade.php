@@ -29,16 +29,16 @@
             <div class="col-xl-12 mb-6">
                 <div class="card">
                     <div class="card-header">
-                        <h5>Tambah Jasa Baru</h5>
+                        <h5>Edit Jasa {{ $service->name }}</h5>
                     </div>
                     <form action="{{ URL('back/kiosku/service/store') }}" enctype="multipart/form-data" method="POST">
                         @csrf
-                        <input type="hidden" name="id" id="id">
+                        <input type="hidden" name="id" id="id" value="{{ $service->id }}">
                         <div class="card-body">
                             <div class="mb-4">
                                 <label for="exampleFormControlInput1" class="form-label">Nama Jasa</label>
                                 <input type="text" class="form-control" id="title" name="title" required
-                                    value="{{ old('title') }}" />
+                                    value="{{ old('title', $service->name) }}" />
                             </div>
                             <div class="mb-4">
                                 <label for="exampleFormControlInput1" class="form-label">Kategori Jasa</label>
@@ -46,22 +46,22 @@
                                     required>
                                     <option value="">Silahkan Pilih</option>
                                     @foreach ($categories as $item)
-                                        <option value="{{ $item->id }}">{{ ucfirst($item->name) }}</option>
+                                        <option value="{{ $item->id }}" {{ $item->id == old('category', $service->category_id) ? 'selected' : '' }}>{{ ucfirst($item->name) }}</option>
                                     @endforeach
                                 </select>
                             </div>
                             <div class="mb-4">
                                 <label for="exampleFormControlTextarea1" class="form-label">Deskripsi</label>
-                                <textarea class="form-control" id="summernote" name="detail" rows="10">{{ old('detail') }}</textarea>
+                                <textarea class="form-control" id="summernote" name="detail" rows="10">{!! old('detail', $service->description) !!}</textarea>
                             </div>
                             <div class="mb-4">
                                 <label for="exampleFormControlTextarea1" class="form-label">Harga</label>
                                 <input type="text" class="form-control" id="price" name="price" required
-                                    value="{{ old('price') }}" />
+                                    value="{{ old('price', number_format($service->price, 0)) }}" />
                             </div>
                             <div class="mb-6">
                                 <button type="submit" class="btn btn-primary float-end m-1">Simpan</button>
-                                <a href="{{ URL::to('back/workshop') }}"
+                                <a href="{{ URL::to('back/back/kiosku/service') }}"
                                     class="btn btn-secondary float-end mb-6 m-1">Kembali</a>
                             </div>
                     </form>

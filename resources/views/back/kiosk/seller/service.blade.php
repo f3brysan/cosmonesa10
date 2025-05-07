@@ -43,10 +43,15 @@
                                             <td>{{ $service->category->name }}</td>
                                             <td>{{ number_format($service->price, 0, '.', '.') }}</td>
                                             <td class="text-center">
+                                                @if ($service->is_active == 1)
                                                 <a href="{{ URL::to('back/kiosku/service/edit/' . Crypt::encrypt($service->id)) }}"
                                                     class="btn btn-sm btn-info">Edit</a>
                                                 <a href="javascript:void(0)" class="btn btn-sm btn-danger"
-                                                    onclick="deleteService('{{ Crypt::encrypt($service->id) }}', '{{ $service->name }}')">Delete</a>
+                                                    onclick="deleteService('{{ Crypt::encrypt($service->id) }}', '{{ $service->name }}','{{ $service->is_active }}')">Delete</a>
+                                                @else
+                                                <a href="javascript:void(0)" class="btn btn-sm btn-primary"
+                                                    onclick="deleteService('{{ Crypt::encrypt($service->id) }}', '{{ $service->name }}','{{ $service->is_active }}')">Restore</a>
+                                                @endif                                                
                                             </td>
                                     @endforeach
                                 </tbody>
@@ -88,7 +93,12 @@
                 });
         }
 
-        function deleteService(id, name) {
+        function deleteService(id, name, status) {
+            if (status == 1) {
+                var statustxt = 'deleted';
+            } else {
+                var statustxt = 'restored';
+            }
             Swal.fire({
                 title: "Are you sure?",
                 text: "You won't be able to revert this!",
@@ -96,7 +106,7 @@
                 showCancelButton: true,
                 confirmButtonColor: "#3085d6",
                 cancelButtonColor: "#d33",
-                confirmButtonText: "Yes, delete it!"
+                confirmButtonText: "Yes, " + statustxt + " it!"
             }).then((result) => {
                 if (result.isConfirmed) {
                     $.ajax({
@@ -105,6 +115,7 @@
                         data: {
                             id: id,
                             name: name,
+                            status: status,
                             _token: "{{ csrf_token() }}"
 
                         },
@@ -112,7 +123,7 @@
                         success: function(response) {                                                    
                             Swal.fire({
                                 title: "Deleted!",
-                                text: "Your file has been deleted.",
+                                text: "Your service has been "+statustxt+".",
                                 icon: "success"
                             });
 

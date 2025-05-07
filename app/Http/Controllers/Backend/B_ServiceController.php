@@ -67,7 +67,9 @@ class B_ServiceController extends Controller
     }
 
     /**
-     * Deletes a service.
+     * Deletes or restores a service by toggling its active status.
+     *
+     * If the service is active, it will be set to inactive, and vice versa.
      *
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
@@ -77,16 +79,19 @@ class B_ServiceController extends Controller
         try {
             // Decrypt the ID from the request
             $id = Crypt::decrypt($request->id);
-
-            // Update the service by setting its is_active property to 0
+            
+            // Determine the new status based on the current status
+            $statusUpdating = $request->status == 1 ? 0 : 1;
+            
+            // Update the service by toggling its is_active property
             $service = Services::where('id', $id)->update([
-                'is_active' => 0
+                'is_active' => $statusUpdating
             ]);
 
             // Return a success response
             return response()->json([
                 'status' => 'success',
-                'message' => 'Data berhasil dihapus'
+                'message' => 'Service status updated successfully'
             ]);
 
         } catch (\Throwable $th) {

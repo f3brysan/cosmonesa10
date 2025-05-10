@@ -1,16 +1,17 @@
 <?php
 
-use App\Http\Controllers\API\ApiRajaOngkirController;
-use App\Http\Controllers\Backend\B_DashboardController;
+
+use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Backend\B_EventController;
 use App\Http\Controllers\Backend\B_KioskController;
-use App\Http\Controllers\Backend\B_ProductCategoryController;
-use App\Http\Controllers\Backend\B_ProductController;
-use App\Http\Controllers\Backend\B_ServiceCategoryController;
-use App\Http\Controllers\Backend\B_ServiceController;
 use App\Http\Controllers\Backend\B_UsersController;
+use App\Http\Controllers\API\APIRajaOngkirController;
+use App\Http\Controllers\Backend\B_ProductController;
+use App\Http\Controllers\Backend\B_ServiceController;
+use App\Http\Controllers\Backend\B_DashboardController;
 use App\Http\Controllers\Backend\B_UserSettingsController;
-use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Backend\B_ProductCategoryController;
+use App\Http\Controllers\Backend\B_ServiceCategoryController;
 
 Route::get('/', function () {
     return view('welcome');

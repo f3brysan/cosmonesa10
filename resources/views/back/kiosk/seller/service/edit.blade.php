@@ -61,7 +61,7 @@
                             </div>
                             <div class="mb-6">
                                 <button type="submit" class="btn btn-primary float-end m-1">Simpan</button>
-                                <a href="{{ URL::to('back/back/kiosku/service') }}"
+                                <a href="{{ URL::to('back/kiosku/service') }}"
                                     class="btn btn-secondary float-end mb-6 m-1">Kembali</a>
                             </div>
                     </form>

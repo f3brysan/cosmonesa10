@@ -16,16 +16,23 @@ class B_KioskController extends Controller
     {
         $kiosk = Kiosks::where('user_id', auth()->user()->id)->first();
         $days = ['monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday', 'sunday'];
+        $activeDays = KioskActiveDay::where('kiosk_id', $kiosk->id)->get()->keyBy('day');
 
         return [
             'kiosk' => $kiosk,
             'days' => $days,
+            'activeDays' => $activeDays
         ];
     }
-    
+    /**
+     * Update the kiosk about information
+     *
+     * @param Request $request
+     * @return \Illuminate\Http\RedirectResponse
+     */
     public function aboutUpdate(Request $request)
     {
-        try {            
+        try {
             // Get the kiosk details
             $kiosk = Kiosks::where('user_id', auth()->user()->id)->first();
 
@@ -50,14 +57,13 @@ class B_KioskController extends Controller
 
             // Save the active days
             if (count($request->days) > 0) {
+                // First delete all the active days of the kiosk
+                $resetActiveDays = KioskActiveDay::where('kiosk_id', $kiosk->id)->delete();
+
                 // Loop through the days and save it
                 foreach ($request->days as $key => $value) {
                     // Check if the day already exist
-                    $insertDays = KioskActiveDay::updateOrCreate(
-                        [
-                            'kiosk_id' => $kiosk->id,
-                            'day' => $value,
-                        ],
+                    $insertDays = KioskActiveDay::create(
                         [
                             'kiosk_id' => $kiosk->id,
                             'day' => $value,
@@ -82,11 +88,12 @@ class B_KioskController extends Controller
     {
         $kiosk = $this->kioskDetail()['kiosk'];
         $days = $this->kioskDetail()['days'];
+        $activeDays = $this->kioskDetail()['activeDays'];
         $services = Services::with('category')->where('kiosk_id', $kiosk->id)->get();
         $user = User::find(auth()->user()->id);
         $active = 'service';
 
-        return view('back.kiosk.seller.service', compact('kiosk', 'user', 'services', 'active', 'days'));
+        return view('back.kiosk.seller.service', compact('kiosk', 'user', 'services', 'active', 'days', 'activeDays'));
     }
 
     public function serviceHistory()

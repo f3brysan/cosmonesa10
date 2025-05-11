@@ -18,7 +18,7 @@
                         <li class="breadcrumb-item">
                             <a href="{{ URL::to('back/kiosku/service') }}">Kiosku</a>
                         </li>
-                        <li class="breadcrumb-item active">Data Jasa Baru</li>
+                        <li class="breadcrumb-item active">Edit Jasa</li>
                     </ol>
                 </nav>
             </div>

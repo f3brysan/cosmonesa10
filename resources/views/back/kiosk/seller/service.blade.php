@@ -44,14 +44,16 @@
                                             <td>{{ number_format($service->price, 0, '.', '.') }}</td>
                                             <td class="text-center">
                                                 @if ($service->is_active == 1)
-                                                <a href="{{ URL::to('back/kiosku/service/edit/' . Crypt::encrypt($service->id)) }}"
-                                                    class="btn btn-sm btn-info">Edit</a>
-                                                <a href="javascript:void(0)" class="btn btn-sm btn-danger"
-                                                    onclick="deleteService('{{ Crypt::encrypt($service->id) }}', '{{ $service->name }}','{{ $service->is_active }}')">Delete</a>
+                                                    <a href="{{ URL::to('back/kiosku/service/edit/' . Crypt::encrypt($service->id)) }}"
+                                                        class="btn btn-sm btn-info">Edit</a>
+                                                    <a href="{{ URL::to('back/kiosku/service/set-slot/' . Crypt::encrypt($service->id)) }}" target="_blank"
+                                                        class="btn btn-sm btn-primary">Set Slot</a>
+                                                    <a href="javascript:void(0)" class="btn btn-sm btn-danger"
+                                                        onclick="deleteService('{{ Crypt::encrypt($service->id) }}', '{{ $service->name }}','{{ $service->is_active }}')">Delete</a>
                                                 @else
-                                                <a href="javascript:void(0)" class="btn btn-sm btn-primary"
-                                                    onclick="deleteService('{{ Crypt::encrypt($service->id) }}', '{{ $service->name }}','{{ $service->is_active }}')">Restore</a>
-                                                @endif                                                
+                                                    <a href="javascript:void(0)" class="btn btn-sm btn-primary"
+                                                        onclick="deleteService('{{ Crypt::encrypt($service->id) }}', '{{ $service->name }}','{{ $service->is_active }}')">Restore</a>
+                                                @endif
                                             </td>
                                     @endforeach
                                 </tbody>
@@ -120,10 +122,10 @@
 
                         },
                         dataType: "JSON",
-                        success: function(response) {                                                    
+                        success: function(response) {
                             Swal.fire({
                                 title: "Deleted!",
-                                text: "Your service has been "+statustxt+".",
+                                text: "Your service has been " + statustxt + ".",
                                 icon: "success"
                             });
 

@@ -66,6 +66,17 @@ class B_ServiceController extends Controller
         }
     }
 
+    public function setSlot($id) 
+    {
+      try {
+        $id = Crypt::decrypt($id);
+        $service = Services::with('category')->where('id', $id)->first();
+        return view('back.kiosk.seller.service.slot', compact('service'));
+      } catch (\Throwable $th) {
+        abort(404);
+      }  
+    }
+
     /**
      * Deletes or restores a service by toggling its active status.
      *

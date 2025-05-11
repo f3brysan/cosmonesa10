@@ -7,6 +7,7 @@ use App\Models\User;
 use App\Models\UserProfiles;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
 
 
 class F_AccountController extends Controller
@@ -21,8 +22,10 @@ class F_AccountController extends Controller
     public function profile()
     {
         try {
-            // Get the authenticated user
-            $userAuth = auth()->user();
+            // // Get the authenticated user
+            $userAuth = Auth::user(); // or
+            // $userAuth = auth()->user();
+
             if (!$userAuth) {
                 return redirect()->route('login');
             }
@@ -35,13 +38,20 @@ class F_AccountController extends Controller
             Carbon::setLocale('id'); // Set locale to Indonesian
             $date = Carbon::createFromFormat('Y-m-d',  $profile->dob);
             $tgl = $date->translatedFormat('l, j F Y');
-            return json_encode([
+            $data = [
                 'id' => $userAuth->id,
                 'nama' => $user->name,
                 'email' => $user->email,
                 'jk' =>  $gender ?? '',
                 'tgl' => $tgl  ?? '',
                 'hp' => $profile->hp ?? ''
+            ];
+
+            return response()->json([
+                'status' => true,
+                'message' => 'Berhasil',
+                'data' => $user
+
             ]);
         } catch (\Throwable $th) {
             abort(404);

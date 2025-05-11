@@ -8,7 +8,7 @@
         <li><a href="contact.html">Contact</a></li>
         @if (Auth::check())
         <li class="menu-item-has-children">
-            <a href="javascript:void(0);">Account</a>
+            <a href="javascript:void(0);">{{ Auth::user()->name }}</a>
             <ul class="sub-menu">
                 <li><a href="/account">My Account</a></li>
                 <li><a href="{{ URL::to('logout') }}">Logout</a></li>

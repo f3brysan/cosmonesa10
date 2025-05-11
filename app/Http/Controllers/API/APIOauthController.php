@@ -5,6 +5,7 @@ namespace App\Http\Controllers\API;
 use App\Models\User;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Models\UserProfiles;
 use Illuminate\Support\Facades\Auth;
 use Laravel\Socialite\Facades\Socialite;
 
@@ -63,6 +64,11 @@ class APIOauthController extends Controller
                     'gauth_id' => $user->id,
                     'gauth_type' => 'google',                    
                     'password' => bcrypt($password),
+                ]);
+
+                // Create a new user profile for the newly registered user
+                $userProfile = UserProfiles::create([
+                    'id' => $newUser->id,
                 ]);
 
                 // Assign the customer role to the new user

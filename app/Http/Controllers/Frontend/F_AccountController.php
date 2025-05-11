@@ -19,41 +19,55 @@ class F_AccountController extends Controller
         // $users = User::all(); // Example: Retrieve data from the database
         return view('front.page.account.index');
     }
+    /**
+     * Display the authenticated user's profile in JSON format.
+     *
+     * This method retrieves the authenticated user's profile information, 
+     * including name, email, gender, date of birth, and phone number, and 
+     * returns it as a JSON response.
+     *
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function profile()
     {
         try {
-            // // Get the authenticated user
-            $userAuth = Auth::user(); // or
-            // $userAuth = auth()->user();
+            // Get the authenticated user
+            $userAuth = auth()->user();
 
+            // Redirect to login if user is not authenticated
             if (!$userAuth) {
                 return redirect()->route('login');
             }
-            // Get the user profile from the database
+
+            // Retrieve user and profile information from the database
             $user = User::find($userAuth->id);
             $profile = UserProfiles::find($userAuth->id);
-            $gender = $profile->gender == 'L' ? 'Laki-laki' : 'Perempuan'; //
-            // Get the user from the database
 
-            Carbon::setLocale('id'); // Set locale to Indonesian
-            $date = Carbon::createFromFormat('Y-m-d',  $profile->dob);
-            $tgl = $date->translatedFormat('l, j F Y');
+            // Determine gender in Indonesian
+            $gender = $profile->gender == 'L' ? 'Laki-laki' : 'Perempuan';
+
+            // Set locale for Carbon to Indonesian and format date of birth
+            Carbon::setLocale('id');
+            $date = $profile->dob ? Carbon::createFromFormat('Y-m-d', $profile->dob)->translatedFormat('l, j F Y') : '';
+
+            // Prepare data array for JSON response
             $data = [
                 'id' => $userAuth->id,
                 'nama' => $user->name,
                 'email' => $user->email,
-                'jk' =>  $gender ?? '',
-                'tgl' => $tgl  ?? '',
+                'jk' => $gender ?? '',
+                'tgl' => $date ?? '',
                 'hp' => $profile->hp ?? ''
             ];
 
+            // Return success response with user profile data
             return response()->json([
                 'status' => true,
                 'message' => 'Berhasil',
-                'data' => $user
-
+                'data' => $data
             ]);
         } catch (\Throwable $th) {
+            // Handle exceptions by returning a 404 error
             abort(404);
         }
     }

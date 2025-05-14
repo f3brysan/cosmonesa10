@@ -113,18 +113,7 @@
                     <div class="col-md-12 mb-6">
                         <label for="nameLarge" class="form-label">Deskripsi Kios</label>
                         <textarea class="form-control" id="summernote" name="description" rows="10">{{ old('description', $kiosk->description) }}</textarea>
-                    </div>
-                    <div class="col-md-12 mb-6">
-                        <label for="nameLarge" class="form-label">Hari Aktif</label>
-                        @foreach ($days as $day)
-                        <div class="form-check">
-                            <input class="form-check-input" type="checkbox" id="days_{{ $day }}" name="days[]" value="{{ $day }}" {{ !empty($activeDays[$day]) ? 'checked' : '' }}>
-                            <label class="form-check-label" for="days_{{ $day }}">
-                                {{ strtoupper($day) }}
-                            </label>
-                        </div>
-                        @endforeach
-                    </div>
+                    </div>                    
                     <div class="col-md-12 mb-4 text-end">
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Tutup</button>
                         <button type="submit" class="btn btn-primary">Simpan</button>

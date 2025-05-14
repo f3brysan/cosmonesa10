@@ -14,14 +14,10 @@ class B_KioskController extends Controller
 {
     public function kioskDetail()
     {
-        $kiosk = Kiosks::where('user_id', auth()->user()->id)->first();
-        $days = ['monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday', 'sunday'];
-        $activeDays = KioskActiveDay::where('kiosk_id', $kiosk->id)->get()->keyBy('day');
+        $kiosk = Kiosks::where('user_id', auth()->user()->id)->first();      
 
         return [
-            'kiosk' => $kiosk,
-            'days' => $days,
-            'activeDays' => $activeDays
+            'kiosk' => $kiosk,           
         ];
     }
     /**
@@ -55,23 +51,6 @@ class B_KioskController extends Controller
                 'address' => $request->address,
             ]);
 
-            // Save the active days
-            if (count($request->days) > 0) {
-                // First delete all the active days of the kiosk
-                $resetActiveDays = KioskActiveDay::where('kiosk_id', $kiosk->id)->delete();
-
-                // Loop through the days and save it
-                foreach ($request->days as $key => $value) {
-                    // Check if the day already exist
-                    $insertDays = KioskActiveDay::create(
-                        [
-                            'kiosk_id' => $kiosk->id,
-                            'day' => $value,
-                        ]
-                    );
-                }
-            }
-
             // Commit the transaction
             DB::commit();
 
@@ -86,14 +65,12 @@ class B_KioskController extends Controller
     }
     public function sellerService()
     {
-        $kiosk = $this->kioskDetail()['kiosk'];
-        $days = $this->kioskDetail()['days'];
-        $activeDays = $this->kioskDetail()['activeDays'];
+        $kiosk = $this->kioskDetail()['kiosk'];       
         $services = Services::with('category')->where('kiosk_id', $kiosk->id)->get();
         $user = User::find(auth()->user()->id);
         $active = 'service';
 
-        return view('back.kiosk.seller.service', compact('kiosk', 'user', 'services', 'active', 'days', 'activeDays'));
+        return view('back.kiosk.seller.service', compact('kiosk', 'user', 'services', 'active'));
     }
 
     public function serviceHistory()

@@ -1,8 +1,9 @@
 @extends('back.layouts.master')
-@section('title', 'Tambah Jasa Baru')
+@section('title', 'Tambah Slot Baru Jasa ' . $service->name)
 
 @push('css')
-    <link href="https://cdn.jsdelivr.net/npm/summernote@0.9.0/dist/summernote.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.datatables.net/2.2.2/css/dataTables.dataTables.css" />
+    <link rel="stylesheet" href="https://cdn.datatables.net/responsive/3.0.4/css/responsive.bootstrap5.css">
 @endpush
 
 @section('content')
@@ -32,45 +33,71 @@
                         <h5>Tambah Slot Jasa {{ $service->name }}</h5>
                     </div>
                     <div class="card-body">
-
+                        <div class="row">
+                            <div class="col-md-12 mb-6">
+                                <a href="javascript:void(0);" class="btn btn-primary" id="tambah-btn"><i
+                                        class="icon-base bx bx-plus me-1"></i> Tambah</a>
+                            </div>
+                        </div>
+                        <div class="card-datatable">
+                            <table id="myTable" class="datatables-basic table table-bordered table-responsive">
+                                <thead>
+                                    <tr>
+                                        <th class="text-center">Hari</th>
+                                        <th class="text-center">Jam</th>
+                                        <th class="text-center">Aksi</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                </tbody>
+                            </table>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-    </div>
 @endsection
 
 @push('js')
     <script src="https://code.jquery.com/jquery-3.7.1.js"></script>
-    {{-- Swal --}}
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-    {{-- Summernote --}}
-    <script src="https://cdn.jsdelivr.net/npm/summernote@0.9.0/dist/summernote.min.js"></script>
-    {{-- Mask --}}
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.16/jquery.mask.js"
-        integrity="sha512-0XDfGxFliYJPFrideYOoxdgNIvrwGTLnmK20xZbCAvPfLGQMzHUsaqZK8ZoH+luXGRxTrS46+Aq400nCnAT0/w=="
-        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-
-    <!-- Styles -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/select2@4.0.13/dist/css/select2.min.css" />
-    <link rel="stylesheet"
-        href="https://cdn.jsdelivr.net/npm/select2-bootstrap-5-theme@1.3.0/dist/select2-bootstrap-5-theme.min.css" />
-    <!-- Scripts -->
-    <script src="https://cdn.jsdelivr.net/npm/select2@4.0.13/dist/js/select2.full.min.js"></script>
+    <script src="https://cdn.datatables.net/2.2.2/js/dataTables.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/jquery-validation@1.19.5/dist/jquery.validate.js"></script>
+    <script src="https://cdn.datatables.net/responsive/3.0.4/js/dataTables.responsive.js"></script>
+    <script src="https://cdn.datatables.net/responsive/3.0.4/js/responsive.bootstrap5.js"></script>
 
     <script>
         $(document).ready(function() {
-            $('#summernote').summernote({
-                height: 200,
-            });
+            
 
-            $('#price').mask('000.000.000.000.000', {
-                reverse: true
-            });
+            table = $('#myTable').DataTable({
+                responsive: true,
+                processing: true,
+                serverSide: true, //aktifkan server-side 
+                ajax: {
+                    url: "{{ URL::to('back/kiosku/service/set-slot/'.Crypt::encrypt($service->id).'') }}",
+                    type: 'GET'
+                },
+                columns: [{
+                        data: 'day',
+                        name: 'day',
+                    },
 
-            $('.js-example-basic-single').select2({
-                theme: 'bootstrap-5'
+                    {
+                        data: 'active_hours',
+                        name: 'active_hours',
+                    },
+                    {
+                        data: 'action',
+                        name: 'action',
+                        orderable: false,
+                        searchable: false,
+                        className: 'text-center'
+                    },
+                ],
+                order: [
+                    [0, 'asc']
+                ]
             });
         });
     </script>

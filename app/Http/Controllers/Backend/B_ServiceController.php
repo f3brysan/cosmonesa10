@@ -4,7 +4,9 @@ namespace App\Http\Controllers\Backend;
 
 use App\Models\Kiosks;
 use App\Models\Services;
+use App\Models\ServiceSlot;
 use Illuminate\Http\Request;
+use Yajra\DataTables\DataTables;
 use App\Models\ServiceCategories;
 use Illuminate\Support\Facades\URL;
 use App\Http\Controllers\Controller;
@@ -66,12 +68,38 @@ class B_ServiceController extends Controller
         }
     }
 
-    public function setSlot($id) 
+    public function setSlot(Request $request, $id) 
     {
       try {
         $id = Crypt::decrypt($id);
         $service = Services::with('category')->where('id', $id)->first();
-        return view('back.kiosk.seller.service.slot', compact('service'));
+        $slots = ServiceSlot::where('service_id', $service->id)->get();
+        
+        if ($request->ajax()) {
+                return DataTables::of($slots)
+                    ->addIndexColumn()
+                    ->editColumn('day', function ($item) {
+                        return ucfirst($item->day);
+                    })
+                    ->addColumn('active_hours', function ($item) {
+                        return date('H:i', strtotime($item->start_at)) . ' - ' . date('H:i', strtotime($item->end_at));
+                    })
+                    ->addColumn('action', function ($item) {
+                        // Generate action buttons for each event
+                        $btn = '<button type="button" class="btn p-0 dropdown-toggle hide-arrow" data-bs-toggle="dropdown"><i class="icon-base bx bx-dots-vertical-rounded"></i></button>
+                    <div class="dropdown-menu">
+                      <a class="dropdown-item" href="' . URL::to('back/product/detail/' . $item->slug) . '"><i class="icon-base bx bx-show me-1"></i> Detil</a>
+                      <a class="dropdown-item" target="_blank" href="' . URL::to('back/product/edit/' . Crypt::encrypt($item->id) . '') . '"><i class="icon-base bx bx-edit-alt me-1"></i> Ubah</a>
+                      <a class="dropdown-item destroy" data-id="' . Crypt::encrypt($item->id) . '" href="javascript:void(0);" ><i class="icon-base bx bx-trash me-1"></i> Hapus</a>
+                    </div>
+                  </div>';
+                        return $btn;
+                    })
+                    ->rawColumns(['action', 'active_hours'])
+                    ->make(true);
+            }
+
+        return view('back.kiosk.seller.service.slot', compact('service', 'slots'));
       } catch (\Throwable $th) {
         abort(404);
       }  

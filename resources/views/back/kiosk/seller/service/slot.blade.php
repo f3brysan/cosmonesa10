@@ -82,11 +82,11 @@
                         </div>
                         <div class="mb-4">
                             <label for="exampleFormControlInput1" class="form-label">Start At</label>
-                            <input type="text" class="timepicker form-control" name="start_at" id="start_at"/>
+                            <input type="text" class="timepicker form-control" name="start_at" id="start_at" />
                         </div>
                         <div class="mb-4">
                             <label for="exampleFormControlInput1" class="form-label">End At</label>
-                            <input type="text" class="timepicker form-control" name="end_at" id="end_at"/>
+                            <input type="text" class="timepicker form-control" name="end_at" id="end_at" />
                         </div>
                     </div>
                     <div class="modal-footer">
@@ -168,20 +168,21 @@
             });
 
             $("#tambah-btn").click(function() {
+                $('#crudForm').trigger("reset");
                 $("#crudModal").modal('show');
                 $("#crudModalLabel").html('Tambah Slot');
             });
 
-            $(document).on('click', '.edit', function () {
+            $(document).on('click', '.edit', function() {
                 var id = $(this).data('id');
                 $.get("{{ URL::to('back/kiosku/service/edit-slot') }}/" + id,
-                    function (data, textStatus, jqXHR) {                        
+                    function(data, textStatus, jqXHR) {
                         $("#crudModal").modal('show');
                         $("#crudModalLabel").html('Edit Slot');
                         $("#id").val(data.data.id);
                         $("#day").val(data.data.day);
                         $("#start_at").val(data.data.start_at);
-                        $("#end_at").val(data.data.end_at);                        
+                        $("#end_at").val(data.data.end_at);
                     });
             });
 

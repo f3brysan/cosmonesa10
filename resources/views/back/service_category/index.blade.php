@@ -137,6 +137,7 @@
             });
 
             $("#tambah-btn").click(function() {
+                $('#crudForm').trigger("reset");
                 $("#crudModal").modal('show');
                 $("#crudModalLabel").html('Tambah Kategori Produk');
             });

@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Frontend;
 
 use Carbon\Carbon;
 use App\Models\User;
+use App\Models\Address;
 use App\Models\UserProfiles;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -22,8 +23,8 @@ class F_AccountController extends Controller
     /**
      * Display the authenticated user's profile in JSON format.
      *
-     * This method retrieves the authenticated user's profile information, 
-     * including name, email, gender, date of birth, and phone number, and 
+     * This method retrieves the authenticated user's profile information,
+     * including name, email, gender, date of birth, and phone number, and
      * returns it as a JSON response.
      *
      * @return \Illuminate\Http\JsonResponse
@@ -61,6 +62,7 @@ class F_AccountController extends Controller
             ];
 
             // Return success response with user profile data
+
             return response()->json([
                 'status' => true,
                 'message' => 'Berhasil',
@@ -71,6 +73,29 @@ class F_AccountController extends Controller
             abort(404);
         }
     }
+    public function get_address()
+
+    {
+        try {
+            $userAuth = auth()->user();
+            $data = Address::find($userAuth->id);
+
+            return response()->json([
+                'status' => true,
+                'message' => 'Berhasil',
+                'data' => $data
+            ]);
+        } catch (\Throwable $th) {
+            // Handle exceptions by returning a 404 error
+            abort(404);
+        }
+    }
+    public function save_address(Request $request)
+    {
+        $data = $request->all();
+        return response()->json($data);
+    }
+
     public function save(Request $request)
     {
         // $data = $request->all();
@@ -89,11 +114,12 @@ class F_AccountController extends Controller
             }            // // Get user and profile data
             // $user = User::find($userAuth->id);
             // $profile = UserProfiles::find($userAuth->id);
+
             User::updateOrCreate([
                 'id' => $userAuth->id
             ], [
-                'name' => $request->input('name'),
-                'email' => $request->input('email')
+                'name' => $request->input('nama'),
+                // 'email' => $request->input('email')
             ]);
             UserProfiles::updateOrCreate([
                 'id' => $userAuth->id
@@ -102,6 +128,8 @@ class F_AccountController extends Controller
                 'dob' => $request->input('tgl'),
                 'hp' => $request->input('hp')
             ]);
+
+
             // Respond with success
             return response()->json([
                 'status' => 'success',

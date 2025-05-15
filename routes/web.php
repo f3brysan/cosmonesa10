@@ -24,7 +24,10 @@ Route::get('/', [F_DashboardController::class, 'index']);
 //account page
 Route::get('/account', [F_AccountController::class, 'index']);
 Route::get('/profile', [F_AccountController::class, 'profile']);
+Route::get('/address', [F_AccountController::class, 'get_address']);
 Route::post('/savebio', [F_AccountController::class, 'save']);
+Route::post('/saveaddress', [F_AccountController::class, 'save_address']);
+
 // Route::post('/savebio', [F_AccountController::class, 'save'])->name('savebio');
 
 

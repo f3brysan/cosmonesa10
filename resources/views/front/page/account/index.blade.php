@@ -7,6 +7,17 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/css/select2.min.css" rel="stylesheet" />
 @endpush
 @section('body')
+    {{-- <style>
+        #kodepos::-webkit-outer-spin-button,
+        #kodepos::-webkit-inner-spin-button {
+            -webkit-appearance: none !important;
+            margin: 0 !important;
+        }
+
+        #kodepos {
+            -moz-appearance: textfield !important;
+        }
+    </style> --}}
     <!-- Begin:: Banner Section -->
     <section class="page_banner">
         <div class="layer_img move_anim animated">
@@ -54,7 +65,7 @@
                             <div class="row">
                                 <div class="col-lg-6">
                                     <table class="table">
-                                        <tbody>
+                                        <tbody id="yourTable">
                                             <tr>
                                                 <th>
                                                     <p style="text-align:right;" class="nama">Nama :</p>
@@ -109,8 +120,7 @@
                                     </button> --}}
                                     <button id="edit-data" type="submit"
                                         class="woocommerce-button button woocommerce-form-login__submit mo_btn"
-                                        data-toggle="modal"
-                                        data-target="#my-modal">
+                                        data-toggle="modal" data-target="#my-modal">
                                         <i class="icofont-user-alt-7"></i>Edit Data Personal
                                     </button>
                                 </div>
@@ -119,51 +129,62 @@
                     </div>
                     <div class="tab-pane fade show" id="alamat" role="tabpanel" aria-labelledby="alamat-tab">
                         <div class="col-lg-12">
-                            <div class="authWrap authLogin">
-                                <h2 class="authTitle">My Personal Data</h2>
-                                <form class="woocommerce-form-login" action="#">
-                                    <div class="row">
-                                        <div class="col-sm-12">
-                                            <input placeholder="Full Name *" type="text" name="name"
-                                                value="">
-                                        </div>
-                                        <div class="col-sm-12">
-                                            <input placeholder="Email Address *" type="email" name="email"
-                                                value="">
-                                        </div>
-                                        <div class="col-sm-12">
-                                            <label for="provinsi"></label>
-                                            <select name="provinces" id="provinces"></select>
-                                        </div>
-                                        <div class="col-sm-12" id="citySelectContainer">
-                                            <label for="cities"></label>
-                                            <select name="cities" id="citySelect"></select>
-                                        </div>
-                                        <div class="col-sm-12">
-                                            <textarea name="address" id="" cols="30" rows="10">Tulis Alamat Lengkap</textarea>
-                                        </div>
-                                        <div class="col-sm-12">
-                                            <input placeholder="Password *" type="password" name="password">
-                                        </div>
-                                        <div class="col-sm-12">
-                                            <input placeholder="Confirm Password *" type="password"
-                                                name="confirm_password">
-                                        </div>
-                                        <div class="col-sm-12">
-                                            <button id="save-btn" type="submit"
-                                                class="woocommerce-button button woocommerce-form-login__submit mo_btn"
-                                                name="login" value="Log in">
-                                                <i class="icofont-user-alt-7"></i>Register Now
-                                            </button>
-                                        </div>
+                            <div class="row">
+                                <div class="col-lg-6">
+                                    <div class="authWrap authLogin">
+                                        <h2 class="authTitle">Address Information</h2>
+                                        <table class="table">
+                                            <tbody id="addressTable">
+                                                <tr>
+                                                    <th>
+                                                        <p style="text-align:right;" class="provinsi">Provinsi :</p>
+                                                    </th>
+                                                    <td>
+                                                        <p class="prov" style="display: inline;">Provinsi</p>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <th>
+                                                        <p style="text-align:right;">Kab/Kota :</p>
+                                                    </th>
+                                                    <td>
+                                                        <p class="kabkota" style="display: inline;">Kab/Kota</p>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <th>
+                                                        <p style="text-align:right;">kodepos :</p>
+                                                    </th>
+                                                    <td>
+                                                        <p class="kodepos" style="display: inline;">kodepos</p>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <th>
+                                                        <p style="text-align:right;" class="alamat">Alamat Lengkap :</p>
+                                                    </th>
+                                                    <td>
+                                                        <p class="alamat" style="display: inline;">Alamat Lengkap</p>
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
                                     </div>
-                                </form>
+                                </div>
+                                <div class="col-lg-6">
+                                    <button id="edit-alamat" type="submit"
+                                        class="woocommerce-button button woocommerce-form-login__submit mo_btn"
+                                        data-toggle="modal" data-target="#alamat">
+                                        <i class="icofont-user-alt-7"></i>Edit Alamat
+                                    </button>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
+
         <div id="my-modal" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
@@ -184,8 +205,8 @@
                                                 value="">
                                         </div>
                                         <div class="col-sm-12">
-                                            <input placeholder="Email *" id="email" type="email" name="email"
-                                                value="">
+                                            <input disabled placeholder="Email *" id="email" type="email"
+                                                name="email" value="">
                                         </div>
                                         <div class="col-sm-12">
                                             <select name="jk" id="jk">
@@ -217,6 +238,59 @@
                 </div>
             </div>
         </div>
+        <div id="alamat-modal" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <h5 class="modal-title">Edit Alamat</h5>
+                                <button id="save-btn" type="button" class="close" data-dismiss="modal"
+                                    aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="col-sm-12">
+                                <div id="alert" class="alert alert-danger" style="display: none;">
+                                    <strong>Alert!</strong> Data tidak ditemukan. anda bisa mengisi alamat
+                                    secara manual
+                                </div>
+                            </div>
+                        </div>
+
+
+                    </div>
+                    <div class="modal-body">
+                        <form id="formAlamat" class="woocommerce-form-login" action="#">
+                            <div class="row">
+                                <div class="col-sm-12">
+                                    <label for="provinsi"></label>
+                                    <select name="provinces" id="provinces"></select>
+                                </div>
+                                <div class="col-sm-12" id="citySelectContainer">
+                                    <label for="cities"></label>
+                                    <select name="cities" id="citySelect"></select>
+                                </div>
+                                <div class="col-sm-12">
+                                    <input class="form-control" id="kodepos" type="text" name="kodepos"
+                                        placeholder="Kode Pos" maxlength="7">
+                                </div>
+                                <div class="col-sm-12">
+                                    <textarea name="address" id="" cols="30" rows="10">Tulis Alamat Lengkap</textarea>
+                                </div>
+                                <div class="col-sm-12">
+                                    <button id="save-btn" type="submit"
+                                        class="woocommerce-button button woocommerce-form-login__submit mo_btn"
+                                        name="login" value="Log in">
+                                        <i class="icofont-user-alt-7"></i>Simpan
+                                    </button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
 
 
 
@@ -230,19 +304,58 @@
 
     <!-- Select2 JS -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script> --}}
+    <script src="https://cdn.jsdelivr.net/npm/jquery-validation@1.19.5/dist/jquery.validate.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js"></script>
 
 
     <script>
         $(document).ready(function() {
+
+
+            fetchUpdatedProfile();
+            fetchAddress();
             $.ajaxSetup({
                 headers: {
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                 }
             });
 
-            if ($("#editForm").length > 0) {
-                $("#editForm").validate({
+
+
+            $('#edit-data').click(function() {
+                // Show the modal
+                $('#my-modal').modal('show');
+                $.ajax({
+                    url: `{{ URL::to('/profile') }}`,
+                    type: 'GET',
+                    success: function(response) {
+                        data = response.data;
+                        // console.log(data);
+                        // Populate the form fields with the response data
+                        formattedDate = data.tgl ? convertIndonesianDate(data.tgl) :
+                            "00-00-0000";
+                        $('#name').val(data.nama);
+                        $('#email').val(data.email);
+
+                        if (data.jk == "Laki-laki") {
+                            $('#jk option[value="L"]').prop('selected', true);
+                        } else {
+                            $('#jk option[value="W"]').prop('selected', true);
+                        }
+                        // $('#jk').val();
+                        // $('#tgl').val(data.tgl);
+                        $('#datepicker').val(formattedDate);
+                        $('#hp').val(data.hp);
+                    },
+                    error: function(xhr, status, error) {
+                        console.error(`AJAX Error: ${status} - ${error}`);
+                    }
+                });
+            });
+            // saving edit profile
+            var table = $('.table');
+            if ($("#edit").length > 0) {
+                $("#edit").validate({
                     submitHandler: function(form) {
                         var actionType = $('#save-btn').val();
                         $('#save-btn').html('Menyimpan . .');
@@ -250,14 +363,19 @@
                         $.ajax({
                             type: "POST",
                             url: "{{ URL::to('/savebio') }}",
-                            data: $('#editForm').serialize(),
+                            data: $('#edit').serialize(),
                             dataType: 'json',
                             success: function(data) {
-                                $('#editForm').trigger("reset");
+                                $('#edit').trigger("reset");
                                 $('#my-modal').modal("hide");
                                 $('#save-btn').html('Simpan');
+                                console.log(data);
+                                if (data.status === "success") {
+                                    // After update, fetch the latest profile data
+                                    fetchUpdatedProfile();
+                                }
 
-                                table.ajax.reload(null, false);
+                                // updateProfileFields(data);
                                 Swal.fire({
                                     title: "Berhsil!",
                                     text: data.message,
@@ -272,6 +390,7 @@
                     }
                 })
             }
+
 
             function convertIndonesianDate(dateString) {
                 // Create a mapping of month names to numbers
@@ -299,67 +418,211 @@
                 return `${year}-${month}-${day}`; // Return the formatted date
             }
 
-
-            // Function to update profile fields
-            function updateProfileFields(data) {
-                data = JSON.parse(data); // Parse the JSON response
-                // Update each field, allowing empty strings to pass through
-
-                $('.name').text(data.nama !== undefined && data.nama !== null ? data.nama :
-                    "Masih Kosong");
-                $('.email').text(data.email !== undefined && data.email !== null ? data.email :
-                    "Masih Kosong");
-                $('.jk').text(data.jk !== "" ? data.jk : "Masih Kosong"); // Empty string fallback
-                $('.tgl').text(data.tgl !== "" ? data.tgl :
-                    "Masih Kosong"); // Empty string fallback
-                $('.hp').text(data.hp !== "" ? data.hp : "Masih Kosong"); // Empty string fallback
-            }
-
-            // Make the AJAX request
-            $.ajax({
-                url: `{{ URL::to('/profile') }}`,
-                type: 'GET',
-                success: function(response) {
-                    updateProfileFields(response); // Directly pass the JSON response
-                },
-                error: function(xhr, status, error) {
-                    console.error(`AJAX Error: ${status} - ${error}`);
-                }
-            });
-            $('#edit-data').click(function() {
-                // Show the modal
-                $('#my-modal').modal('show');
-
-
+            function fetchUpdatedProfile() {
+                // Make the AJAX request
                 $.ajax({
                     url: `{{ URL::to('/profile') }}`,
                     type: 'GET',
                     success: function(response) {
-                        data = JSON.parse(response);
-                        // console.log(data);
-                        // Populate the form fields with the response data
-                        formattedDate = convertIndonesianDate(data.tgl);
-                        $('#name').val(data.nama);
-                        $('#email').val(data.email);
+                        updateProfileFields(response); // Directly pass the JSON response
+                    },
+                    error: function(xhr, status, error) {
+                        console.error(`AJAX Error: ${status} - ${error}`);
+                    }
+                });
+            }
 
-                        if (data.jk == "Laki-laki") {
-                            $('#jk option[value="L"]').prop('selected', true);
+            // Function to update profile fields
+            function updateProfileFields(response) {
+                let data = response.data;
+
+                // Update individual text fields
+                $('.name').text(data.nama ? data.nama : "Masih Kosong");
+                $('.email').text(data.email ? data.email : "Masih Kosong");
+                $('.jk').text(data.jk ? data.jk : "Masih Kosong");
+                $('.tgl').text(data.tgl ? data.tgl : "Masih Kosong");
+                $('.hp').text(data.hp ? data.hp : "Masih Kosong");
+
+                // Refresh the table after updating fields
+                reloadTable(data);
+            }
+
+            function reloadTable(data) {
+                let tableBody = $('#yourTable'); // Select the tbody
+                tableBody.empty(); // Clear existing rows
+
+                // Create a new row based on updated data
+                let row = `<tr>
+                            <th><p style="text-align:right;">Nama:</p></th>
+                            <td><p class="name" style="display: inline;">${data.nama ? data.nama : "Masih Kosong"}</p></td>
+                        </tr>
+                        <tr>
+                            <th><p style="text-align:right;">Email:</p></th>
+                            <td><p class="email" style="display: inline;">${data.email ? data.email : "Masih Kosong"}</p></td>
+                        </tr>
+                        <tr>
+                            <th><p style="text-align:right;">Jenis Kelamin:</p></th>
+                            <td><p class="jk" style="display: inline;">${data.jk ? data.jk : "Masih Kosong"}</p></td>
+                        </tr>
+                        <tr>
+                            <th><p style="text-align:right;">Tanggal Lahir:</p></th>
+                            <td><p class="tgl" style="display: inline;">${data.tgl ? data.tgl : "Masih Kosong"}</p></td>
+                        </tr>
+                        <tr>
+                            <th><p style="text-align:right;">No. HP:</p></th>
+                            <td><p class="hp" style="display: inline;">${data.hp ? data.hp : "Masih Kosong"}</p></td>
+                        </tr>`;
+
+                tableBody.append(row); // Append the refreshed table row
+            }
+
+            function reloadTableAddress(data) {
+                let tableBody = $('#addressTable'); // Select the tbody
+                tableBody.empty(); // Clear existing rows
+
+                // Create a new row based on updated data
+                let row = `
+                        <tr>
+                            <th><p style="text-align:right;">Provinsi:</p></th>
+                            <td><p class="prov" style="display: inline;">${data.province_name ? data.province_name : "Masih Kosong"}</p></td>
+                        </tr>
+                        <tr>
+                            <th><p style="text-align:right;">Kab/Kota:</p></th>
+                            <td><p class="kabkota" style="display: inline;">${data.regency_name ? data.regency_name : "Masih Kosong"}</p></td>
+                        </tr>
+                        <tr>
+                            <th><p style="text-align:right;">Kode Pos:</p></th>
+                            <td><p class="kodepos" style="display: inline;">${data.kodepos ? data.kodepos : "Masih Kosong"}</p></td>
+                        </tr>
+                        <tr>
+                            <th><p style="text-align:right;">Alamat Lengkap:</p></th>
+                            <td><p class="alamat" style="display: inline;">${data.alamat ? data.alamat : "Masih Kosong"}</p></td>
+                        </tr>`;
+
+                tableBody.append(row); // Append the refreshed table row
+            }
+
+
+
+
+            // ================= Address Section ==============================
+            // Add a click event listener to all "ubah" links
+            $('#edit-alamat').click(function() {
+                // Show the modal
+                $('#alamat-modal').modal('show');
+                $("#kodepos").attr({
+                    "type": "number",
+                    "maxlength": "7"
+                }).on("input", function() {
+                    $(this).val($(this).val().replace(/[^0-9]/g, '').slice(0, 7));
+                });
+                // Initially hide city select
+                $('#citySelectContainer').hide();
+
+                $('#provinces').on('change', function() {
+                    let selectedProvinceId = $(this).val(); // Get selected province ID
+                    // console.log(selectedProvinceId);
+                    if (selectedProvinceId) {
+                        $('#citySelectContainer')
+                            .show(); // Show city select when province is selected
+                        fetchCities(selectedProvinceId); // Load city options dynamically
+                    } else {
+                        $('#citySelectContainer').hide(); // Hide if no province is selected
+                    }
+                });
+
+                // Fetch provinces and cities
+                fetchProvinces();
+                $.ajax({
+                    url: `{{ URL::to('/address') }}`,
+                    type: 'GET',
+                    success: function(response) {
+                        data = response.data;
+                        if (data) {
+                            console.log(data);
                         } else {
-                            $('#jk option[value="W"]').prop('selected', true);
+                            // Handle the case when no data is returned
+                            $("#alert").show();
+                            // Swal.fire({
+                            //     title: "Gagal!",
+                            //     text: response.message,
+                            //     icon: "error"
+                            // });
                         }
-                        // $('#jk').val();
-                        // $('#tgl').val(data.tgl);
-                        $('#datepicker').val(formattedDate);
-                        $('#hp').val(data.hp);
+                        // Populate the form fields with the response data
+
                     },
                     error: function(xhr, status, error) {
                         console.error(`AJAX Error: ${status} - ${error}`);
                     }
                 });
             });
+            // Function to save and update address fields
+            if ($("#formAlamat").length > 0) {
+                $("#formAlamat").validate({
+                    submitHandler: function(form) {
+                        var actionType = $('#save-btn').val();
+                        $('#save-btn').html('Menyimpan . .');
+
+                        $.ajax({
+                            type: "POST",
+                            url: "{{ URL::to('/saveaddress') }}",
+                            data: $('#formAlamat').serialize(),
+                            dataType: 'json',
+                            success: function(data) {
+                                $('#formAlamat').trigger("reset");
+                                $('#alamat-modal').modal("hide");
+                                $('#save-btn').html('Simpan');
+                                console.log(data);
+                                if (data.status === "success") {
+                                    // After update, fetch the latest profile data
+                                    fetchUpdatedProfile();
+                                }
+
+                                // updateProfileFields(data);
+                                Swal.fire({
+                                    title: "Berhsil!",
+                                    text: data.message,
+                                    icon: "success"
+                                });
+                            },
+                            error: function(data) {
+                                console.log('Error', data);
+                                $('#save-btn').html('Simpan');
+                            }
+                        });
+                    }
+                })
+            }
+            // Function to update address fields
+            function updateAddressFields(response) {
+
+                let data = response.data;
+                if (data) {
+                    $('.prov').text(data.province_name ?? "Masih Kosong");
+                    $('.kabkota').text(data.regency_name ?? "Masih Kosong");
+                    $('.kodepos').text(data.kodepos ?? "Masih Kosong");
+                    $('.alamat').text(data.alamat ?? "Masih Kosong");
+                    reloadTableAddress(data);
+                } else {
+                    $('.prov, .kabkota, .kodepos, .alamat').text("Masih Kosong");
+                }
+            }
 
             // Add a click event listener to all "ubah" links
-
+            function fetchAddress() {
+                // Make the AJAX request
+                $.ajax({
+                    url: `{{ URL::to('/address') }}`,
+                    type: 'GET',
+                    success: function(response) {
+                        updateAddressFields(response); // Directly pass the JSON response
+                    },
+                    error: function(xhr, status, error) {
+                        console.error(`AJAX Error: ${status} - ${error}`);
+                    }
+                });
+            }
             let provinceData = [];
 
             function fetchProvinces() {
@@ -367,6 +630,7 @@
                     url: "{{ URL::to('back/api/provinces') }}",
                     dataType: "json",
                     success: function(response) {
+                        // console.log(response);
                         if (response.success && Array.isArray(response.data)) {
                             let $select = $('#provinces');
 
@@ -381,9 +645,6 @@
                                     `<option value="${item.province_id}">${item.province}</option>`
                                 );
                             });
-
-                            // // Refresh Nice Select after updating options
-                            // $select.niceSelect('update');
                         }
                     },
                     error: function(xhr, status, error) {
@@ -418,21 +679,9 @@
                 });
             }
             // Run the function to fetch and populate the select box
-            fetchProvinces();
 
-            // Initially hide city select
-            $('#citySelectContainer').hide();
 
-            $('#provinces').on('change', function() {
-                let selectedProvinceId = $(this).val(); // Get selected province ID
-                // console.log(selectedProvinceId);
-                if (selectedProvinceId) {
-                    $('#citySelectContainer').show(); // Show city select when province is selected
-                    fetchCities(selectedProvinceId); // Load city options dynamically
-                } else {
-                    $('#citySelectContainer').hide(); // Hide if no province is selected
-                }
-            });
+
         });
     </script>
 @endpush

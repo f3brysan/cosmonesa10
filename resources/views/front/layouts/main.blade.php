@@ -29,6 +29,8 @@
         <link rel="stylesheet" href="{{ asset('frontend/css/ignore_for_wp.css') }}"/>
         <link rel="stylesheet" href="{{ asset('frontend/css/theme.css') }}"/>
         <link rel="stylesheet" href="{{ asset('frontend/css/responsive.css') }}"/>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css" />
+
         <!-- End Include All CSS -->
 
         <!-- Favicon Icon -->
@@ -110,6 +112,8 @@
         <script src="{{ asset('frontend/js/extensions/revolution.extension.parallax.min.js') }}"></script>
         <script src="{{ asset('frontend/js/extensions/revolution.extension.slideanims.min.js') }}"></script>
         <script src="{{ asset('frontend/js/extensions/revolution.extension.video.min.js') }}"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
 
 
         <script src="{{ asset('frontend/js/theme.js') }}"></script>

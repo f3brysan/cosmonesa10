@@ -67,7 +67,7 @@ class B_ServiceController extends Controller
             return redirect()->back()->with('error', $th->getMessage());
         }
     }
-    
+
     public function setSlot(Request $request, $id)
     {
         try {
@@ -96,13 +96,14 @@ class B_ServiceController extends Controller
                         return date('H:i', strtotime($item->start_at)) . ' - ' . date('H:i', strtotime($item->end_at));
                     })
                     ->addColumn('action', function ($item) {
-                        // Generate action buttons for each slot
-                        $btn = '<button type="button" class="btn p-0 dropdown-toggle hide-arrow" data-bs-toggle="dropdown"><i class="icon-base bx bx-dots-vertical-rounded"></i></button>
-                                <div class="dropdown-menu">
-                                  <a class="dropdown-item" href="' . URL::to('back/product/detail/' . $item->slug) . '"><i class="icon-base bx bx-show me-1"></i> Detil</a>
-                                  <a class="dropdown-item" target="_blank" href="' . URL::to('back/product/edit/' . Crypt::encrypt($item->id) . '') . '"><i class="icon-base bx bx-edit-alt me-1"></i> Ubah</a>
-                                  <a class="dropdown-item destroy" data-id="' . Crypt::encrypt($item->id) . '" href="javascript:void(0);" ><i class="icon-base bx bx-trash me-1"></i> Hapus</a>
-                                </div>';
+                        // Generate action buttons for each slot                        
+                        $btn = '<button type="button" class="btn btn-outline-secondary p-0 dropdown-toggle hide-arrow" data-bs-toggle="dropdown"><i class="icon-base bx bx-dots-vertical-rounded"></i></button>';
+                        $btn .= '<div class="dropdown-menu">';
+                        $btn .= '<a class="dropdown-item edit" data-id="' . Crypt::encrypt($item->id) . '" href="javascript:void(0);"><i class="icon-base bx bx-edit-alt me-1"></i> Ubah</a>';
+                        if ($item->product_count == 0) {
+                            $btn .= ' <a class="dropdown-item destroy" data-id="' . Crypt::encrypt($item->id) . '" href="javascript:void(0);" ><i class="icon-base bx bx-trash me-1"></i> Hapus</a>';
+                        }
+                        $btn .= '</div></div>';
                         return $btn;
                     })
                     ->rawColumns(['action', 'active_hours'])
@@ -150,6 +151,45 @@ class B_ServiceController extends Controller
                 ],
                 200
             );
+        } catch (\Throwable $th) {
+            // Return an error response if an exception is caught
+            return response()->json([
+                'status' => 'error',
+                'message' => $th->getMessage()
+            ], 500);
+        }
+    }
+
+    /**
+     * Returns the data of a service slot to be edited.
+     *
+     * @param  string  $id  The encrypted ID of the service slot to be edited.
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function editSlot($id)
+    {
+        try {
+            // Decrypt the slot ID
+            $id = Crypt::decrypt($id);
+
+            // Retrieve the slot data
+            $slot = ServiceSlot::where('id', $id)->first();
+
+            // Format the slot data
+            $slot = [
+                'id' => $slot->id,
+                'service_id' => $slot->service_id,
+                'day' => $slot->day,
+                'start_at' => date('H:i', strtotime($slot->start_at)),
+                'end_at' => date('H:i', strtotime($slot->end_at)),
+            ];
+
+            // Return a success response with the slot data
+            return response()->json([
+                'status' => 'success',
+                'data' => $slot
+            ], 200);
+
         } catch (\Throwable $th) {
             // Return an error response if an exception is caught
             return response()->json([

@@ -172,6 +172,19 @@
                 $("#crudModalLabel").html('Tambah Slot');
             });
 
+            $(document).on('click', '.edit', function () {
+                var id = $(this).data('id');
+                $.get("{{ URL::to('back/kiosku/service/edit-slot') }}/" + id,
+                    function (data, textStatus, jqXHR) {                        
+                        $("#crudModal").modal('show');
+                        $("#crudModalLabel").html('Edit Slot');
+                        $("#id").val(data.data.id);
+                        $("#day").val(data.data.day);
+                        $("#start_at").val(data.data.start_at);
+                        $("#end_at").val(data.data.end_at);                        
+                    });
+            });
+
             if ($("#crudForm").length > 0) {
                 $("#crudForm").validate({
                     submitHandler: function(form) {

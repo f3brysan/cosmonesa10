@@ -69,6 +69,7 @@ Route::group(['middleware' => ['auth', 'role:seller']], function () {
     Route::get('kiosku/service/set-slot/{id}', [B_ServiceController::class, 'setSlot']);
     Route::get('kiosku/service/edit-slot/{id}', [B_ServiceController::class, 'editSlot']);
     Route::post('kiosku/service/add-slot', [B_ServiceController::class, 'addSlot']);
+    Route::post('kiosku/service/destroy-slot', [B_ServiceController::class, 'destroySlot']);
     
 });
 

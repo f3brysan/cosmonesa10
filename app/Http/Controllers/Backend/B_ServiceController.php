@@ -199,6 +199,29 @@ class B_ServiceController extends Controller
         }
     }
 
+    public function destroySlot(Request $request)
+    {
+        try {
+            // Decrypt the slot ID
+            $id = Crypt::decrypt($request->id);
+            
+            // Delete the slot
+            $slot = ServiceSlot::where('id', $id)->delete();
+
+            // Return a success response
+            return response()->json([
+                'status' => 'success',
+                'message' => 'Slot deleted successfully'
+            ]);
+        } catch (\Throwable $th) {
+            // Return an error response if an exception is caught
+            return response()->json([
+                'status' => 'error',
+                'message' => $th->getMessage()
+            ], 500);
+        }
+    }
+
     /**
      * Deletes or restores a service by toggling its active status.
      *

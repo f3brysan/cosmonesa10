@@ -217,6 +217,41 @@
                     }
                 })
             }
+
+            $(document).on('click', '.destroy', function() {
+                var id = $(this).data('id');
+                console.log(id);
+                Swal.fire({
+                    title: "Yakin?",
+                    text: "Anda tidak akan bisa mengembalikan data ini!",
+                    icon: "warning",
+                    showCancelButton: true,
+                    confirmButtonColor: "#3085d6",
+                    cancelButtonColor: "#d33",
+                    confirmButtonText: "Iya, Hapus!"
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        $.ajax({
+                            type: "POST",
+                            url: "{{ URL::to('back/kiosku/service/destroy-slot') }}",
+                            data: {
+                                id: id
+                            },
+                            dataType: "JSON",
+                            success: function(response) {
+                                if (response.status == 'success') {
+                                    table.ajax.reload(null, false);
+                                    Swal.fire({
+                                        title: "Berhasil!",
+                                        text: response.message,
+                                        icon: "success"
+                                    });
+                                }
+                            }
+                        });
+                    }
+                });
+            });
         });
     </script>
 @endpush

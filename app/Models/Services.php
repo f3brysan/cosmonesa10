@@ -20,4 +20,9 @@ class Services extends Model
     {
         return $this->belongsTo(ServiceCategories::class, 'category_id');
     }
+
+    public function kiosk() 
+    {
+        return $this->belongsTo(Kiosks::class, 'kiosk_id');
+    }
 }

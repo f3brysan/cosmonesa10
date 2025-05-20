@@ -26,6 +26,7 @@ Route::get('/account', [F_AccountController::class, 'index']);
 Route::get('/profile', [F_AccountController::class, 'profile']);
 Route::get('/address', [F_AccountController::class, 'get_address']);
 Route::get('/tenant-register', [F_AccountController::class, 'reg_tenant']);
+Route::get('/tenant/data', [F_AccountController::class, 'get_tenant']);
 Route::post('/savebio', [F_AccountController::class, 'save']);
 Route::post('/saveaddress', [F_AccountController::class, 'save_address']);
 

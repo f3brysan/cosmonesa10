@@ -4,9 +4,11 @@ namespace App\Http\Controllers\Frontend;
 
 use Carbon\Carbon;
 use App\Models\User;
+use App\Models\Kiosks;
 use App\Models\Address;
 use App\Models\UserProfiles;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 
@@ -30,6 +32,32 @@ class F_AccountController extends Controller
      * @return \Illuminate\Http\JsonResponse
      */
 
+    public function get_tenant()
+    {
+        $auth = auth()->user();
+        $kiosks = DB::table('kiosks')
+            ->join('users', 'kiosks.user_id', '=', 'users.id')
+            ->where('kiosks.user_id', $auth->id)
+            ->select('kiosks.*', 'users.name as owner_name')
+            ->get();
+        if ($kiosks->isEmpty()) {
+            $data = User::find($auth->id);
+            return response()->json([
+                'status' => false,
+                'data' => $data,
+                'message' => 'No kiosks found for this user.'
+            ]);
+        } else {
+            return response()->json([
+                'status' => true,
+                'message' => 'Kiosks retrieved successfully.',
+                'data' => $kiosks
+            ]);
+        }
+    }
+
+
+    # code...
 
     public function reg_tenant(Request $request)
     {

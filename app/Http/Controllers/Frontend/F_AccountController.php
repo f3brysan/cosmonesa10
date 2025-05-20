@@ -29,6 +29,12 @@ class F_AccountController extends Controller
      *
      * @return \Illuminate\Http\JsonResponse
      */
+
+
+    public function reg_tenant(Request $request)
+    {
+        return view('front.page.tenant.register');
+    }
     public function profile()
     {
         try {

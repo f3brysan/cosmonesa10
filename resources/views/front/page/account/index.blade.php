@@ -495,7 +495,7 @@
                         </tr>
                         <tr>
                             <th><p style="text-align:right;">Kab/Kota:</p></th>
-                            <td><p class="kabkota" style="display: inline;">${data.regency_name ? data.regency_name : "Masih Kosong"}</p></td>
+                            <td><p class="kabkota" style="display: inline;">${data.city_name ? data.city_name : "Masih Kosong"}</p></td>
                         </tr>
                         <tr>
                             <th><p style="text-align:right;">Kode Pos:</p></th>
@@ -503,7 +503,7 @@
                         </tr>
                         <tr>
                             <th><p style="text-align:right;">Alamat Lengkap:</p></th>
-                            <td><p class="alamat" style="display: inline;">${data.alamat ? data.alamat : "Masih Kosong"}</p></td>
+                            <td><p class="alamat" style="display: inline;">${data.detail ? data.detail : "Masih Kosong"}</p></td>
                         </tr>`;
 
                 tableBody.append(row); // Append the refreshed table row

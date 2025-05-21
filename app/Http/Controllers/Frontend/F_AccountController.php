@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Frontend;
 
+use App\Services\RajaOngkirService;
 use Carbon\Carbon;
 use App\Models\User;
 use App\Models\Kiosks;
@@ -11,6 +12,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Http;
+use App\Http\Controllers\API\APIRajaOngkirController;
 
 
 class F_AccountController extends Controller
@@ -19,8 +22,9 @@ class F_AccountController extends Controller
     public function index()
     {
 
-        // $users = User::all(); // Example: Retrieve data from the database
-        return view('front.page.account.index');
+        $rajaOngkirService = new RajaOngkirService();
+        $provinces = $rajaOngkirService->getProvinces();
+        return view('front.page.account.index', compact('provinces'));
     }
     /**
      * Display the authenticated user's profile in JSON format.
@@ -108,11 +112,10 @@ class F_AccountController extends Controller
         }
     }
     public function get_address()
-
     {
         try {
             $userAuth = auth()->user();
-            $data = Address::find($userAuth->id);
+            $data = Address::where('user_id', $userAuth->id)->first();
 
             return response()->json([
                 'status' => true,
@@ -126,8 +129,54 @@ class F_AccountController extends Controller
     }
     public function save_address(Request $request)
     {
-        $data = $request->all();
-        return response()->json($data);
+        try {
+            $rajaOngkirService = new RajaOngkirService();
+            $provinces = $rajaOngkirService->getProvinces();
+            $cities = $rajaOngkirService->getCities($request->provinces);
+
+            $proviceName = '';
+            $cityName = '';
+
+            foreach ($provinces as $key => $value) {
+                if ($value['province_id'] == $request->provinces) {
+                    $proviceName = $value['province'];
+                    break;
+                }
+            }
+
+            foreach ($cities as $key => $value) {
+                if ($value['city_id'] == $request->cities) {
+                    $cityName = $value['city_name'];
+                    break;
+                }
+            }
+
+            $userId = auth()->user()->id;
+
+            $upsert = Address::updateOrCreate(
+                ['user_id' => $userId],
+                [
+                    'province_id' => $request->provinces,
+                    'province_name' => $proviceName,
+                    'city_id' => $request->cities,
+                    'city_name' => $cityName,
+                    'kodepos' => $request->kodepos,
+                    'detail' => $request->address
+                ]
+            );
+
+            return response()->json([
+                'status' => true,
+                'message' => 'Berhasil',
+                'data' => $upsert
+            ]);
+        } catch (\Throwable $th) {
+            return response()->json([
+                'status' => false,
+                'message' => $th
+            ]);
+        }
+
     }
 
     public function save(Request $request)

@@ -44,7 +44,7 @@ Route::get('/join', [F_EventsController::class, 'join']);
 Route::get('/service-cat', [F_ServicesController::class, 'categories']);
 Route::get('/get-service-cat', [F_ServicesController::class, 'getServiceCat']);
 Route::get('/services/{slug}', [F_ServicesController::class, 'index']);
-Route::get('/service_detail', [F_ServicesController::class, 'view']);
+Route::get('/service_detail/{id}', [F_ServicesController::class, 'view']);
 Route::get('/book', [F_ServicesController::class, 'schedule']);
 
 

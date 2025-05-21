@@ -264,18 +264,25 @@
                         <form id="formAlamat" class="woocommerce-form-login" action="#">
                             <div class="row">
                                 <div class="col-sm-12">
-                                    <label for="provinsi"></label>
-                                    <select name="provinces" id="provinces"></select>
+                                    <label for="provinsi">Provinsi</label>
+                                    <select name="provinces" id="provinces">
+                                        <option value="">Silahkan Pilih</option>
+                                        @foreach ($provinces as $province)
+                                            <option value="{{ $province['province_id'] }}">{{ $province['province'] }}</option>
+                                        @endforeach
+                                    </select>
                                 </div>
                                 <div class="col-sm-12" id="citySelectContainer">
-                                    <label for="cities"></label>
+                                    <label for="cities">Kota/Kabupaten</label>
                                     <select name="cities" id="citySelect"></select>
                                 </div>
                                 <div class="col-sm-12">
+                                    <label for="kodepos">Kodepos</label>
                                     <input class="form-control" id="kodepos" type="text" name="kodepos"
                                         placeholder="Kode Pos" maxlength="7">
                                 </div>
                                 <div class="col-sm-12">
+                                    <label for="address">Alamat</label>
                                     <textarea name="address" id="" cols="30" rows="10">Tulis Alamat Lengkap</textarea>
                                 </div>
                                 <div class="col-sm-12">

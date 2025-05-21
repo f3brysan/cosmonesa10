@@ -184,7 +184,7 @@
                 </div>
             </div>
         </div>
-
+        </div>
         <div id="my-modal" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
@@ -268,7 +268,8 @@
                                     <select name="provinces" id="provinces">
                                         <option value="">Silahkan Pilih</option>
                                         @foreach ($provinces as $province)
-                                            <option value="{{ $province['province_id'] }}">{{ $province['province'] }}</option>
+                                            <option value="{{ $province['province_id'] }}">{{ $province['province'] }}
+                                            </option>
                                         @endforeach
                                     </select>
                                 </div>
@@ -297,11 +298,6 @@
                     </div>
                 </div>
             </div>
-        </div>
-
-
-
-
         </div>
     </section>
     <!-- End:: Account Section -->

@@ -1,5 +1,5 @@
 @extends('front.layouts.main')
-@section('title', 'Services List')
+@section('title', 'Services Category '.$serviceCategory->name)
 @section('body')
     <!-- Begin:: Banner Section -->
     <section class="page_banner">
@@ -63,7 +63,7 @@
                                 <div class="pi_content">
                                     <p><a href="javascript:void(0);">{{ $service->kiosk->name }}</a></p>
                                     <h3><a
-                                            href="{{ 'service_detail/' . Crypt::encrypt($service->id) }}">{{ $service->name }}</a>
+                                            href="{{ URL::to('service_detail/' . Crypt::encrypt($service->id)) }}">{{ $service->name }}</a>
                                     </h3>
                                     <div class="product_price clearfix">
                                         <span class="price"><span class="woocommerce-Price-amount amount"><bdi><span

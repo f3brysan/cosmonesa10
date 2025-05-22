@@ -35,6 +35,10 @@ Route::group(['middleware' => ['auth']], function () {
 
     // booking
     Route::get('service-booking/{service_id}/{date}/{slot_id}', [F_BookingController::class, 'service_booking']);
+
+
+    // checout
+    Route::get('checkout', [F_BookingController::class, 'service_booking']);
 });
 
 

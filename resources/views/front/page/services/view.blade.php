@@ -70,7 +70,7 @@
                                                        @foreach ($slots as $slot)
                                                     <tr>                                                        
                                                         <td>{{ Carbon\Carbon::parse($slot->start_at)->translatedFormat('H:i') }} - {{ Carbon\Carbon::parse($slot->end_at)->translatedFormat('H:i') }}</td>
-                                                        <td><a href="{{ URL::to('booking/'.$service->id.'/'.$slotday['date'].'/'.$slot->id) }}" class="mo_btn mob_lg"><i class="icofont-long-arrow-right"></i>Make Appointment</a></td>
+                                                        <td><a href="{{ URL::to('service-booking/'.$service->id.'/'.$slotday['date'].'/'.$slot->id) }}" class="mo_btn mob_lg"><i class="icofont-long-arrow-right"></i>Make Appointment</a></td>
                                                     </tr>
                                                     @endforeach
                                                    </table>

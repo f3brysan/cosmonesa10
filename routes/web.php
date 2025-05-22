@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\API\APIOauthController;
 use App\Http\Controllers\Frontend\F_DashboardController;
 use App\Http\Controllers\Frontend\F_AccountController;
+use App\Http\Controllers\Frontend\F_BookingController;
 use App\Http\Controllers\Frontend\F_ServicesController;
 use App\Http\Controllers\Frontend\F_EventsController;
 use App\Http\Controllers\Frontend\F_ProductController;
@@ -21,14 +22,20 @@ use App\Http\Controllers\Frontend\F_ProductController;
 */
 
 Route::get('/', [F_DashboardController::class, 'index']);
-//account page
-Route::get('/account', [F_AccountController::class, 'index']);
-Route::get('/profile', [F_AccountController::class, 'profile']);
-Route::get('/address', [F_AccountController::class, 'get_address']);
-Route::get('/tenant-register', [F_AccountController::class, 'reg_tenant']);
-Route::get('/tenant/data', [F_AccountController::class, 'get_tenant']);
-Route::post('/savebio', [F_AccountController::class, 'save']);
-Route::post('/saveaddress', [F_AccountController::class, 'save_address']);
+
+Route::group(['middleware' => ['auth']], function () {
+    // account
+    Route::get('/account', [F_AccountController::class, 'index']);
+    Route::get('/profile', [F_AccountController::class, 'profile']);
+    Route::get('/address', [F_AccountController::class, 'get_address']);
+    Route::get('/tenant-register', [F_AccountController::class, 'reg_tenant']);
+    Route::get('/tenant/data', [F_AccountController::class, 'get_tenant']);
+    Route::post('/savebio', [F_AccountController::class, 'save']);
+    Route::post('/saveaddress', [F_AccountController::class, 'save_address']);
+
+    // booking
+    Route::get('service-booking/{service_id}/{date}/{slot_id}', [F_BookingController::class, 'service_booking']);
+});
 
 
 // Route::post('/savebio', [F_AccountController::class, 'save'])->name('savebio');

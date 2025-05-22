@@ -82,7 +82,7 @@ class APIOauthController extends Controller
                 }
 
                 // Redirect the new user to the customer dashboard
-                return redirect('/dashboard');
+                return redirect('/');
             }
         } catch (\Exception $th) {
             // If there is an error, display the error message

@@ -15,4 +15,14 @@ class ServiceBooking extends Model
     protected $guarded = [
         
     ];
+
+    public function service()
+    {
+        return $this->belongsTo(Services::class);
+    }
+
+    public function slot()
+    {
+        return $this->belongsTo(ServiceSlot::class);
+    }
 }

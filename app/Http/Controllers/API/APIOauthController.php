@@ -50,7 +50,7 @@ class APIOauthController extends Controller
                     return redirect()->intended('back/dashboard');
                 }
 
-                return redirect('/dashboard');
+                return redirect('/');
             } else {
                 // If the user does not exist, create a new user
 

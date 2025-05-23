@@ -1,6 +1,5 @@
 <nav class="mainMenu">
     <ul>
-
         <li><a href="{{ '/' }}">Home</a></li>
         <li><a href="{{ '/shop' }}">Product</a></li>
         <li><a href="{{ '/service-cat' }}">Services</a></li>
@@ -13,13 +12,11 @@
                 <li><a href="/account">My Account</a></li>
                 <li><a href="{{ '/tenant-register' }}">Register Tenant</a></li>
                 <li><a href="{{ URL::to('logout') }}">Logout</a></li>
-
             </ul>
         </li>
         @else
             <li><a href="/login">Login</a></li>
         @endif
-
     </ul>
 </nav>
 <section class="popup_sidebar_sec">

@@ -6,6 +6,7 @@ use App\Models\Services;
 use Illuminate\Http\Request;
 use App\Models\ServiceCategories;
 use App\Http\Controllers\Controller;
+use App\Models\ServiceBooking;
 use App\Models\ServiceSlot;
 use Illuminate\Support\Facades\Crypt;
 
@@ -31,8 +32,9 @@ class F_ServicesController
         $slots = ServiceSlot::where('service_id', $service->id)->get();  
         $filterDays = $slots->pluck('day')->unique()->toArray();   
         $slotDays = $this->slotDays($filterDays);        
-        
-        return view('front.page.services.view', compact('service', 'slotDays', 'slots'));
+        $bookings = ServiceBooking::with('slot')->where('service_id', $service->id)->get();        
+
+        return view('front.page.services.view', compact('service', 'slotDays', 'slots', 'bookings'));
     }
 
     /**

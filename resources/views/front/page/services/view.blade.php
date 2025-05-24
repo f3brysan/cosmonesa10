@@ -51,7 +51,9 @@
                                     <div class="card">
                                         <div class="card-header" id="ma_ac_day_{{ $slotday['date'] }}">
                                             <h2 class="mb-0">
-                                                <button type="button" data-toggle="collapse" data-target="#ma_collapes_day_{{ $slotday['date'] }}"
+                                                <button type="button" class="collapsed" data-toggle="collapse"
+                                                    data-aria-expanded="false"
+                                                    data-target="#ma_collapes_day_{{ $slotday['date'] }}"
                                                     data-aria-controls="ma_collapes_01">
                                                     {{ Carbon\Carbon::parse($slotday['date'])->translatedFormat('l, d F Y') }}
                                                     <span></span>
@@ -59,21 +61,46 @@
                                             </h2>
                                         </div>
 
-                                        <div id="ma_collapes_day_{{ $slotday['date'] }}" class="collapse" aria-labelledby="ma_ac_day_{{ $slotday['date'] }}"
+                                        <div id="ma_collapes_day_{{ $slotday['date'] }}" class="collapse"
+                                            aria-labelledby="ma_ac_day_{{ $slotday['date'] }}"
                                             data-parent="#mkAccordion01">
                                             <div class="card-body">
                                                 <table style="border: 0; padding: 0; width: 100%;">
-                                                    <tr>                                                        
+                                                    <tr>
                                                         <th>Time</th>
                                                         <th>Book Now</th>
                                                     </tr>
-                                                       @foreach ($slots as $slot)
-                                                    <tr>                                                        
-                                                        <td>{{ Carbon\Carbon::parse($slot->start_at)->translatedFormat('H:i') }} - {{ Carbon\Carbon::parse($slot->end_at)->translatedFormat('H:i') }}</td>
-                                                        <td><a href="{{ URL::to('service-booking/'.$service->id.'/'.$slotday['date'].'/'.$slot->id) }}" class="mo_btn mob_lg"><i class="icofont-long-arrow-right"></i>Make Appointment</a></td>
-                                                    </tr>
+                                                    @foreach ($slots as $slot)
+                                                        <tr>
+                                                            <td>{{ Carbon\Carbon::parse($slot->start_at)->translatedFormat('H:i') }}
+                                                                -
+                                                                {{ Carbon\Carbon::parse($slot->end_at)->translatedFormat('H:i') }}
+                                                            </td>
+                                                            <td>
+                                                                @if (!empty($bookings))
+                                                                    @foreach ($bookings as $booking)
+                                                                        @if ($booking->slot_id == $slot->id and $booking->date == $slotday['date'])
+                                                                            <a href="javascript:void(0)"
+                                                                                class="btn btn-sm btn-outline-danger disabled">
+                                                                                Booked</a>
+                                                                        @else
+                                                                            <a href="{{ URL::to('service-booking/' . $service->id . '/' . $slotday['date'] . '/' . $slot->id) }}"
+                                                                                class="btn btn-sm btn-outline-primary"> Make
+                                                                                Appointment
+                                                                            </a>
+                                                                        @endif
+                                                                    @endforeach
+                                                                    </a>
+                                                                    <a href="{{ URL::to('service-booking/' . $service->id . '/' . $slotday['date'] . '/' . $slot->id) }}"
+                                                                        class="btn btn-sm btn-outline-primary"> Make
+                                                                        Appointment
+                                                                    @else
+                                                                @endif
+
+                                                            </td>
+                                                        </tr>
                                                     @endforeach
-                                                   </table>
+                                                </table>
                                             </div>
                                         </div>
                                     </div>

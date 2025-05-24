@@ -15,6 +15,7 @@ class F_TransactionController extends Controller
 {
     public function autocode($type)
     {
+        
         switch ($type) {
             case 'service':
                 $typecode = "SRV";
@@ -35,17 +36,19 @@ class F_TransactionController extends Controller
         $autocode = $typecode . date('Ymd');
         $check = Transaction::where('type', $type)->orderBy('created_at', 'desc')->first();
         $strpad = str_pad(+1, 5, '0', STR_PAD_LEFT);
-        if (!empty($check)) {
-            $autocode = "INV" . date('Ym') . str_pad($check->id + 1, 4, '0', STR_PAD_LEFT);
+        
+        if (!empty($check)) {            
+            $lastcode = substr($check->code, -5);            
+            $autocode = "INV" . date('Ym') . str_pad($lastcode + 1, 4, '0', STR_PAD_LEFT);
         } else {
             $autocode .= $strpad;
         }
-
+        
         return $autocode;
     }
     public function createTransaction($type, $reference_id = null)
     {
-        try {
+        try {            
             $autocode = $this->autocode($type);
             
             if (in_array($type, ['service', 'event'])) {
@@ -101,6 +104,7 @@ class F_TransactionController extends Controller
             return [
                 'status' => true,
                 'message' => 'Berhasil',
+                'transaction_id' => $uuid,
                 'data' => $insertTransaction
             ];
         } catch (\Throwable $th) {

@@ -8,7 +8,9 @@ use App\Http\Controllers\Frontend\F_AccountController;
 use App\Http\Controllers\Frontend\F_BookingController;
 use App\Http\Controllers\Frontend\F_ServicesController;
 use App\Http\Controllers\Frontend\F_EventsController;
+use App\Http\Controllers\Frontend\F_PaymentController;
 use App\Http\Controllers\Frontend\F_ProductController;
+use App\Http\Controllers\Frontend\F_TransactionController;
 
 /*
 |--------------------------------------------------------------------------
@@ -36,9 +38,10 @@ Route::group(['middleware' => ['auth']], function () {
     // booking
     Route::get('service-booking/{service_id}/{date}/{slot_id}', [F_BookingController::class, 'service_booking']);
 
+    Route::get('checkout/{transaction_id}', [F_PaymentController::class, 'index']);
 
-    // checout
-    Route::get('checkout', [F_BookingController::class, 'service_booking']);
+    // Transactions
+    Route::get('riwayat-transaksi', [F_TransactionController::class, 'index']);
 });
 
 

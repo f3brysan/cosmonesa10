@@ -6,7 +6,9 @@ use App\Models\Services;
 use Illuminate\Http\Request;
 use App\Models\ServiceBooking;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\URL;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Crypt;
 
 class F_BookingController extends Controller
 {
@@ -31,17 +33,18 @@ class F_BookingController extends Controller
             'date' => $date,
             'slot_id' => $slot_id,            
         ]);
-        $transaction = new F_TransactionController();
+        $transaction = new F_TransactionController();        
         $createTransaction = $transaction->createTransaction('service', $service_id);
+        
+        DB::commit();        
 
-        DB::commit();
-        dd($createTransaction);
+        $transaction_id = $createTransaction['transaction_id'];
+        $transaction_id_crypt = Crypt::encrypt($transaction_id->__tostring());
+
+        return redirect(URL::to('checkout/' . $transaction_id_crypt))->with('success', 'Service booking created successfully. Please complete the payment.');
         } catch (\Throwable $th) {
             DB::rollBack();
             return $th->getMessage();
-        }
-        
-
-        return redirect('checkout')->with('success', 'Service booking created successfully.');
+        }            
     }
 }

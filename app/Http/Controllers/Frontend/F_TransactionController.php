@@ -46,6 +46,14 @@ class F_TransactionController extends Controller
         
         return $autocode;
     }
+
+    public function index()
+    {
+        $transactions = Transaction::with('transaction_detail')->where('customer_id', auth()->user()->id)->get();
+        
+        return view('front.page.transactions.index', compact('transactions'));
+    }
+
     public function createTransaction($type, $reference_id = null)
     {
         try {            

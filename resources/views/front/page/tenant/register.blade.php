@@ -9,7 +9,7 @@
         <div class="container">
             <div class="row">
                 <div class="col-lg-5 offset-lg-1">
-                    <h2 class="banner-title">My Account</h2>
+                    <h2 class="banner-title">Register Tenant</h2>
                     <p class="breadcrumbs"><a href="index.html">Home</a><span>/</span>Account</p>
                 </div>
                 <div class="col-lg-6 animated pnl">

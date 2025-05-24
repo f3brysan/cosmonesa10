@@ -158,8 +158,8 @@ class F_AccountController extends Controller
                 [
                     'province_id' => $request->provinces,
                     'province_name' => $proviceName,
-                    'city_id' => $request->cities,
-                    'city_name' => $cityName,
+                    'regency_id' => $request->cities,
+                    'regency_name' => $cityName,
                     'kodepos' => $request->kodepos,
                     'detail' => $request->address
                 ]

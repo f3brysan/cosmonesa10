@@ -1,8 +1,6 @@
 @extends('front.layouts.main')
 @section('title', 'Account Settings')
 @push('css')
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css">
-    <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
     <!-- Select2 CSS -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/css/select2.min.css" rel="stylesheet" />
 @endpush
@@ -174,7 +172,7 @@
                                 <div class="col-lg-6">
                                     <button id="edit-alamat" type="submit"
                                         class="woocommerce-button button woocommerce-form-login__submit mo_btn"
-                                        data-toggle="modal" data-target="#alamat">
+                                        data-toggle="modal" data-target="#alamat-modal">
                                         <i class="icofont-user-alt-7"></i>Edit Alamat
                                     </button>
                                 </div>
@@ -263,14 +261,14 @@
                     <div class="modal-body">
                         <form id="formAlamat" class="woocommerce-form-login" action="#">
                             <div class="row">
-                                <div class="col-sm-12">
+                                <div class="col-sm-12" id="provinceSelectContainer">
                                     <label for="provinsi">Provinsi</label>
                                     <select name="provinces" id="provinces">
-                                        <option value="">Silahkan Pilih</option>
-                                        @foreach ($provinces as $province)
+                                        {{-- <option value="">Silahkan Pilih</option> --}}
+                                        {{-- @foreach ($provinces as $province)
                                             <option value="{{ $province['province_id'] }}">{{ $province['province'] }}
                                             </option>
-                                        @endforeach
+                                        @endforeach --}}
                                     </select>
                                 </div>
                                 <div class="col-sm-12" id="citySelectContainer">
@@ -284,7 +282,7 @@
                                 </div>
                                 <div class="col-sm-12">
                                     <label for="address">Alamat</label>
-                                    <textarea name="address" id="" cols="30" rows="10">Tulis Alamat Lengkap</textarea>
+                                    <textarea name="address" id="address" cols="30" rows="10">Tulis Alamat Lengkap</textarea>
                                 </div>
                                 <div class="col-sm-12">
                                     <button id="save-btn" type="submit"
@@ -303,10 +301,6 @@
     <!-- End:: Account Section -->
 @endsection
 @push('js')
-    {{-- <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.min.js"></script>
-
-    <!-- Select2 JS -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script> --}}
     <script src="https://cdn.jsdelivr.net/npm/jquery-validation@1.19.5/dist/jquery.validate.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js"></script>
 
@@ -491,7 +485,7 @@
                         </tr>
                         <tr>
                             <th><p style="text-align:right;">Kab/Kota:</p></th>
-                            <td><p class="kabkota" style="display: inline;">${data.city_name ? data.city_name : "Masih Kosong"}</p></td>
+                            <td><p class="kabkota" style="display: inline;">${data.regency_name ? data.regency_name : "Masih Kosong"}</p></td>
                         </tr>
                         <tr>
                             <th><p style="text-align:right;">Kode Pos:</p></th>
@@ -508,11 +502,15 @@
 
 
 
+
             // ================= Address Section ==============================
             // Add a click event listener to all "ubah" links
             $('#edit-alamat').click(function() {
-                // Show the modal
-                $('#alamat-modal').modal('show');
+
+
+                fetchProvinces();
+                //   $('#citySelect').select2();
+                //   $('#provinces').select2();
                 $("#kodepos").attr({
                     "type": "number",
                     "maxlength": "7"
@@ -523,29 +521,43 @@
                 $('#citySelectContainer').hide();
 
                 $('#provinces').on('change', function() {
-                    let selectedProvinceId = $(this).val(); // Get selected province ID
+                    let selectedProvinceId = $(this)
+                        .val(); // Get selected province ID
                     // console.log(selectedProvinceId);
                     if (selectedProvinceId) {
                         $('#citySelectContainer')
                             .show(); // Show city select when province is selected
-                        fetchCities(selectedProvinceId); // Load city options dynamically
+                        fetchCities(
+                            selectedProvinceId); // Load city options dynamically
+
                     } else {
-                        $('#citySelectContainer').hide(); // Hide if no province is selected
+                        $('#citySelectContainer')
+                            .hide(); // Hide if no province is selected
                     }
                 });
-
                 // Fetch provinces and cities
-                fetchProvinces();
                 $.ajax({
                     url: `{{ URL::to('/address') }}`,
                     type: 'GET',
                     success: function(response) {
                         data = response.data;
                         if (data) {
-                            console.log(data);
+                            // console.log(data);
+                            $('#provinces').val(data.province_id).trigger(
+                                'change');
+                                setTimeout(function() {
+                                $('#citySelect').val(data.regency_id).trigger('change');
+                                    // console.log("This runs after 2 seconds!");
+                                }, 2000);
+
+                            $("#kodepos").val(data.kodepos);
+                            $("#address").text(data.detail);
+
                         } else {
+
                             // Handle the case when no data is returned
                             $("#alert").show();
+
                             // Swal.fire({
                             //     title: "Gagal!",
                             //     text: response.message,
@@ -566,7 +578,6 @@
                     submitHandler: function(form) {
                         var actionType = $('#save-btn').val();
                         $('#save-btn').html('Menyimpan . .');
-
                         $.ajax({
                             type: "POST",
                             url: "{{ URL::to('/saveaddress') }}",
@@ -633,21 +644,26 @@
                     url: "{{ URL::to('back/api/provinces') }}",
                     dataType: "json",
                     success: function(response) {
-                        // console.log(response);
                         if (response.success && Array.isArray(response.data)) {
                             let $select = $('#provinces');
 
                             // Clear existing options
                             $select.empty();
-                            $select.append(
-                                `<option value="">--Pilih Provinsi--</option>`
-                            );
+                            $select.append(`<option value="">--Pilih Provinsi--</option>`);
+
                             // Append new options
                             response.data.forEach(item => {
-                                $select.append(
-                                    `<option value="${item.province_id}">${item.province}</option>`
-                                );
+                                let newOption = new Option(item.province, item.province_id,
+                                    false, false);
+                                $select.append(newOption);
                             });
+
+                            // Refresh Select2 properly
+                            $select.select2({
+                                dropdownParent: $(
+                                    '#provinceSelectContainer'
+                                ) // Ensures dropdown stays inside the modal
+                            }); // Ensure Select2 reinitializes
                         }
                     },
                     error: function(xhr, status, error) {
@@ -658,22 +674,26 @@
 
             function fetchCities(provinceId) {
                 $.ajax({
-                    url: `{{ URL::to('back/api/cities') }}/${provinceId}`, // Replace with your actual API route
+                    url: `{{ URL::to('back/api/cities') }}/${provinceId}`,
                     dataType: 'json',
                     success: function(response) {
                         let $citySelect = $('#citySelect'); // Target city dropdown
                         $citySelect.empty(); // Clear previous options
-                        $citySelect.append(
-                            `<option value="">--Pilih Kab./Kota--</option>`
-                        );
+                        $citySelect.append(`<option value="">--Pilih Kab./Kota--</option>`);
+
                         if (response.success && Array.isArray(response.data)) {
                             response.data.forEach(city => {
-                                $citySelect.append(
-                                    `<option value="${city.city_id}">${city.city_name}</option>`
-                                );
+                                let newOption = new Option(city.city_name, city.city_id, false,
+                                    false);
+                                $citySelect.append(newOption);
                             });
 
-                            $citySelect.niceSelect('update'); // Refresh Nice Select
+                            // Reinitialize Select2
+                            $citySelect.select2({
+                                dropdownParent: $(
+                                    '#citySelectContainer'
+                                ) // Ensures dropdown stays inside the modal
+                            });
                         }
                     },
                     error: function(xhr, status, error) {

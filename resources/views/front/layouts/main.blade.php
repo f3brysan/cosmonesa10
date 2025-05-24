@@ -21,10 +21,9 @@
         <link rel="stylesheet" href="{{ asset('frontend/css/slick.css') }}"/>
         <link rel="stylesheet" href="{{ asset('frontend/css/lightcase.css') }}"/>
         <link rel="stylesheet" href="{{ asset('frontend/css/lightslider.css') }}"/>
-
+        @stack('css')
         <!-- Revolution Slider Setting CSS -->
         <link rel="stylesheet" href="{{ asset('frontend/css/settings.css') }}"/>
-
         <link rel="stylesheet" href="{{ asset('frontend/css/preset.css') }}"/>
         <link rel="stylesheet" href="{{ asset('frontend/css/ignore_for_wp.css') }}"/>
         <link rel="stylesheet" href="{{ asset('frontend/css/theme.css') }}"/>
@@ -85,12 +84,14 @@
         <script src="{{ asset('frontend/js/jquery.js') }}"></script>
         <script src="{{ asset('frontend/js/jquery-ui.js') }}"></script>
         <script src="{{ asset('frontend/js/bootstrap.min.js') }}"></script>
-        <script src="{{ asset('frontend/js/owl.carousel.min.js') }}"></script>
-        <script src="{{ asset('frontend/js/jquery.appear.js') }}"></script>
-        <script src="https://maps.google.com/maps/api/js?key=AIzaSyBJtPMZ_LWZKuHTLq5o08KSncQufIhPU3o"></script>
-        <script src="{{ asset('frontend/js/gmaps.js') }}"></script>
-        <script src="{{ asset('frontend/js/jquery.nice-select.min.js') }}"></script>
         <script src="{{ asset('frontend/js/jquery.datetimepicker.full.min.js') }}"></script>
+        <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+        @stack('js')
+        {{-- <script src="{{ asset('frontend/js/owl.carousel.min.js') }}"></script> --}}
+        <script src="{{ asset('frontend/js/jquery.appear.js') }}"></script>
+        {{-- <script src="https://maps.google.com/maps/api/js?key=AIzaSyBJtPMZ_LWZKuHTLq5o08KSncQufIhPU3o"></script> --}}
+        {{-- <script src="{{ asset('frontend/js/gmaps.js') }}"></script> --}}
+        {{-- <script src="{{ asset('frontend/js/jquery.nice-select.min.js') }}"></script> --}}
         <script src="{{ asset('frontend/js/slick.js') }}"></script>
         <script src="{{ asset('frontend/js/lightcase.js') }}"></script>
         <script src="{{ asset('frontend/js/lightslider.js') }}"></script>
@@ -101,7 +102,6 @@
         <!-- Slider Revolution Main Files -->
         <script src="{{ asset('frontend/js/jquery.themepunch.tools.min.js') }}"></script>
         <script src="{{ asset('frontend/js/jquery.themepunch.revolution.min.js') }}"></script>
-        @stack('js')
         <!-- Slider Revolution Extension -->
         <script src="{{ asset('frontend/js/extensions/revolution.extension.actions.min.js') }}"></script>
         <script src="{{ asset('frontend/js/extensions/revolution.extension.carousel.min.js') }}"></script>
@@ -112,10 +112,6 @@
         <script src="{{ asset('frontend/js/extensions/revolution.extension.parallax.min.js') }}"></script>
         <script src="{{ asset('frontend/js/extensions/revolution.extension.slideanims.min.js') }}"></script>
         <script src="{{ asset('frontend/js/extensions/revolution.extension.video.min.js') }}"></script>
-<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-
-
-
         <script src="{{ asset('frontend/js/theme.js') }}"></script>
         <!-- End Include All JS -->
 

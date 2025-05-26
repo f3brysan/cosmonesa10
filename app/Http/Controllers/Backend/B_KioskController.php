@@ -12,6 +12,12 @@ use App\Models\KioskActiveDay;
 
 class B_KioskController extends Controller
 {
+    public function index()
+    {
+        $kiosks = Kiosks::with('user')->get();
+
+        
+    }
     public function kioskDetail()
     {
         $kiosk = Kiosks::where('user_id', auth()->user()->id)->first();      
@@ -20,12 +26,7 @@ class B_KioskController extends Controller
             'kiosk' => $kiosk,           
         ];
     }
-    /**
-     * Update the kiosk about information
-     *
-     * @param Request $request
-     * @return \Illuminate\Http\RedirectResponse
-     */
+
     public function aboutUpdate(Request $request)
     {
         try {
@@ -63,6 +64,7 @@ class B_KioskController extends Controller
             return redirect()->back()->with('error', $th->getMessage());
         }
     }
+
     public function sellerService()
     {
         $kiosk = $this->kioskDetail()['kiosk'];       

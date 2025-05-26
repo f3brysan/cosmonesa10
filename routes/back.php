@@ -50,6 +50,8 @@ Route::group(['middleware' => ['auth', 'role:superadmin|pengelola']], function (
     Route::get('service-categories/edit/{id}', [B_ServiceCategoryController::class, 'edit']);
     Route::post('service-categories/store', [B_ServiceCategoryController::class, 'store']);
     Route::post('service-categories/destroy', [B_ServiceCategoryController::class, 'destroy']);
+
+    Route::get('service-provider-list', [B_KioskController::class, 'index']);
 });
 
 Route::group(['middleware' => ['auth', 'role:superadmin|pengelola']], function () {

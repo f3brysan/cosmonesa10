@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers\Frontend;
 
-use App\Services\RajaOngkirService;
 use Carbon\Carbon;
 use App\Models\User;
 use App\Models\Kiosks;
@@ -10,10 +9,9 @@ use App\Models\Address;
 use App\Models\UserProfiles;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use App\Services\RajaOngkirService;
+use Illuminate\Support\Facades\URL;
 use App\Http\Controllers\Controller;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Http;
-use App\Http\Controllers\API\APIRajaOngkirController;
 
 
 class F_AccountController extends Controller
@@ -63,9 +61,28 @@ class F_AccountController extends Controller
 
     # code...
 
-    public function reg_tenant(Request $request)
+    public function reg_tenant()
     {
-        return view('front.page.tenant.register');
+        $checkKiosk = Kiosks::where('user_id', auth()->user()->id)->first();
+        return view('front.page.tenant.register', compact('checkKiosk'));
+    }
+
+    public function reg_tenant_store(Request $request) 
+    {
+        $user = User::find(auth()->user()->id);
+        
+        $createKiosk = Kiosks::create([
+            'user_id' => $user->id,
+            'name' => $request->name,
+            'phone' => $request->phone,
+            'description' => $request->desc,
+            'address' => $request->address,
+            'is_verified' => 0
+        ]);
+
+        $user->syncRoles(['seller', 'customer']);
+
+        return redirect(URL::to('tenant-register'));
     }
     public function profile()
     {

@@ -20,7 +20,7 @@ return new class extends Migration
             $table->string('phone', 20)->nullable();
             $table->dateTime('created_at')->nullable();
             $table->dateTime('updated_at')->nullable();
-            $table->decimal('is_verifed', 65, 30)->nullable();
+            $table->decimal('is_verified', 65, 30)->nullable();
             $table->string('verifed_by')->nullable();
         });
     }

@@ -39,6 +39,7 @@ Route::group(['middleware' => ['auth']], function () {
     Route::get('service-booking/{service_id}/{date}/{slot_id}', [F_BookingController::class, 'service_booking']);
 
     Route::get('checkout/{transaction_id}', [F_PaymentController::class, 'index']);
+    Route::post('checkout-store', [F_PaymentController::class, 'storePayment']);
 
     // Transactions
     Route::get('riwayat-transaksi', [F_TransactionController::class, 'index']);

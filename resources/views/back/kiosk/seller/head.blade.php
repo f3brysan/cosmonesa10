@@ -37,7 +37,7 @@
                                         class="icon-base bx bx-calendar me-2 align-top"></i><span class="fw-medium">
                                         Since {{ Carbon\Carbon::parse($kiosk->created_at)->format('d F Y') }}</span>
                                 </li>
-                                @if ($kiosk->is_verifed == 1)
+                                @if ($kiosk->is_verified == 1)
                                     <li class="list-inline-item"><i
                                             class="icon-base bx bx-badge-check me-2 align-top text-info"></i><span
                                             class="fw-medium label bg-label-info">Terverifikasi</span></li>

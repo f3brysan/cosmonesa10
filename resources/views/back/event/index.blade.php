@@ -43,8 +43,8 @@
                                         <th class="text-center">Jenis Acara</th>
                                         <th class="text-center">Waktu Daftar</th>
                                         <th class="text-center">Tanggal Acara</th>
-                                        <th class="text-center">HTM</th>
                                         <th class="text-center">Kuota</th>
+                                        <th class="text-center">HTM</th>
                                         <th class="text-center">Aksi</th>
                                     </tr>
                                 </thead>

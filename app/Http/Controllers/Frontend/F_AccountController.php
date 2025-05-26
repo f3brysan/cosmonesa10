@@ -12,6 +12,7 @@ use Illuminate\Support\Facades\DB;
 use App\Services\RajaOngkirService;
 use Illuminate\Support\Facades\URL;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Http;
 
 
 class F_AccountController extends Controller
@@ -70,7 +71,16 @@ class F_AccountController extends Controller
     public function reg_tenant_store(Request $request) 
     {
         $user = User::find(auth()->user()->id);
+
+        $url = "https://sso.unesa.ac.id/api/profil/email/$user->email";
         
+        $checkStudent = Http::get($url);
+        $checkStudent = $checkStudent->json(0);
+        
+        if (empty($checkStudent->userid)) {
+            return redirect(URL::to('tenant-register'));
+        }
+
         $createKiosk = Kiosks::create([
             'user_id' => $user->id,
             'name' => $request->name,

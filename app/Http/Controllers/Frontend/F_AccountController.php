@@ -70,17 +70,22 @@ class F_AccountController extends Controller
 
     public function reg_tenant_store(Request $request) 
     {
+        // Find the authenticated user
         $user = User::find(auth()->user()->id);
 
+        // Construct the API URL to check if the user is a student
         $url = "https://sso.unesa.ac.id/api/profil/email/$user->email";
         
+        // Make a GET request to the API
         $checkStudent = Http::get($url);
         $checkStudent = $checkStudent->json(0);
         
+        // Redirect to tenant registration if user is not a student
         if (empty($checkStudent->userid)) {
             return redirect(URL::to('tenant-register'));
         }
 
+        // Create a new kiosk with the provided data
         $createKiosk = Kiosks::create([
             'user_id' => $user->id,
             'name' => $request->name,
@@ -90,8 +95,10 @@ class F_AccountController extends Controller
             'is_verified' => 0
         ]);
 
+        // Update user roles to 'seller' and 'customer'
         $user->syncRoles(['seller', 'customer']);
 
+        // Redirect back to tenant registration
         return redirect(URL::to('tenant-register'));
     }
     public function profile()

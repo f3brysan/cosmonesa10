@@ -15,33 +15,35 @@ class F_TransactionController extends Controller
 {
     public function autocode($type)
     {
-        
         switch ($type) {
             case 'service':
-                $typecode = "SRV";
+                $typecode = 'SRV';
                 break;
-
             case 'product':
-                $typecode = "PRD";
+                $typecode = 'PRD';
                 break;
-
             case 'event':
-                $typecode = "EVT";
+                $typecode = 'EVT';
                 break;
-
             default:
-                $typecode = "INV";
+                $typecode = 'INV';
                 break;
         }
-        $autocode = $typecode . date('Ymd');
-        $check = Transaction::where('type', $type)->orderBy('created_at', 'desc')->first();
-        $strpad = str_pad(+1, 5, '0', STR_PAD_LEFT);
         
-        if (!empty($check)) {            
-            $lastcode = substr($check->code, -5);            
-            $autocode = "INV" . date('Ym') . str_pad($lastcode + 1, 4, '0', STR_PAD_LEFT);
+        $autocode = $typecode . date('Ymd');
+        $lastcode = Transaction::where('type', $type)
+            ->orderByDesc('created_at')
+            ->value('code');
+        if ($lastcode) {
+            $lastnum = (int) substr($lastcode, -5);
+            $date = substr($lastcode, 3, 8);
+            if ($date == date('Ymd')) {
+                $autocode .= str_pad($lastnum + 1, 5, '0', STR_PAD_LEFT);
+            } else {
+                $autocode .= str_pad(1, 5, '0', STR_PAD_LEFT);
+            }
         } else {
-            $autocode .= $strpad;
+            $autocode .= str_pad(1, 5, '0', STR_PAD_LEFT);
         }
         
         return $autocode;

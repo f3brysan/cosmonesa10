@@ -82,12 +82,7 @@
                                                                         @if ($booking->slot_id == $slot->id and $booking->date == $slotday['date'])
                                                                             <a href="javascript:void(0)"
                                                                                 class="btn btn-sm btn-outline-danger disabled">
-                                                                                Booked</a>
-                                                                        @else
-                                                                            <a href="{{ URL::to('service-booking/' . $service->id . '/' . $slotday['date'] . '/' . $slot->id) }}"
-                                                                                class="btn btn-sm btn-outline-primary"> Make
-                                                                                Appointment
-                                                                            </a>
+                                                                                Booked</a>                                                                        
                                                                         @endif
                                                                     @endforeach
                                                                     </a>

@@ -38,8 +38,7 @@ class F_AccountController extends Controller
     public function get_tenant()
     {
         $auth = auth()->user();
-        $kiosks = DB::table('kiosks')
-            ->join('users', 'kiosks.user_id', '=', 'users.id')
+        $kiosks = Kiosks::join('users', 'kiosks.user_id', '=', 'users.id')
             ->where('kiosks.user_id', $auth->id)
             ->select('kiosks.*', 'users.name as owner_name')
             ->get();
@@ -58,48 +57,79 @@ class F_AccountController extends Controller
             ]);
         }
     }
-
-
     # code...
 
     public function reg_tenant()
     {
-        $checkKiosk = Kiosks::where('user_id', auth()->user()->id)->first();
-        return view('front.page.tenant.register', compact('checkKiosk'));
+
+        return view('front.page.tenant.register');
+    }
+    public function reg_tenant_check()
+    {
+        // Check if the user already has a kiosk
+        $user = User::find(auth()->user()->id);
+        $checkKiosk = Kiosks::where('user_id', $user->id)->first();
+
+        if ($checkKiosk) {
+            return response()->json([
+                'status' => false,
+                'message' => 'Anda sudah memiliki tenant.',
+            ]);
+        } else {
+            return response()->json([
+                'status' => true,
+                'message' => 'Anda belum memiliki tenant.',
+            ]);
+        }
     }
 
-    public function reg_tenant_store(Request $request) 
+    public function reg_tenant_store(Request $request)
     {
-        // Find the authenticated user
-        $user = User::find(auth()->user()->id);
 
-        // Construct the API URL to check if the user is a student
-        $url = "https://sso.unesa.ac.id/api/profil/email/$user->email";
-        
-        // Make a GET request to the API
-        $checkStudent = Http::get($url);
-        $checkStudent = $checkStudent->json(0);
-        
-        // Redirect to tenant registration if user is not a student
-        if (empty($checkStudent->userid)) {
-            return redirect(URL::to('tenant-register'));
+        try {
+            // Find the authenticated user
+            $user = User::find(auth()->user()->id);
+
+            // Construct the API URL to check if the user is a student
+            $url = "https://sso.unesa.ac.id/api/profil/email/$user->email";
+
+            // Make a GET request to the API
+            $checkStudent = Http::get($url);
+            $checkStudent = $checkStudent->json(0);
+
+            // Redirect to tenant registration if user is not a student
+            if (empty($checkStudent->userid)) {
+                return response()->json([
+                    'status' => false,
+                    'message' => 'Anda bukan mahasiswa UNESA, silahkan hubungi admin untuk membuat tenant.',
+                ]);
+            } else {
+                $createKiosk = Kiosks::create([
+                    'user_id' => $user->id,
+                    'name' => $request->name,
+                    'phone' => $request->phone,
+                    'description' => $request->desc,
+                    'address' => $request->address,
+                    'is_verified' => 0
+                ]);
+                // Update user roles to 'seller' and 'customer'
+                $user->syncRoles(['seller', 'customer']);
+                // Redirect back to tenant registration
+                return response()->json([
+                    'status' => true,
+                    'message' => 'Kiosks created successfully.',
+                    'data' => $createKiosk
+                ]);
+            }
+            // Create a new kiosk with the provided data
+            // Uncomment the line below if you want to redirect to tenant registration page
+            // return redirect(URL::to('tenant-register'));
+        } catch (\Throwable $th) {
+            return response()->json([
+                'status' => false,
+                'message' => $th->getMessage()
+            ]);
         }
-
-        // Create a new kiosk with the provided data
-        $createKiosk = Kiosks::create([
-            'user_id' => $user->id,
-            'name' => $request->name,
-            'phone' => $request->phone,
-            'description' => $request->desc,
-            'address' => $request->address,
-            'is_verified' => 0
-        ]);
-
-        // Update user roles to 'seller' and 'customer'
-        $user->syncRoles(['seller', 'customer']);
-
-        // Redirect back to tenant registration
-        return redirect(URL::to('tenant-register'));
     }
     public function profile()
     {
@@ -210,7 +240,6 @@ class F_AccountController extends Controller
                 'message' => $th
             ]);
         }
-
     }
 
     public function save(Request $request)

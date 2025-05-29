@@ -126,6 +126,15 @@
     <script src="{{ asset('frontend/js/theme.js') }}"></script>
     <!-- End Include All JS -->
 
+    <script>
+        $(document).on("mouseenter", "#userMenu", function () {
+            $.get("{{ URL::to('cart/count-unpaid') }}",
+                function (data, textStatus, jqXHR) {
+                    $("#cart_count").html(data.count);
+                });            
+        });
+    </script>
+
 </body>
 
 </html>

@@ -1,5 +1,5 @@
 @extends('front.layouts.main')
-@section('title', 'Product Details '.$product->name)
+@section('title', 'Product Details ' . $product->name)
 @section('body')
 
     <!-- popup sidebar widget -->
@@ -52,7 +52,8 @@
             <div class="row">
                 <div class="col-lg-5 offset-lg-1">
                     <h2 class="banner-title">Product Details</h2>
-                    <p class="breadcrumbs"><a href="{{ URL::to('/') }}">Home</a><span>/</span><a href="{{ URL::to('shop') }}">Products</a><span>/</span>Product Details</p>
+                    <p class="breadcrumbs"><a href="{{ URL::to('/') }}">Home</a><span>/</span><a
+                            href="{{ URL::to('shop') }}">Products</a><span>/</span>Product Details</p>
                 </div>
                 <div class="col-lg-6 animated pnl">
                     <div class="page_layer">
@@ -73,16 +74,16 @@
                         <ul id="product_gallery" class="gallery_sliders cS-hidden">
                             @if ($productImages->count() > 0)
                                 @foreach ($productImages as $image)
-                                <li data-thumb="{{ asset('frontend/') }}/images/product/ss1.jpg">
-                                    <div class="pg_item"><img src="{{ asset('frontend/') }}/images/product/s1.jpg"
-                                            alt="" /></div>
-                                </li>
+                                    <li data-thumb="{{ asset('frontend/') }}/images/product/ss1.jpg">
+                                        <div class="pg_item"><img src="{{ asset('frontend/') }}/images/product/s1.jpg"
+                                                alt="" /></div>
+                                    </li>
                                 @endforeach
                             @else
-                            <li data-thumb="{{ asset('frontend/') }}/images/product/ss2.jpg">
-                                <div class="pg_item"><img src="https://picsum.photos/1280/780/?blur"
-                                        alt="" /></div>
-                            @endif                                                        
+                                <li data-thumb="{{ asset('frontend/') }}/images/product/ss2.jpg">
+                                    <div class="pg_item"><img src="https://picsum.photos/1280/780/?blur" alt="" />
+                                    </div>
+                            @endif
                         </ul>
                     </div>
                 </div>
@@ -90,11 +91,13 @@
                     <div class="product_details">
                         <h3>{{ $product->name }}</h3>
                         <div class="product_price clearfix">
-                            <span class="price">                                
+                            <span class="price">
                                 <ins><span class="woocommerce-Price-amount amount"><bdi><span
                                                 class="woocommerce-Price-currencySymbol">Rp</span>{{ number_format($product->price, 0, '.', '.') }}</bdi></span></ins>
                             </span>
-                            <span><p><b>Stock : {{ $product->stock }} items</b></p></span>
+                            <span>
+                                <p><b>Stock : {{ $product->stock }} items</b></p>
+                            </span>
                         </div>
                         {{-- <div class="woocommerce-product-rating">
                             <div class="star-rating" role="img" aria-label="Rated 4.50 out of 5">
@@ -108,17 +111,20 @@
                             </div>
                             <a href="#reviews" class="woocommerce-review-link" rel="nofollow">(<span class="count">2</span>
                                 customer reviews)</a>
-                        </div> --}}                        
+                        </div> --}}
                         <div class="cart_quantity clearfix">
                             <div class="quantity quantityd clearfix">
                                 <button type="button" class="minus qtyBtn btnMinus">-</button>
-                                <input type="number" class="carqty input-text qty text" name="quantity" value="1">
+                                <input type="number" class="carqty input-text qty text" name="quantity" id="qty"
+                                    value="1">
                                 <button type="button" class="plus qtyBtn btnPlus">+</button>
+                                <input type="hidden" id="product_id" value="{{ Crypt::encrypt($product->id) }}">
                             </div>
                             {{-- <button type="submit" class="mo_btn"><i class="icofont-cart-alt"></i>Add to cart</button> --}}
-                            <a href="{{ '/cart' }}" type="submit" class="mo_btn"><i class="icofont-cart-alt"></i>Add
+                            <a href="javascript:void(0);" type="submit" class="mo_btn" id="addToCart"><i
+                                    class="icofont-cart-alt"></i>Add
                                 to cart</a>
-                        </div>                        
+                        </div>
                         <div class="pro_m_social">
                             <h5>Share:</h5>
                             <a target="_blank" href="https://www.facebook.com/"><i class="icofont-facebook"></i></a>
@@ -170,7 +176,7 @@
                                             <tr>
                                                 <th>Weight:</th>
                                                 <td>{{ $product->weight }} gram</td>
-                                            </tr>                                            
+                                            </tr>
                                         </tbody>
                                     </table>
                                 </div>
@@ -297,29 +303,33 @@
                     <div class="related_area">
                         <h2>Related Products</h2>
                         <div class="related_carousel owl-carousel">
-                            @foreach ($relatedProducts as $rProduct)                             
-                            <div class="product_item text-center">
-                                <div class="pi_thumb">
-                                    <img src="{{ !empty($productImage[$product->id]) ? asset('storage/' . $productImage[$product->id]->filename) : 'https://picsum.photos/1280/780/?blur'}}" alt="" />
-                                    <div class="pi_01_actions">
-                                        <a href="cart.html"><i class="icofont-cart-alt"></i></a>
-                                        <a href="{{ URL::to('product-detail/' . $rProduct->slug . '/') }}"><i class="icofont-eye"></i></a>
+                            @foreach ($relatedProducts as $rProduct)
+                                <div class="product_item text-center">
+                                    <div class="pi_thumb">
+                                        <img src="{{ !empty($productImage[$product->id]) ? asset('storage/' . $productImage[$product->id]->filename) : 'https://picsum.photos/1280/780/?blur' }}"
+                                            alt="" />
+                                        <div class="pi_01_actions">
+                                            <a href="cart.html"><i class="icofont-cart-alt"></i></a>
+                                            <a href="{{ URL::to('product-detail/' . $rProduct->slug . '/') }}"><i
+                                                    class="icofont-eye"></i></a>
+                                        </div>
+                                        <div class="prLabels">
+                                            @if ($product->stock < 1)
+                                                <span class="badge badge-info">Out of Stock</span>
+                                            @endif
+                                        </div>
                                     </div>
-                                    <div class="prLabels">
-                                        @if ($product->stock < 1)                                    
-                                        <span class="badge badge-info">Out of Stock</span>                                
-                                        @endif
+                                    <div class="pi_content">
+                                        <p>{{ $rProduct->category->name }}</p>
+                                        <h3><a
+                                                href="{{ URL::to('product-detail/' . $rProduct->slug . '/') }}">{{ $rProduct->name }}</a>
+                                        </h3>
+                                        <div class="product_price clearfix">
+                                            <span class="price"><span class="woocommerce-Price-amount amount"><bdi><span
+                                                            class="woocommerce-Price-currencySymbol">Rp</span>{{ number_format($rProduct->price, 0, '.', '.') }}</bdi></span></span>
+                                        </div>
                                     </div>
                                 </div>
-                                <div class="pi_content">
-                                    <p>{{ $rProduct->category->name }}</p>
-                                    <h3><a href="{{ URL::to('product-detail/' . $rProduct->slug . '/') }}">{{ $rProduct->name }}</a></h3>
-                                    <div class="product_price clearfix">
-                                        <span class="price"><span class="woocommerce-Price-amount amount"><bdi><span
-                                                        class="woocommerce-Price-currencySymbol">Rp</span>{{ number_format($rProduct->price, 0, '.', '.') }}</bdi></span></span>
-                                    </div>
-                                </div>
-                            </div>                            
                             @endforeach
                         </div>
                     </div>
@@ -332,10 +342,38 @@
 @endsection
 @push('js')
     <script>
-        $.ajaxSetup({
-            headers: {
-                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-            }
+        $(document).ready(function() {
+            $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                }
+            });
+        });
+
+        $("#addToCart").click(function(e) {
+            e.preventDefault();
+            var product_id = $("#product_id").val();
+            var qty = $("#qty").val();
+
+            console.log(product_id, qty);
+
+            $.ajax({
+                type: "POST",
+                url: "{{ URL::to('cart/add') }}",
+                data: {
+                    product_id: product_id,
+                    qty: qty
+                },
+                dataType: "JSON",
+                success: function(ress) {
+                    console.log(ress);
+                    
+                },
+                error: function(error) {
+                    console.log(error);
+                }
+            });
+
         });
     </script>
 @endpush

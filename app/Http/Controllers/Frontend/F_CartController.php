@@ -9,6 +9,11 @@ use Illuminate\Support\Facades\Crypt;
 
 class F_CartController extends Controller
 {
+    public function index()
+    {        
+        $cartItems = CartItem::with('product')->where('customer_id', auth()->user()->id)->where('is_paid', 0)->get();
+        return view('front.page.cart.index', compact('cartItems'));
+    }   
     public function addItems(Request $request) 
     {
         try {        

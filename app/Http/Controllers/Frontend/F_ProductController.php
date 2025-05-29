@@ -29,12 +29,7 @@ class F_ProductController extends Controller
 
         // Return the view with the product and its images
         return view('front.page.product.single', compact('product', 'productImages', 'relatedProducts'));
-    }
-    public function cart()
-    {
-        // $users = User::all(); // Example: Retrieve data from the database
-        return view('front.page.product.cart');
-    }
+    }    
     public function checkout()
     {
         // $users = User::all(); // Example: Retrieve data from the database

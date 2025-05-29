@@ -70,9 +70,9 @@ Route::get('/book', [F_ServicesController::class, 'schedule']);
 // selling page
 Route::get('/shop', [F_ProductController::class, 'index']);
 Route::get('/product-detail/{slug}', [F_ProductController::class, 'product']);
-Route::get('/cart', [F_ProductController::class, 'cart']);
 Route::get('/co', [F_ProductController::class, 'checkout']);
 
+Route::get('/cart', [F_CartController::class, 'index']);
 Route::post('/cart/add', [F_CartController::class, 'addItems']);
 Route::get('/cart/count-unpaid', [F_CartController::class, 'countUnpaidItems']);
 

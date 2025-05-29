@@ -15,4 +15,9 @@ class CartItem extends Model
     protected $guarded = [
         
     ];
+
+    public function product()
+    {
+        return $this->belongsTo(Products::class);
+    }
 }

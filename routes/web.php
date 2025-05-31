@@ -55,10 +55,12 @@ Route::group(['middleware' => ['auth']], function () {
 Route::get('/events', [F_EventsController::class, 'index']);
 Route::get('/detail-event/{slug}', [F_EventsController::class, 'detail']);
 Route::get('/join', [F_EventsController::class, 'join']);
+Route::get('/cert', [F_EventsController::class, 'cert']);
 
 
 // service page
 Route::get('/service-cat', [F_ServicesController::class, 'categories']);
+Route::post('/get-service', [F_ServicesController::class, 'getServices']);
 Route::get('/get-service-cat', [F_ServicesController::class, 'getServiceCat']);
 Route::get('/services/{slug}', [F_ServicesController::class, 'index']);
 Route::get('/service_detail/{id}', [F_ServicesController::class, 'view']);

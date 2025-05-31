@@ -3,6 +3,9 @@
 namespace App\Http\Controllers\Frontend;
 
 use App\Models\Events;
+use Dompdf\Dompdf;
+use Dompdf\Options;
+// use PDF;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -39,14 +42,42 @@ class F_EventsController extends Controller
      * @param string $slug The slug for the event
      * @return \Illuminate\Contracts\View\View
      */
+
+    public function cert()
+    {
+        $path = public_path('frontend/images/cert/cert.jpg'); // Correct local path
+        $type = pathinfo($path, PATHINFO_EXTENSION);
+        $data = file_get_contents($path);
+        $base64 = 'data:image/' . $type . ';base64,' . base64_encode($data);
+
+        // Set DomPDF options
+        $options = new Options();
+        $options->set('isRemoteEnabled', true); // Allows loading external images
+
+        // Create a new DomPDF instance with options
+        $dompdf = new Dompdf($options);
+        $pdfContent = view('front.page.events.cert', compact('base64'))->render();
+        $dompdf->loadHtml($pdfContent);
+
+        // Set paper size & render PDF
+        $dompdf->setPaper('A4', 'landscape');
+        $dompdf->render();
+        return $dompdf->stream('certificate.pdf');
+
+
+        // $pdf = PDF::loadView('front.page.events.cert');
+
+        // return $pdf->download('users.pdf');
+        // return view('front.page.events.cert');
+    }
     public function detail($slug)
     {
-        // Retrieve the event with the given slug        
+        // Retrieve the event with the given slug
         $event = Events::with('eventtype')->where('slug', $slug)->first();
 
         // Retrieve the related events
         $relatedEvents = Events::with('eventtype')->where('id', '!=', $event->id)->limit(3)->get();
-        
+
         // Return the view with the event and the related events
         return view('front.page.events.detail', compact('event', 'relatedEvents'));
     }

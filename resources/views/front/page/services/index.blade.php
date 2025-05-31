@@ -57,7 +57,7 @@
                                         <a href="{{ '/book' }}"><i class="icofont-cart-alt"></i></a>
                                         <a href="{{ '/service_detail' }}"><i class="icofont-eye"></i></a>
                                     </div>
-                                    <div class="prLabels">                                        
+                                    <div class="prLabels">
                                     </div>
                                 </div> --}}
                                 <div class="pi_content">
@@ -93,6 +93,8 @@
 @endsection
 @push('js')
     <script>
+
+
         $.ajaxSetup({
             headers: {
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')

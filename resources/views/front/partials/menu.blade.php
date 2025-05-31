@@ -7,14 +7,15 @@
         <li><a href="contact.html">Contact</a></li>
         @if (Auth::check())
         <li class="menu-item-has-children">
-            <a href="javascript:void(0);">{{ Auth::user()->name }}</a>
+            <a href="javascript:void(0);" id="userMenu">{{ Auth::user()->name }}</a>
             <ul class="sub-menu">
+                <li><a href="{{ '/cart' }}">My Cart <span class="badge badge-info" id="cart_count">0</span></a></li>
                 <li><a href="/account">My Account</a></li>
                 <li><a href="{{ '/riwayat-transaksi' }}">Transactions History</a></li>
                 <li><a href="{{ '/tenant-register' }}">Register Tenant</a></li>
                 <li><a href="{{ URL::to('logout') }}">Logout</a></li>
             </ul>
-        </li>
+        </li>        
         @else
             <li><a href="/login">Login</a></li>
         @endif

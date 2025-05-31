@@ -68,9 +68,9 @@
         <div class="container">
             <div class="row">
                 <div class="col-lg-12">
-                    <div class="woocommerce">
+                    <div class="woocommerce" id="cartTables">
                         <form action="#" method="post" class="woocommerce-cart-form">
-                            <table class="shop_table">
+                            <table class="shop_table" id="cartTable">
                                 <thead>
                                     <tr>
                                         <th class="product-name">Item</th>
@@ -81,71 +81,38 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr class="cart_item">
-                                        <td class="product-name" data-title="Product">
-                                            <a class="p-img" href="single-product.html"><img
-                                                    src="{{ asset('frontend/') }}/images/product/2.jpg" alt=""></a>
-                                            <a href="single-product.html">Cream & Brush</a>
-                                        </td>
-                                        <td class="product-price" data-title="Price">
-                                            <span class="woocommerce-Price-amount amount"><bdi><span
-                                                        class="woocommerce-Price-currencySymbol">$</span>87.00</bdi></span>
-                                        </td>
-                                        <td class="product-quantity" data-title="Quantity">
-                                            <div class="quantity quantityd clearfix">
-                                                <button type="button" class="minus qtyBtn btnMinus">-</button>
-                                                <input type="number" class="carqty input-text qty text" name="quantity"
-                                                    value="2">
-                                                <button type="button" class="plus qtyBtn btnPlus">+</button>
-                                            </div>
-                                        </td>
-                                        <td class="product-subtotal" data-title="Subtotal">
-                                            <span class="woocommerce-Price-amount amount"><bdi><span
-                                                        class="woocommerce-Price-currencySymbol">$</span>174.00</bdi></span>
-                                        </td>
-                                        <td class="product-remove">
-                                            <a href="javascript:void(0);" class="remove">×</a>
-                                        </td>
-                                    </tr>
-                                    <tr class="cart_item">
-                                        <td class="product-name" data-title="Product">
-                                            <a class="p-img" href="single-product.html"><img
-                                                    src="{{ asset('frontend/') }}/images/product/4.jpg" alt=""></a>
-                                            <a href="single-product.html">Beauty Harbal Soap</a>
-                                        </td>
-                                        <td class="product-price" data-title="Price">
-                                            <span class="woocommerce-Price-amount amount"><bdi><span
-                                                        class="woocommerce-Price-currencySymbol">$</span>99.99</bdi></span>
-                                        </td>
-                                        <td class="product-quantity" data-title="Quantity">
-                                            <div class="quantity quantityd clearfix">
-                                                <button type="button" class="minus qtyBtn btnMinus">-</button>
-                                                <input type="number" class="carqty input-text qty text" name="quantity"
-                                                    value="1">
-                                                <button type="button" class="plus qtyBtn btnPlus">+</button>
-                                            </div>
-                                        </td>
-                                        <td class="product-subtotal" data-title="Subtotal">
-                                            <span class="woocommerce-Price-amount amount"><bdi><span
-                                                        class="woocommerce-Price-currencySymbol">$</span>99.99</bdi></span>
-                                        </td>
-                                        <td class="product-remove">
-                                            <a href="javascript:void(0);" class="remove">×</a>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td colspan="6" class="actions">
-                                            <div class="coupon">
-                                                <label for="coupon_code">Coupon:</label>
-                                                <input type="text" name="coupon_code" class="input-text"
-                                                    id="coupon_code" value="" placeholder="Coupon code">
-                                                <button type="submit" class="button" name="apply_coupon"
-                                                    value="Apply coupon">Apply coupon</button>
-                                            </div>
-                                            <button type="submit" class="button update" name="update_cart"
-                                                value="Update cart">Update cart</button>
-                                        </td>
-                                    </tr>
+                                    @foreach ($cartItems as $item)
+                                        @php
+                                            $subtotal = $item->product->price * $item->qty;
+                                        @endphp
+                                        <tr class="cart_item">
+                                            <td class="product-name" data-title="Product">
+                                                <a class="p-img" href="single-product.html"><img
+                                                        src="{{ asset('frontend/') }}/images/product/2.jpg"
+                                                        alt=""></a>
+                                                <a href="javascript:void(0);">{{ $item->product->name }}</a>
+                                            </td>
+                                            <td class="product-price" data-title="Price">
+                                                <span class="woocommerce-Price-amount amount"><bdi><span
+                                                            class="woocommerce-Price-currencySymbol">Rp</span>{{ number_format($item->product->price, 0, '.', '.') }}</bdi></span>
+                                            </td>
+                                            <td class="product-quantity" data-title="Quantity">
+                                                <div class="quantity quantityd clearfix">
+                                                    <button type="button" class="minus qtyBtn btnMinus">-</button>
+                                                    <input type="number" class="carqty input-text qty text" name="quantity"
+                                                        value="{{ $item->qty }}">
+                                                    <button type="button" class="plus qtyBtn btnPlus">+</button>
+                                                </div>
+                                            </td>
+                                            <td class="product-subtotal" data-title="Subtotal">
+                                                <span class="woocommerce-Price-amount amount"><bdi><span
+                                                            class="woocommerce-Price-currencySymbol">$</span>{{ number_format($subtotal, 0, '.', '.') }}</bdi></span>
+                                            </td>
+                                            <td class="product-remove">
+                                                <a href="javascript:void(0);" class="remove">×</a>
+                                            </td>
+                                        </tr>
+                                    @endforeach
                                 </tbody>
                             </table>
                         </form>
@@ -216,10 +183,12 @@
 @endsection
 @push('js')
     <script>
-        $.ajaxSetup({
-            headers: {
-                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-            }
-        });
+        $(document).ready(function() {
+            $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                }
+            });            
+        });        
     </script>
 @endpush

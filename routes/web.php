@@ -37,6 +37,7 @@ Route::group(['middleware' => ['auth']], function () {
     Route::get('/tenant/data', [F_AccountController::class, 'get_tenant']);
     Route::post('/savebio', [F_AccountController::class, 'save']);
     Route::post('/saveaddress', [F_AccountController::class, 'save_address']);
+    Route::get('/participations', [F_AccountController::class, 'participation']);
 
     // booking
     Route::get('service-booking/{service_id}/{date}/{slot_id}', [F_BookingController::class, 'service_booking']);

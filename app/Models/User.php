@@ -9,7 +9,11 @@ use Spatie\Permission\Traits\HasRoles;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasManyThrough;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Support\Collection;
 
 class User extends Authenticatable
 {
@@ -24,7 +28,7 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
-        'gauth_id', 
+        'gauth_id',
         'gauth_type',
     ];
 
@@ -47,4 +51,17 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
         'password' => 'hashed',
     ];
+    public function events(): BelongsToMany
+    {
+        return $this->belongsToMany(Events::class, 'event_participants', 'user_id', 'event_id');
+    }
+
+    public function hasParticipated()
+    {
+        return Events::query()
+            ->join('event_participants', 'events.id', '=', 'event_participants.event_id')
+            ->join('users', 'event_participants.user_id', '=', 'users.id')
+            ->leftJoin('certificates', 'event_participants.id', '=', 'certificates.event_participant_id')
+            ->where('event_participants.user_id', $this->id);
+    }
 }

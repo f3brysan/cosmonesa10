@@ -128,7 +128,7 @@
                                             <tbody>
                                                 <tr class="cart-subtotal">
                                                     <th>Subtotal</th>
-                                                    <td data-title="Subtotal"><span class="amount">$173.00</span></td>
+                                                    <td data-title="Subtotal"><span class="amount" id="cartTotal">Rp {{ $totalPaid['total'] }}</span></td>
                                                 </tr>
                                                 <tr class="woocommerce-shipping-totals shipping">
                                                     <th>Shipping</th>
@@ -139,37 +139,22 @@
                                                                     data-index="0" id="shipping_method_0_flat_rate1"
                                                                     value="flat_rate:1" class="shipping_method"
                                                                     checked="checked"><label
-                                                                    for="shipping_method_0_flat_rate1">Flat rate: <span
+                                                                    for="shipping_method_0_flat_rate1">JNE {{ $totalPaid['serviceShipping'] }} ({{ $totalPaid['estimatedDays'] }} hari) <span
                                                                         class="woocommerce-Price-amount amount"><bdi><span
-                                                                                class="woocommerce-Price-currencySymbol">$</span>10.00</bdi></span></label>
-                                                            </li>
-                                                            <li>
-                                                                <input type="radio" name="shipping_method[0]"
-                                                                    data-index="0" id="shipping_method_0_free_shipping2"
-                                                                    value="free_shipping:2" class="shipping_method"><label
-                                                                    for="shipping_method_0_free_shipping2">Free
-                                                                    shipping</label>
-                                                            </li>
-                                                            <li>
-                                                                <input type="radio" name="shipping_method[0]"
-                                                                    data-index="0" id="shipping_method_0_local_pickup3"
-                                                                    value="local_pickup:3" class="shipping_method"><label
-                                                                    for="shipping_method_0_local_pickup3">Local pickup:
-                                                                    <span class="woocommerce-Price-amount amount"><bdi><span
-                                                                                class="woocommerce-Price-currencySymbol">$</span>10.00</bdi></span></label>
-                                                            </li>
+                                                                                class="woocommerce-Price-currencySymbol">Rp</span><span id="shippingCost">{{ $totalPaid['ongkir'] }}</span></bdi></span></label>
+                                                            </li>                                                           
                                                         </ul>
                                                     </td>
                                                 </tr>
                                                 <tr class="order-total">
                                                     <th>Total</th>
                                                     <td data-title="Total"><strong><span
-                                                                class="amount">$173.00</span></strong> </td>
+                                                                class="amount" id="grandTotal">Rp {{ $totalPaid['totalPaid'] }}</span></strong> </td>
                                                 </tr>
                                             </tbody>
                                         </table>
                                         <div class="wc-proceed-to-checkout">
-                                            <a class="checkout-button alt wc-forward" href="{{ '/co' }}">Proceed
+                                            <a class="checkout-button alt wc-forward" href="{{ URL::to('checkout') }}">Proceed
                                                 to Checkout</a>
                                         </div>
                                     </div>
@@ -208,7 +193,9 @@
                 success: function(response) {
                     console.log(response);
                     if (response.success === true) {
-                        $("#subTotal_" + id).html(response.subtotal);                        
+                        $("#subTotal_" + id).html(response.subtotal);     
+                        $("#cartTotal").html('Rp '+response.total);        
+                        $("#grandTotal").html('Rp '+response.totalPaid);           
                     }
                 },
                 error: function(xhr, status, error) {

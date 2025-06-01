@@ -63,12 +63,6 @@ class F_EventsController extends Controller
         $dompdf->setPaper('A4', 'landscape');
         $dompdf->render();
         return $dompdf->stream('certificate.pdf');
-
-
-        // $pdf = PDF::loadView('front.page.events.cert');
-
-        // return $pdf->download('users.pdf');
-        // return view('front.page.events.cert');
     }
     public function detail($slug)
     {

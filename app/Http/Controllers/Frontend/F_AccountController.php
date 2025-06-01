@@ -322,4 +322,44 @@ class F_AccountController extends Controller
             ]);
         }
     }
+    public function get_cert_data()
+    {
+        try {
+            // Get the authenticated user
+            $event_id  = request()->event_id;
+            $userAuth = auth()->user();
+
+            // Redirect to login if user is not authenticated
+            if (!$userAuth) {
+                return redirect()->route('login');
+            }
+            $data = $userAuth
+                ->hasParticipated()
+                ->select(
+                    'events.id',
+                    'events.title',
+                    'events.slug',
+                    'start_date',
+                    'end_date',
+                    'users.name AS fullname',
+                    'certificates.id AS certificate_id',
+                    'certificates.serial_number',
+                    'certificates.pic AS signatory',
+                    'issued_at',
+                    'valid_until'
+                )
+                ->where('events.id', $event_id)
+                ->get();
+            return response()->json([
+                'status' => true,
+                'message' => 'Berhasil',
+                'data' => $data
+            ]);
+        } catch (\Throwable $th) {
+            return response()->json([
+                'status' => false,
+                'message' => $th->getMessage()
+            ]);
+        }
+    }
 }

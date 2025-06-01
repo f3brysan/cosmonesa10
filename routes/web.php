@@ -77,6 +77,7 @@ Route::get('/co', [F_ProductController::class, 'checkout']);
 
 Route::get('/cart', [F_CartController::class, 'index']);
 Route::post('/cart/add', [F_CartController::class, 'addItems']);
+Route::post('/cart/change-qty', [F_CartController::class, 'changeQty']);
 Route::get('/cart/count-unpaid', [F_CartController::class, 'countUnpaidItems']);
 
 //auth page

@@ -98,15 +98,17 @@
                                             </td>
                                             <td class="product-quantity" data-title="Quantity">
                                                 <div class="quantity quantityd clearfix">
-                                                    <button type="button" class="minus qtyBtn btnMinus">-</button>
+                                                    <button type="button" class="minus qtyBtn btnMinus"
+                                                        onclick="changeQty('{{ $item->product_id }}', 'minus')">-</button>
                                                     <input type="number" class="carqty input-text qty text" name="quantity"
-                                                        value="{{ $item->qty }}">
-                                                    <button type="button" class="plus qtyBtn btnPlus">+</button>
+                                                        value="{{ $item->qty }}" readonly>
+                                                    <button type="button" class="plus qtyBtn btnPlus"
+                                                        onclick="changeQty('{{ $item->product_id }}', 'plus')">+</button>
                                                 </div>
                                             </td>
                                             <td class="product-subtotal" data-title="Subtotal">
                                                 <span class="woocommerce-Price-amount amount"><bdi><span
-                                                            class="woocommerce-Price-currencySymbol">$</span>{{ number_format($subtotal, 0, '.', '.') }}</bdi></span>
+                                                            class="woocommerce-Price-currencySymbol">Rp </span><span id="subTotal_{{ $item->product_id }}">{{ number_format($subtotal, 0, '.', '.') }}</span></bdi></span>
                                             </td>
                                             <td class="product-remove">
                                                 <a href="javascript:void(0);" class="remove">×</a>
@@ -188,7 +190,33 @@
                 headers: {
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                 }
-            });            
-        });        
+            });
+        });
+    </script>
+
+    <script>
+        function changeQty(id, type) {
+            console.log(id, type);
+            $.ajax({
+                type: "POST",
+                url: "{{ URL::to('cart/change-qty') }}",
+                data: {
+                    id: id,
+                    type: type
+                },
+                dataType: "JSON",
+                success: function(response) {
+                    console.log(response);
+                    if (response.success === true) {
+                        $("#subTotal_" + id).html(response.subtotal);                        
+                    }
+                },
+                error: function(xhr, status, error) {
+                    console.error("Error:", error);
+                }
+            });
+
+
+        }
     </script>
 @endpush

@@ -14,6 +14,7 @@ class Certificates extends Model
     use HasUuids;
     protected $table = 'certificates';
     public $incrementing = false;
+    public $timestamps = false;
     /**
      * The attributes that are mass assignable.
      *

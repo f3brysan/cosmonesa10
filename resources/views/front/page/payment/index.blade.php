@@ -39,35 +39,13 @@
                                     </td>
                                 </tr>
                                 @if ($transaction->type == 'product')
-                                    <tr class="woocommerce-shipping-totals shipping">
-                                        <th>Shipping</th>
-                                        <td data-title="Shipping">
-                                            <ul id="shipping_method" class="woocommerce-shipping-methods">
-                                                <li>
-                                                    <input type="radio" name="shipping_method[0]" data-index="0"
-                                                        id="shipping_method_0_flat_rate1" value="flat_rate:1"
-                                                        class="shipping_method" checked="checked"><label
-                                                        for="shipping_method_0_flat_rate1">Flat rate: <span
-                                                            class="woocommerce-Price-amount amount"><bdi><span
-                                                                    class="woocommerce-Price-currencySymbol">$</span>10.00</bdi></span></label>
-                                                </li>
-                                                <li>
-                                                    <input type="radio" name="shipping_method[0]" data-index="0"
-                                                        id="shipping_method_0_free_shipping2" value="free_shipping:2"
-                                                        class="shipping_method"><label
-                                                        for="shipping_method_0_free_shipping2">Free shipping</label>
-                                                </li>
-                                                <li>
-                                                    <input type="radio" name="shipping_method[0]" data-index="0"
-                                                        id="shipping_method_0_local_pickup3" value="local_pickup:3"
-                                                        class="shipping_method"><label
-                                                        for="shipping_method_0_local_pickup3">Local pickup: <span
-                                                            class="woocommerce-Price-amount amount"><bdi><span
-                                                                    class="woocommerce-Price-currencySymbol">$</span>10.00</bdi></span></label>
-                                                </li>
-                                            </ul>
-                                        </td>
-                                    </tr>
+                                    <tr class="cart-subtotal">
+                                    <th>Shipping</th>
+                                    <td>
+                                        <span class="woocommerce-Price-amount amount"><bdi><span
+                                                    class="woocommerce-Price-currencySymbol">Rp</span>{{ number_format($transaction->shipping, 0, '.', '.') }}</bdi></span>
+                                    </td>
+                                </tr>
                                 @endif
                                 <tr class="order-total">
                                     <th>Total</th>
@@ -122,7 +100,7 @@
                                     </div>
                                     <button type="submit" class="button">Submit</button>
                                 </div>
-                            </form>                        
+                            </form>
                         @endif
                     </div>
                 </div>

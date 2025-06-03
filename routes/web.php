@@ -40,10 +40,6 @@ Route::group(['middleware' => ['auth']], function () {
 
     // booking
     Route::get('service-booking/{service_id}/{date}/{slot_id}', [F_BookingController::class, 'service_booking']);
-
-    Route::get('checkout/{transaction_id}', [F_PaymentController::class, 'index']);
-    Route::post('checkout-store', [F_PaymentController::class, 'storePayment']);
-
     // Transactions
     Route::get('riwayat-transaksi', [F_TransactionController::class, 'index']);
 });
@@ -79,6 +75,11 @@ Route::get('/cart', [F_CartController::class, 'index']);
 Route::post('/cart/add', [F_CartController::class, 'addItems']);
 Route::post('/cart/change-qty', [F_CartController::class, 'changeQty']);
 Route::get('/cart/count-unpaid', [F_CartController::class, 'countUnpaidItems']);
+
+// checkout
+Route::post('/checkout', [F_CartController::class, 'checkout']);
+Route::get('checkout/{transaction_id}', [F_PaymentController::class, 'index']);
+Route::post('checkout-store', [F_PaymentController::class, 'storePayment']);
 
 //auth page
 Route::get('/login', function () {

@@ -16,7 +16,7 @@ class F_CartController extends Controller
     {
         $cartItems = CartItem::with('product')->where('customer_id', auth()->user()->id)->where('is_paid', 0)->get();
         $totalPaid = $this->countTotalPaid();
-        
+
         return view('front.page.cart.index', compact('cartItems', 'totalPaid'));
     }
     public function addItems(Request $request)
@@ -176,12 +176,6 @@ class F_CartController extends Controller
         }
     }
 
-    /**
-     * Calculate the total paid for the items in the cart
-     * including the shipping cost.
-     *
-     * @return array
-     */
     public function countTotalPaid()
     {
         // Get all the items in the cart that are not paid yet
@@ -205,7 +199,7 @@ class F_CartController extends Controller
         $citiesOrigins = '444';
 
         // Initialize the shipping cost and estimated days
-        $ongkir = 0;        
+        $ongkir = 0;
 
         // Get the shipping cost from RajaOngkir API
         $rajaOngkir = new RajaOngkirService();
@@ -234,5 +228,43 @@ class F_CartController extends Controller
         ];
 
         return $result;
+    }
+
+    public function checkout(Request $request)
+    {
+        try {
+            $getCartItems = CartItem::with('product')->where('customer_id', auth()->user()->id)->where('is_paid', 0)->get();
+
+            foreach ($getCartItems as $key => $value) {
+                if ($value->product->stock < $value->qty) {
+                    return response()->json([
+                        'success' => false,
+                        'message' => 'Stok barang tidak mencukupi'
+                    ], 500);
+                }
+            }
+
+            $cartTotalPrice = (int) preg_replace('/\D/', '', $request->grandTotal);
+            $shippingCost = (int) preg_replace('/\D/', '', $request->shippingCost);
+
+            $costArray = [
+                'cartTotalPrice' => $cartTotalPrice,
+                'shippingCost' => $shippingCost
+            ];
+
+            $transaction = new F_TransactionController();
+            $createTransaction = $transaction->createTransaction('product', $costArray);
+
+            $transaction_id = $createTransaction['transaction_id'];
+            $transaction_id_crypt = Crypt::encrypt($transaction_id->__tostring());            
+
+            return response()->json([
+                'success' => true,
+                'transaction_id' => $transaction_id_crypt
+            ], 200);
+
+        } catch (\Throwable $th) {
+            //throw $th;
+        }
     }
 }

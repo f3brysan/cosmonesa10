@@ -139,7 +139,7 @@
                                                                     data-index="0" id="shipping_method_0_flat_rate1"
                                                                     value="flat_rate:1" class="shipping_method"
                                                                     checked="checked"><label
-                                                                    for="shipping_method_0_flat_rate1">JNE {{ $totalPaid['serviceShipping'] }} ({{ $totalPaid['estimatedDays'] }} hari) <span
+                                                                    for="shipping_method_0_flat_rate1">Estimasi ({{ $totalPaid['estimatedDays'] }} hari) <span
                                                                         class="woocommerce-Price-amount amount"><bdi><span
                                                                                 class="woocommerce-Price-currencySymbol">Rp</span><span id="shippingCost">{{ $totalPaid['ongkir'] }}</span></bdi></span></label>
                                                             </li>                                                           
@@ -154,7 +154,7 @@
                                             </tbody>
                                         </table>
                                         <div class="wc-proceed-to-checkout">
-                                            <a class="checkout-button alt wc-forward" href="{{ URL::to('checkout') }}">Proceed
+                                            <a class="checkout-button alt wc-forward" onclick="checkoutCart()" href="javascript:void(0);">Proceed
                                                 to Checkout</a>
                                         </div>
                                     </div>
@@ -202,8 +202,28 @@
                     console.error("Error:", error);
                 }
             });
+        }
 
+        function checkoutCart() {
+            var grandTotal = $("#cartTotal").html();
+            var shippingCost = $("#shippingCost").html();
 
+            $.ajax({
+                type: "POST",
+                url: "{{ URL::to('checkout') }}",
+                data: {
+                    grandTotal: grandTotal,
+                    shippingCost: shippingCost
+                },
+                dataType: "JSON",
+                success: function (response) {
+                    console.log(response);      
+                    if (response.success === true) {
+                        window.location.href = "{{ URL::to('checkout') }}/" + response.transaction_id;
+                    }                            
+                }
+            });
+            
         }
     </script>
 @endpush

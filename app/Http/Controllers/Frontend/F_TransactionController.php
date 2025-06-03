@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Frontend;
 
 use App\Models\Events;
+use App\Models\CartItem;
 use App\Models\Services;
 use App\Models\Transaction;
 use Illuminate\Support\Str;
@@ -29,7 +30,7 @@ class F_TransactionController extends Controller
                 $typecode = 'INV';
                 break;
         }
-        
+
         $autocode = $typecode . date('Ymd');
         $lastcode = Transaction::where('type', $type)
             ->orderByDesc('created_at')
@@ -45,29 +46,83 @@ class F_TransactionController extends Controller
         } else {
             $autocode .= str_pad(1, 5, '0', STR_PAD_LEFT);
         }
-        
+
         return $autocode;
     }
 
     public function index()
     {
         $transactions = Transaction::with('transaction_detail')->where('customer_id', auth()->user()->id)->get();
-        
+
         return view('front.page.transactions.index', compact('transactions'));
     }
 
     public function createTransaction($type, $reference_id = null)
     {
-        try {            
+        try {
             $autocode = $this->autocode($type);
-            
+
             if (in_array($type, ['service', 'event'])) {
                 $insertTransaction = $this->nonCart($type, $autocode, $reference_id);
             }
-            
+
+            if (in_array($type, ['product'])) {
+                $insertTransaction = $this->cart($type, $autocode, $reference_id);
+            }
+
             return $insertTransaction;
         } catch (\Throwable $th) {
             return $th->getMessage();
+        }
+    }
+
+    public function cart($type, $code, $costArray)
+    {
+        $uuid = Str::orderedUuid();
+        $void_at = date('Y-m-d H:i:s', strtotime(date('Y-m-d H:i:s') . '+1 day'));
+
+        $getCartItems = CartItem::with('product')->where('customer_id', auth()->user()->id)->where('is_paid', 0)->get();
+
+        try {
+            DB::beginTransaction();
+            $insertTransaction = Transaction::create([
+                'id' => $uuid,
+                'code' => $code,
+                'customer_id' => auth()->user()->id,
+                'type' => $type,
+                'total' => $costArray['cartTotalPrice'],
+                'shipping' => $costArray['shippingCost'],
+                'note' => 'Pembelian ' . count($getCartItems) . ' produk',
+                'payment_status' => 'unpaid',
+                'void_at' => $void_at
+            ]);
+
+            // Loop through the cart items and create a new transaction detail
+            // for each one.
+            foreach ($getCartItems as $key => $value) {
+                $insertDetail = TransactionDetail::create([
+                    'transaction_id' => $uuid,
+                    'reference_id' => $value->product_id,
+                    'description' => $value->product->name,
+                    'qty' => $value->qty,
+                    'price' => $value->product->price,
+                    'sub_total' => $value->product->price * $value->qty
+                ]);
+            }
+
+            DB::commit();
+            return [
+                'status' => true,
+                'message' => 'Berhasil',
+                'transaction_id' => $uuid,
+                'data' => $insertTransaction
+            ];
+        } catch (\Throwable $th) {
+            DB::rollBack();
+            return [
+                'status' => false,
+                'message' => $th->getMessage()
+            ];
         }
     }
 
@@ -75,9 +130,9 @@ class F_TransactionController extends Controller
     {
         $uuid = Str::orderedUuid();
         $void_at = date('Y-m-d H:i:s', strtotime(date('Y-m-d H:i:s') . '+1 day'));
-        
+
         if ($type == 'service') {
-            $reference = Services::find($reference_id);            
+            $reference = Services::find($reference_id);
             $price = $reference->price;
             $reference = $reference->name;
         }
@@ -87,7 +142,7 @@ class F_TransactionController extends Controller
             $price = $reference->price;
             $reference = $reference->name;
         }
-        
+
         try {
             DB::beginTransaction();
             $insertTransaction = Transaction::create([
@@ -107,7 +162,7 @@ class F_TransactionController extends Controller
                 'description' => $reference,
                 'qty' => 1,
                 'price' => $price,
-                'sub_total' => $price*1                
+                'sub_total' => $price * 1
             ]);
 
             DB::commit();
@@ -124,10 +179,5 @@ class F_TransactionController extends Controller
                 'message' => $th->getMessage()
             ];
         }
-
-
-
-
-
     }
 }

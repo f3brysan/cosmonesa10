@@ -114,6 +114,12 @@
                     </li>
                 </ul>
             </li>
+            <li class="menu-item">
+            <a href="{{ URL::to('back/transaction-history') }}" class="menu-link">
+                <i class="menu-icon tf-icons bx bx-list-ul"></i>
+                <div class="text-truncate" data-i18n="Basic">Histori Transaksi</div>
+            </a>
+        </li>
         @endrole
 
         @role('seller')

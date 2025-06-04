@@ -15,8 +15,11 @@ class F_CartController extends Controller
     public function index()
     {
         $cartItems = CartItem::with('product')->where('customer_id', auth()->user()->id)->where('is_paid', 0)->get();
-        $totalPaid = $this->countTotalPaid();
-
+        $totalPaid = [];
+        if (count($cartItems) > 0) {            
+            $totalPaid = $this->countTotalPaid();        
+        }
+        
         return view('front.page.cart.index', compact('cartItems', 'totalPaid'));
     }
     public function addItems(Request $request)

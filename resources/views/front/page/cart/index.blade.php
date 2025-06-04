@@ -81,86 +81,100 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @foreach ($cartItems as $item)
-                                        @php
-                                            $subtotal = $item->product->price * $item->qty;
-                                        @endphp
-                                        <tr class="cart_item">
-                                            <td class="product-name" data-title="Product">
-                                                <a class="p-img" href="single-product.html"><img
-                                                        src="{{ asset('frontend/') }}/images/product/2.jpg"
-                                                        alt=""></a>
-                                                <a href="javascript:void(0);">{{ $item->product->name }}</a>
-                                            </td>
-                                            <td class="product-price" data-title="Price">
-                                                <span class="woocommerce-Price-amount amount"><bdi><span
-                                                            class="woocommerce-Price-currencySymbol">Rp</span>{{ number_format($item->product->price, 0, '.', '.') }}</bdi></span>
-                                            </td>
-                                            <td class="product-quantity" data-title="Quantity">
-                                                <div class="quantity quantityd clearfix">
-                                                    <button type="button" class="minus qtyBtn btnMinus"
-                                                        onclick="changeQty('{{ $item->product_id }}', 'minus')">-</button>
-                                                    <input type="number" class="carqty input-text qty text" name="quantity"
-                                                        value="{{ $item->qty }}" readonly>
-                                                    <button type="button" class="plus qtyBtn btnPlus"
-                                                        onclick="changeQty('{{ $item->product_id }}', 'plus')">+</button>
-                                                </div>
-                                            </td>
-                                            <td class="product-subtotal" data-title="Subtotal">
-                                                <span class="woocommerce-Price-amount amount"><bdi><span
-                                                            class="woocommerce-Price-currencySymbol">Rp </span><span id="subTotal_{{ $item->product_id }}">{{ number_format($subtotal, 0, '.', '.') }}</span></bdi></span>
-                                            </td>
-                                            <td class="product-remove">
-                                                <a href="javascript:void(0);" class="remove">×</a>
-                                            </td>
-                                        </tr>
-                                    @endforeach
+                                    @if (count($cartItems) > 0)
+                                        @foreach ($cartItems as $item)
+                                            @php
+                                                $subtotal = $item->product->price * $item->qty;
+                                            @endphp
+                                            <tr class="cart_item">
+                                                <td class="product-name" data-title="Product">
+                                                    <a class="p-img" href="single-product.html"><img
+                                                            src="{{ asset('frontend/') }}/images/product/2.jpg"
+                                                            alt=""></a>
+                                                    <a href="javascript:void(0);">{{ $item->product->name }}</a>
+                                                </td>
+                                                <td class="product-price" data-title="Price">
+                                                    <span class="woocommerce-Price-amount amount"><bdi><span
+                                                                class="woocommerce-Price-currencySymbol">Rp</span>{{ number_format($item->product->price, 0, '.', '.') }}</bdi></span>
+                                                </td>
+                                                <td class="product-quantity" data-title="Quantity">
+                                                    <div class="quantity quantityd clearfix">
+                                                        <button type="button" class="minus qtyBtn btnMinus"
+                                                            onclick="changeQty('{{ $item->product_id }}', 'minus')">-</button>
+                                                        <input type="number" class="carqty input-text qty text"
+                                                            name="quantity" value="{{ $item->qty }}" readonly>
+                                                        <button type="button" class="plus qtyBtn btnPlus"
+                                                            onclick="changeQty('{{ $item->product_id }}', 'plus')">+</button>
+                                                    </div>
+                                                </td>
+                                                <td class="product-subtotal" data-title="Subtotal">
+                                                    <span class="woocommerce-Price-amount amount"><bdi><span
+                                                                class="woocommerce-Price-currencySymbol">Rp </span><span
+                                                                id="subTotal_{{ $item->product_id }}">{{ number_format($subtotal, 0, '.', '.') }}</span></bdi></span>
+                                                </td>
+                                                <td class="product-remove">
+                                                    <a href="javascript:void(0);" class="remove">×</a>
+                                                </td>
+                                            </tr>
+                                        @endforeach
+                                    @else
+                                        <tr>
+                                            <td colspan="5" class="text-center">Cart is empty</td>
+                                        </tr>                                        
+                                    @endif
                                 </tbody>
                             </table>
                         </form>
-                        <div class="row">
-                            <div class="col-xl-7 col-lg-6 col-md-4"></div>
-                            <div class="col-xl-5 col-lg-6 col-md-8">
-                                <div class="cart-collaterals">
-                                    <div class="cart_totals">
-                                        <h2>Cart Totals</h2>
-                                        <table class="shop_table shop_table_responsive">
-                                            <tbody>
-                                                <tr class="cart-subtotal">
-                                                    <th>Subtotal</th>
-                                                    <td data-title="Subtotal"><span class="amount" id="cartTotal">Rp {{ $totalPaid['total'] }}</span></td>
-                                                </tr>
-                                                <tr class="woocommerce-shipping-totals shipping">
-                                                    <th>Shipping</th>
-                                                    <td data-title="Shipping">
-                                                        <ul id="shipping_method" class="woocommerce-shipping-methods">
-                                                            <li>
-                                                                <input type="radio" name="shipping_method[0]"
-                                                                    data-index="0" id="shipping_method_0_flat_rate1"
-                                                                    value="flat_rate:1" class="shipping_method"
-                                                                    checked="checked"><label
-                                                                    for="shipping_method_0_flat_rate1">Estimasi ({{ $totalPaid['estimatedDays'] }} hari) <span
-                                                                        class="woocommerce-Price-amount amount"><bdi><span
-                                                                                class="woocommerce-Price-currencySymbol">Rp</span><span id="shippingCost">{{ $totalPaid['ongkir'] }}</span></bdi></span></label>
-                                                            </li>                                                           
-                                                        </ul>
-                                                    </td>
-                                                </tr>
-                                                <tr class="order-total">
-                                                    <th>Total</th>
-                                                    <td data-title="Total"><strong><span
-                                                                class="amount" id="grandTotal">Rp {{ $totalPaid['totalPaid'] }}</span></strong> </td>
-                                                </tr>
-                                            </tbody>
-                                        </table>
-                                        <div class="wc-proceed-to-checkout">
-                                            <a class="checkout-button alt wc-forward" onclick="checkoutCart()" href="javascript:void(0);">Proceed
-                                                to Checkout</a>
+                        @if (!empty($totalPaid))
+                            <div class="row">
+                                <div class="col-xl-7 col-lg-6 col-md-4"></div>
+                                <div class="col-xl-5 col-lg-6 col-md-8">
+                                    <div class="cart-collaterals">
+                                        <div class="cart_totals">
+                                            <h2>Cart Totals</h2>
+                                            <table class="shop_table shop_table_responsive">
+                                                <tbody>
+                                                    <tr class="cart-subtotal">
+                                                        <th>Subtotal</th>
+                                                        <td data-title="Subtotal"><span class="amount" id="cartTotal">Rp
+                                                                {{ $totalPaid['total'] }}</span></td>
+                                                    </tr>
+                                                    <tr class="woocommerce-shipping-totals shipping">
+                                                        <th>Shipping</th>
+                                                        <td data-title="Shipping">
+                                                            <ul id="shipping_method" class="woocommerce-shipping-methods">
+                                                                <li>
+                                                                    <input type="radio" name="shipping_method[0]"
+                                                                        data-index="0" id="shipping_method_0_flat_rate1"
+                                                                        value="flat_rate:1" class="shipping_method"
+                                                                        checked="checked"><label
+                                                                        for="shipping_method_0_flat_rate1">Estimasi
+                                                                        ({{ $totalPaid['estimatedDays'] }} hari) <span
+                                                                            class="woocommerce-Price-amount amount"><bdi><span
+                                                                                    class="woocommerce-Price-currencySymbol">Rp</span><span
+                                                                                    id="shippingCost">{{ $totalPaid['ongkir'] }}</span></bdi></span></label>
+                                                                </li>
+                                                            </ul>
+                                                        </td>
+                                                    </tr>
+                                                    <tr class="order-total">
+                                                        <th>Total</th>
+                                                        <td data-title="Total"><strong><span class="amount"
+                                                                    id="grandTotal">Rp
+                                                                    {{ $totalPaid['totalPaid'] }}</span></strong> </td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                            <div class="wc-proceed-to-checkout">
+                                                <a class="checkout-button alt wc-forward" onclick="checkoutCart()"
+                                                    href="javascript:void(0);">Proceed
+                                                    to Checkout</a>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                        </div>
+                        @endif
                     </div>
                 </div>
             </div>
@@ -193,9 +207,9 @@
                 success: function(response) {
                     console.log(response);
                     if (response.success === true) {
-                        $("#subTotal_" + id).html(response.subtotal);     
-                        $("#cartTotal").html('Rp '+response.total);        
-                        $("#grandTotal").html('Rp '+response.totalPaid);           
+                        $("#subTotal_" + id).html(response.subtotal);
+                        $("#cartTotal").html('Rp ' + response.total);
+                        $("#grandTotal").html('Rp ' + response.totalPaid);
                     }
                 },
                 error: function(xhr, status, error) {
@@ -216,14 +230,14 @@
                     shippingCost: shippingCost
                 },
                 dataType: "JSON",
-                success: function (response) {
-                    console.log(response);      
+                success: function(response) {
+                    console.log(response);
                     if (response.success === true) {
                         window.location.href = "{{ URL::to('checkout') }}/" + response.transaction_id;
-                    }                            
+                    }
                 }
             });
-            
+
         }
     </script>
 @endpush

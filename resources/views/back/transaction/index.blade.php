@@ -34,7 +34,7 @@
                             <table id="myTable" class="datatables-basic table table-bordered table-responsive">
                                 <thead>
                                     <tr>
-                                        <th class="text-center">Date</th>
+                                        <th class="text-center" style="width: 10%">Date</th>
                                         <th class="text-center">No Invoice</th>
                                         <th class="text-center">Customer Name</th>
                                         <th class="text-center" style="width: 50%">Description</th>
@@ -116,6 +116,7 @@
                 columns: [{
                         data: 'created_at',
                         name: 'created_at',
+                        className: 'text-center'
                     },
                     {
                         data: 'code',

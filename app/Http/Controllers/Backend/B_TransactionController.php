@@ -21,7 +21,7 @@ class B_TransactionController extends Controller
                 return DataTables::of($transactions)
                     ->addIndexColumn()    
                     ->editColumn('created_at', function ($item) {
-                        return Carbon::parse($item->created_at)->translatedFormat('d F Y');
+                        return date('Y-m-d', strtotime($item->created_at));
                     })                               
                     ->editColumn('payment_status', function ($item) {
                         $result = '';
@@ -49,6 +49,7 @@ class B_TransactionController extends Controller
                                     $result .= $value->description;
                                     $result .= ' (' . $value->qty . 'x '. 'Rp ' . number_format($value->price, 0, ',', '.') . ')</li>';
                                 }
+                                $result .= '<li>Ongkir (Rp ' . number_format($item->shipping, 0, ',', '.') . ')</li>';
                             }
                         $result .= '</ul>';
                         return $result;

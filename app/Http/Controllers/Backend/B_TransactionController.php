@@ -33,7 +33,24 @@ class B_TransactionController extends Controller
                             $result = '<span class="badge bg-label-danger me-1">Failed</span>';
                         } elseif ($item->payment_status == 'paid') {
                             $result = '<span class="badge bg-label-primary me-1">Paid</span>';
+                            $result .= '<br>';
+                            $result .= '<a class="btn btn-sm btn-primary m-2" href="' . URL::asset('storage/' . $item->payment_file) . '" target="_blank">Bukti Bayar</a>';
                         }
+                        return $result;
+                    })
+                    ->addColumn('description', function ($item) {
+                        $result = '';
+                        $result .= $item->note;
+                        $result .= '<br>';
+                        $result .= '<ul>';
+                        if ($item->type == 'product') {                                
+                                foreach ($item->transaction_detail as $key => $value) {
+                                    $result .= '<li>';
+                                    $result .= $value->description;
+                                    $result .= ' (' . $value->qty . 'x '. 'Rp ' . number_format($value->price, 0, ',', '.') . ')</li>';
+                                }
+                            }
+                        $result .= '</ul>';
                         return $result;
                     })
                     ->addColumn('name', function ($item) {
@@ -44,7 +61,7 @@ class B_TransactionController extends Controller
                         $total = (int) (!empty($item->total)) ? $item->total : 0;
                         $shipping = (int) (!empty($item->shipping)) ? $item->shipping : 0;
 
-                        $result = 'Rp ' . number_format($total + $shipping, 0, ',', '.');
+                        $result = 'Rp&nbsp;' . number_format($total + $shipping, 0, ',', '.');
                         return $result;
                     })                  
                     ->addColumn('action', function ($item) {
@@ -58,7 +75,7 @@ class B_TransactionController extends Controller
                       </div>';
                         return $btn;
                     })
-                    ->rawColumns(['action', 'payment_status', 'price', 'name'])
+                    ->rawColumns(['action', 'payment_status', 'price', 'name', 'description'])
                     ->addIndexColumn()
                     ->make(true);
             }

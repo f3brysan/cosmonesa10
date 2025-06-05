@@ -37,7 +37,7 @@
                                         <th class="text-center">Date</th>
                                         <th class="text-center">No Invoice</th>
                                         <th class="text-center">Customer Name</th>
-                                        <th class="text-center">Description</th>
+                                        <th class="text-center" style="width: 50%">Description</th>
                                         <th class="text-center">Type</th>
                                         <th class="text-center">Total Paid</th>
                                         <th class="text-center">Payment Status</th>
@@ -126,20 +126,23 @@
                         name: 'name',
                     },
                     {
-                        data: 'note',
-                        name: 'note',
+                        data: 'description',
+                        name: 'description',
                     },
                     {
                         data: 'type',
                         name: 'type',
+                        className: 'text-center'
                     },
                     {
                         data: 'price',
                         name: 'price',
+                        className: 'text-end',
                     },
                     {
                         data: 'payment_status',
                         name: 'payment_status',
+                        className: 'text-center'
                     },
                     {
                         data: 'action',

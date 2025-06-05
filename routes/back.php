@@ -12,6 +12,7 @@ use App\Http\Controllers\Backend\B_DashboardController;
 use App\Http\Controllers\Backend\B_UserSettingsController;
 use App\Http\Controllers\Backend\B_ProductCategoryController;
 use App\Http\Controllers\Backend\B_ServiceCategoryController;
+use App\Http\Controllers\Backend\B_TransactionController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -52,6 +53,9 @@ Route::group(['middleware' => ['auth', 'role:superadmin|pengelola']], function (
     Route::post('service-categories/destroy', [B_ServiceCategoryController::class, 'destroy']);
 
     Route::get('service-provider-list', [B_KioskController::class, 'index']);
+    
+
+    Route::get('transaction-history', [B_TransactionController::class, 'index']);
 });
 
 Route::group(['middleware' => ['auth', 'role:superadmin|pengelola']], function () {

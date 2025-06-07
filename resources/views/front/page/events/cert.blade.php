@@ -25,6 +25,10 @@
         object-fit: contain;
     }
 
+
+
+
+
     @page {
         margin: 0;
     }

@@ -9,6 +9,9 @@ use Dompdf\Options;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Str;
+use App\Models\EventParticipants;
+use DateTime;
 
 class F_EventsController extends Controller
 {
@@ -75,9 +78,29 @@ class F_EventsController extends Controller
         // Return the view with the event and the related events
         return view('front.page.events.detail', compact('event', 'relatedEvents'));
     }
-    public function join()
+    public function join($eventId)
     {
+        try {
+            $userAuth = auth()->user();
+            if (!$userAuth) {
+                return redirect()->route('login');
+            }
+            $regist_range = Events::query()
+                ->select('start_date', 'end_date')
+                ->where('id', $eventId)
+                ->first();
+            $open_regist = new DateTime($regist_range['start_date']);
+            $close_regist = new DateTime($regist_range['end_date']);
+            if ($open_regist <= date_create('now') && $close_regist > date_create('now')) {
+                return $userAuth->events()->attach($eventId, ['id' => Str::orderedUuid()]);
+            };
+        } catch (\Throwable $th) {
+            return response()->json([
+                'status' => false,
+                'message' => $th->getMessage()
+            ]);
+        }
         // $users = User::all(); // Example: Retrieve data from the database
-        return view('front.page.events.presents');
+        // return view('front.page.events.presents');
     }
 }

@@ -41,12 +41,23 @@
 
     .certificate-text {
         position: absolute;
-        width: 80%;
+        width: 100%;
         /* Controls text width */
-        top: 50%;
+        top: 20%;
         left: 50%;
+        text-align: center;
         transform: translate(-50%, -50%);
         /* Adjust based on design */
+    }
+
+    #title,
+    #name,
+    #date {
+        font-family: 'Arial', sans-serif;
+        font-weight: bold;
+        font-size: 1em;
+        margin-bottom: 20px;
+        color: #333;
     }
 </style>
 
@@ -62,8 +73,15 @@
         </div>
         <div class="certificate-text">
             <h1>Certificate of Achievement</h1>
-            <p>Presented to: <span id="name">John Doe</span></p>
-            <p>Date: <span id="date">2025-05-28</span></p>
+            <p>Event Title : <span id="title">{{ $data_cert->title }}</span></p>
+            <div class="user_info">
+
+                <p>Presented to : <span id="name">{{ $data_cert->fullname }}</span></p>
+                <p>Event Date : <span id="date">@php
+                    $date = Carbon\Carbon::parse($data_cert->event_date);
+                    echo $date->translatedFormat('l, d F Y');
+                @endphp</span></p>
+            </div>
         </div>
     </div>
 </body>

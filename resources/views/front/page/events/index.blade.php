@@ -215,7 +215,7 @@
                         <td class="product-quantity">${eventDate}</td>
                         <td class="product-subtotal">${"complete"? "complete": "Pending"}</td>
                         <td class="product-remove">
-                            ${"complete" ? `<a href="/cert/${participation.user_id}" class="btn btn-primary">Print</a>` : `<span class="text-muted">N/A</span>`}
+                            ${"complete" ? `<a href="/cert/${participation.event_id}" class="btn btn-primary">Print</a>` : `<span class="text-muted">N/A</span>`}
                         </td>
                     </tr>
                 `;

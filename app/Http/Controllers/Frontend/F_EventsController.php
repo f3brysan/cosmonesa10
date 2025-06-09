@@ -49,7 +49,7 @@ class F_EventsController extends Controller
     public function cert($id)
     {
         $userAuth = auth()->user();
-        $data = $userAuth
+        $data_cert = $userAuth
             ->hasParticipated()
             ->select(
                 'events.id AS event_id',
@@ -62,8 +62,9 @@ class F_EventsController extends Controller
                 'certificates.pic AS signatory',
                 'issued_at',
                 'valid_until'
-            )->where('users.id', $id)
+            )->where('event_id', $id)
             ->first();
+        // dd($data_cert);
         $path = public_path('frontend/images/cert/cert.jpg'); // Correct local path
         $type = pathinfo($path, PATHINFO_EXTENSION);
         $data = file_get_contents($path);
@@ -75,7 +76,7 @@ class F_EventsController extends Controller
 
         // Create a new DomPDF instance with options
         $dompdf = new Dompdf($options);
-        $pdfContent = view('front.page.events.cert', compact('base64'))->render();
+        $pdfContent = view('front.page.events.cert', compact(['base64', 'data_cert']))->render();
         $dompdf->loadHtml($pdfContent);
 
         // Set paper size & render PDF

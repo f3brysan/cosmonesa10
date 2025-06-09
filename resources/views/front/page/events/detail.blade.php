@@ -38,6 +38,8 @@
                         @endphp
                         <span class="bpdate">{{ $date->translatedFormat('l, d F Y') }}</span>
                         <h3>{{ $event->title }}</h3>
+                        <button onclick="greet(this)" data-id="{{ $event->id }}">Click me</button>
+                        {{-- <button onclick="greet(this)" data-username="Mike">Click me</button> --}}
                         <div class="sic_the_content clearfix">
                             {{-- Description --}}
                             {!! $event->description !!}
@@ -95,7 +97,9 @@
                                 <div class="pp_post_item">
                                     <img src="{{ asset('storage/' . $rEvent->picture) ?? 'https://picsum.photos/1280/780/?blur' }}"
                                         alt="" />
-                                    <h5><a href="{{ URL::to('detail-event/' . $rEvent->slug . '/') }}">{{ Str::limit($rEvent->title, 30, '...') }}</a></h5>
+                                    <h5><a
+                                            href="{{ URL::to('detail-event/' . $rEvent->slug . '/') }}">{{ Str::limit($rEvent->title, 30, '...') }}</a>
+                                    </h5>
                                     <span>{{ Carbon\Carbon::parse($rEvent->event_date)->translatedFormat('l, d F Y') }}</span>
                                 </div>
                             @endforeach
@@ -107,3 +111,52 @@
     </section>
     <!-- End:: Single Blog Section -->
 @endsection
+
+@push('js')
+    <script>
+        function greet(button) {
+            let id = button.getAttribute("data-id");
+            // alert("Hello, " + id + "!");
+            $.ajax({
+                type: "POST",
+                url: "/join_event",
+                data: {
+
+                    "event_id": id,
+                },
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                },
+                dataType: "json",
+                success: function(response) {
+                    if (response.status === 'success') {
+                        Swal.fire({
+                            title: "Berhsil!",
+                            text: response.message,
+                            icon: "success"
+                        });
+                    } else if (response.status === false) {
+                        Swal.fire({
+                            title: "Error!",
+                            text: response.message,
+                            icon: "error"
+                        });
+
+                    } else if (response.status === 409) {
+                        Swal.fire({
+                            title: "Warning!",
+                            text: response.message,
+                            icon: "warning"
+                        });
+
+                    }
+                }
+            });
+        }
+        // $.ajaxSetup({
+        //     headers: {
+        //         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        //     }
+        // });
+    </script>
+@endpush

@@ -183,32 +183,33 @@
     <script>
         $(document).ready(function() {
             $.ajax({
-    type: "get",
-    url: "{{ URL::to('/participations') }}",
-    dataType: "json",
-    success: function (response) {
-        console.log(response); // Debugging purpose
+                type: "get",
+                url: "{{ URL::to('/participations') }}",
+                dataType: "json",
+                success: function(response) {
+                    console.log(response); // Debugging purpose
 
-        let tableBody = $("#participationTable tbody"); // Select the table body
-        tableBody.empty(); // Clear previous entries
+                    let tableBody = $("#participationTable tbody"); // Select the table body
+                    tableBody.empty(); // Clear previous entries
 
-        if (response.data.length > 0) {
-            $.each(response.data, function (index, participation) {
-                // Format start and end date into Indonesian format
-                let eventDate = new Date(participation.event_date).toLocaleDateString('id-ID', {
-                    weekday: 'long',
-                    day: '2-digit',
-                    month: 'long',
-                    year: 'numeric'
-                });
-
-
-
-                // Combine formatted dates
+                    if (response.data.length > 0) {
+                        $.each(response.data, function(index, participation) {
+                            // Format start and end date into Indonesian format
+                            let eventDate = new Date(participation.event_date)
+                                .toLocaleDateString('id-ID', {
+                                    weekday: 'long',
+                                    day: '2-digit',
+                                    month: 'long',
+                                    year: 'numeric'
+                                });
 
 
-                // Create row dynamically
-                let row = `
+
+                            // Combine formatted dates
+
+
+                            // Create row dynamically
+                            let row = `
                     <tr class="cart_item">
                         <td class="product-name">${index + 1}</td>
                         <td class="product-price">${participation.title}</td>
@@ -219,16 +220,19 @@
                         </td>
                     </tr>
                 `;
-                tableBody.append(row); // Append row to table
+                            tableBody.append(row); // Append row to table
+                        });
+                    } else {
+                        tableBody.append(
+                            `<tr><td colspan="5" class="text-center">No participation records found.</td></tr>`
+                            );
+                    }
+                },
+                error: function() {
+                    $("#participationTable tbody").append(
+                        `<tr><td colspan="5" class="text-center">Failed to load data.</td></tr>`);
+                }
             });
-        } else {
-            tableBody.append(`<tr><td colspan="5" class="text-center">No participation records found.</td></tr>`);
-        }
-    },
-    error: function () {
-        $("#participationTable tbody").append(`<tr><td colspan="5" class="text-center">Failed to load data.</td></tr>`);
-    }
-});
         });
     </script>
 @endpush

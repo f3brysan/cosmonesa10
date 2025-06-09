@@ -124,20 +124,20 @@ class F_EventsController extends Controller
                 $userAuth->events()->attach($eventId, ['id' => Str::orderedUuid()]);
                 return response()->json([
                     'status' => 'success',
-                    'message' => "Data updated successfully"
+                    'message' => "You've been Success to register this Event"
                 ], 201);
             };
             return response()->json([
                 'status' => false,
-                'message' => "Event has been passed"
-            ], 412);
-        } catch (QueryException $ex) {
+                'message' => "Event registration haas been closed or not yet open"
+            ]);
+        } catch (QueryException $ex) { //if user has been registered, user cannot register again/or duplicate input
             switch ($ex->errorInfo[1]) {
                 case 1062:
                     return response()->json([
                         'status' => 409,
                         'message' => "user has been registered"
-                    ], 409);
+                    ]);
             }
             return $ex->errorInfo[1];
         } catch (\Throwable $th) {

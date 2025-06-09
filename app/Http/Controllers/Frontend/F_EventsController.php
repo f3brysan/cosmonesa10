@@ -12,6 +12,8 @@ use App\Http\Controllers\Controller;
 use Illuminate\Support\Str;
 use App\Models\EventParticipants;
 use DateTime;
+use Exception;
+use Illuminate\Database\QueryException;
 
 class F_EventsController extends Controller
 {
@@ -96,8 +98,14 @@ class F_EventsController extends Controller
         // Return the view with the event and the related events
         return view('front.page.events.detail', compact('event', 'relatedEvents'));
     }
-    public function join($eventId)
+    public function test_id()
     {
+        return view('front.page.events.test_eventid');
+    }
+    public function joinEvent(Request $request)
+    {
+        $eventId = $request['event_id'];
+        // dd($eventId);
         try {
             $userAuth = auth()->user();
             if (!$userAuth) {
@@ -109,9 +117,28 @@ class F_EventsController extends Controller
                 ->first();
             $open_regist = new DateTime($regist_range['start_date']);
             $close_regist = new DateTime($regist_range['end_date']);
-            if ($open_regist <= date_create('now') && $close_regist > date_create('now')) {
-                return $userAuth->events()->attach($eventId, ['id' => Str::orderedUuid()]);
+            $today = date_create('now');
+            // dd($open_regist, $close_regist, $today);
+            if ($open_regist <= $today && $close_regist > $today) {
+                $userAuth->events()->attach($eventId, ['id' => Str::orderedUuid()]);
+                return response()->json([
+                    'status' => 'success',
+                    'message' => "Data updated successfully"
+                ], 201);
             };
+            return response()->json([
+                'status' => false,
+                'message' => "Event has been passed"
+            ], 412);
+        } catch (QueryException $ex) {
+            switch ($ex->errorInfo[1]) {
+                case 1062:
+                    return response()->json([
+                        'status' => 409,
+                        'message' => "user has been registered"
+                    ], 409);
+            }
+            return $ex->errorInfo[1];
         } catch (\Throwable $th) {
             return response()->json([
                 'status' => false,

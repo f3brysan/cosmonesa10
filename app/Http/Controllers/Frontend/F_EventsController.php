@@ -65,6 +65,7 @@ class F_EventsController extends Controller
                 'issued_at',
                 'valid_until'
             )->where('event_id', $id)
+            ->where('is_attended', 1)
             ->first();
         // dd($data_cert);
         $path = public_path('frontend/images/cert/cert.jpg'); // Correct local path

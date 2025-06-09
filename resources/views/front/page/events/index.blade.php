@@ -28,17 +28,17 @@
             <div class="row">
                 <div class="col-lg-12">
                     <div class="woocommerce">
-                        <table class="shop_table">
+                        <table id="participationTable" class="shop_table">
                             <thead>
                                 <tr>
-                                    <th class="product-name">Item</th>
-                                    <th class="product-price">Price</th>
-                                    <th class="product-quantity">Quantity</th>
-                                    <th class="product-subtotal">Total</th>
-                                    <th class="product-remove">&nbsp;</th>
+                                    <th class="product-name">No</th>
+                                    <th class="product-price">Event/Workshop Title</th>
+                                    <th class="product-quantity">Event's Date</th>
+                                    <th class="product-subtotal">Status</th>
+                                    <th class="product-remove">Cert Print</th>
                                 </tr>
                             </thead>
-                            <tbody>
+                            <tbody id="dataTable">
                                 <tr class="cart_item">
                                     <td class="product-name" data-title="Product">
                                         <a class="p-img" href="single-product.html"><img src="images/product/2.jpg"
@@ -102,16 +102,16 @@
     <section class="blogPage">
         <div class="container">
             <div class="sectionTitle text-center">
-                        <img src="http://127.0.0.1:8000/frontend/images/icons/2.png" alt="">
-                        <h5 class="primaryFont">Let's Join</h5>
-                        <h2>Upcoming <span class="colorPrimary fontWeight400">Next Events</span></h2>
-                        <p>
-                            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut
-                            labore et dolore magna aliqua.
-                            Quis ipsum suspendisse ultrices gravida. Risus commodo viverra maecenas accumsan lacus vel
-                            facilisis.
-                        </p>
-                    </div>
+                <img src="http://127.0.0.1:8000/frontend/images/icons/2.png" alt="">
+                <h5 class="primaryFont">Let's Join</h5>
+                <h2>Upcoming <span class="colorPrimary fontWeight400">Next Events</span></h2>
+                <p>
+                    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut
+                    labore et dolore magna aliqua.
+                    Quis ipsum suspendisse ultrices gravida. Risus commodo viverra maecenas accumsan lacus vel
+                    facilisis.
+                </p>
+            </div>
             <div class="row">
 
                 @foreach ($events as $event)
@@ -181,15 +181,54 @@
 @endsection
 @push('js')
     <script>
-        $(document).ready(function () {
+        $(document).ready(function() {
             $.ajax({
-                type: "get",
-                url: "{{ URL::to('/participations') }}",
-                dataType: "json",
-                success: function (response) {
-                    console.log(response);
-                }
+    type: "get",
+    url: "{{ URL::to('/participations') }}",
+    dataType: "json",
+    success: function (response) {
+        console.log(response); // Debugging purpose
+
+        let tableBody = $("#participationTable tbody"); // Select the table body
+        tableBody.empty(); // Clear previous entries
+
+        if (response.data.length > 0) {
+            $.each(response.data, function (index, participation) {
+                // Format start and end date into Indonesian format
+                let eventDate = new Date(participation.event_date).toLocaleDateString('id-ID', {
+                    weekday: 'long',
+                    day: '2-digit',
+                    month: 'long',
+                    year: 'numeric'
+                });
+
+
+
+                // Combine formatted dates
+
+
+                // Create row dynamically
+                let row = `
+                    <tr class="cart_item">
+                        <td class="product-name">${index + 1}</td>
+                        <td class="product-price">${participation.title}</td>
+                        <td class="product-quantity">${eventDate}</td>
+                        <td class="product-subtotal">${"complete"? "complete": "Pending"}</td>
+                        <td class="product-remove">
+                            ${"complete" ? `<a href="/cert/${participation.user_id}" class="btn btn-primary">Print</a>` : `<span class="text-muted">N/A</span>`}
+                        </td>
+                    </tr>
+                `;
+                tableBody.append(row); // Append row to table
             });
+        } else {
+            tableBody.append(`<tr><td colspan="5" class="text-center">No participation records found.</td></tr>`);
+        }
+    },
+    error: function () {
+        $("#participationTable tbody").append(`<tr><td colspan="5" class="text-center">Failed to load data.</td></tr>`);
+    }
+});
         });
     </script>
 @endpush

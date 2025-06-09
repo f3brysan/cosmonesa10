@@ -46,8 +46,24 @@ class F_EventsController extends Controller
      * @return \Illuminate\Contracts\View\View
      */
 
-    public function cert()
+    public function cert($id)
     {
+        $userAuth = auth()->user();
+        $data = $userAuth
+            ->hasParticipated()
+            ->select(
+                'events.id AS event_id',
+                'events.title',
+                'events.slug',
+                'event_date',
+                'users.name AS fullname',
+                'certificates.id AS certificate_id',
+                'certificates.serial_number',
+                'certificates.pic AS signatory',
+                'issued_at',
+                'valid_until'
+            )->where('users.id', $id)
+            ->first();
         $path = public_path('frontend/images/cert/cert.jpg'); // Correct local path
         $type = pathinfo($path, PATHINFO_EXTENSION);
         $data = file_get_contents($path);
@@ -65,7 +81,8 @@ class F_EventsController extends Controller
         // Set paper size & render PDF
         $dompdf->setPaper('A4', 'landscape');
         $dompdf->render();
-        return $dompdf->stream('certificate.pdf');
+        // return $dompdf->stream('certificate.pdf');
+        return $dompdf->stream('certificate.pdf', ["Attachment" => false]);
     }
     public function detail($slug)
     {

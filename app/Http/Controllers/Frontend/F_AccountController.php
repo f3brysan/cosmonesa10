@@ -13,11 +13,12 @@ use App\Services\RajaOngkirService;
 use Illuminate\Support\Facades\URL;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Http;
-
+use App\Models\Certificates;
 
 class F_AccountController extends Controller
 {
     //
+
     public function index()
     {
 
@@ -298,11 +299,11 @@ class F_AccountController extends Controller
             $data = $userAuth
                 ->hasParticipated()
                 ->select(
-                    'events.id',
+                    'events.id AS event_id',
                     'events.title',
                     'events.slug',
-                    'start_date',
-                    'end_date',
+                    'event_date',
+                    'users.id AS user_id',
                     'users.name AS fullname',
                     'certificates.id AS certificate_id',
                     'certificates.serial_number',
@@ -336,11 +337,10 @@ class F_AccountController extends Controller
             $data = $userAuth
                 ->hasParticipated()
                 ->select(
-                    'events.id',
+                    'events.id AS event_id',
                     'events.title',
                     'events.slug',
-                    'start_date',
-                    'end_date',
+                    'event_date',
                     'users.name AS fullname',
                     'certificates.id AS certificate_id',
                     'certificates.serial_number',

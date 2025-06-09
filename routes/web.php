@@ -53,7 +53,7 @@ Route::get('/events', [F_EventsController::class, 'index']);
 Route::get('/detail-event/{slug}', [F_EventsController::class, 'detail']);
 Route::get('/join', [F_EventsController::class, 'join']);
 Route::get('/participations', [F_AccountController::class, 'participation']);
-Route::get('/cert', [F_EventsController::class, 'cert']);
+Route::get('/cert/{id}', [F_EventsController::class, 'cert']);
 
 
 // service page

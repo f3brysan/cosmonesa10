@@ -74,8 +74,8 @@
                         <ul id="product_gallery" class="gallery_sliders cS-hidden">
                             @if ($productImages->count() > 0)
                                 @foreach ($productImages as $image)
-                                    <li data-thumb="{{ asset('frontend/') }}/images/product/ss1.jpg">
-                                        <div class="pg_item"><img src="{{ asset('frontend/') }}/images/product/s1.jpg"
+                                    <li data-thumb="{{ asset('storage/' . $image->filename) }}">
+                                        <div class="pg_item"><img src="{{ asset('storage/' . $image->filename) }}"
                                                 alt="" /></div>
                                     </li>
                                 @endforeach

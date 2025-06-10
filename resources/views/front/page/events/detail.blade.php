@@ -38,7 +38,7 @@
                         @endphp
                         <span class="bpdate">{{ $date->translatedFormat('l, d F Y') }}</span>
                         <h3>{{ $event->title }}</h3>
-                        <button onclick="greet(this)" data-id="{{ $event->id }}">Click me</button>
+                        <button class="mo_btn" onclick="greet(this)" data-id="{{ $event->id }}">Join</button>
                         {{-- <button onclick="greet(this)" data-username="Mike">Click me</button> --}}
                         <div class="sic_the_content clearfix">
                             {{-- Description --}}

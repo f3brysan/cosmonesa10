@@ -3,6 +3,30 @@
 
 @section('body')
 
+    <style>
+        .frame {
+            width: 100%;
+            /* responsive width */
+            max-width: 1280px;
+            /* limit max size */
+            aspect-ratio: 1280 / 780;
+            /* force 1280:780 aspect ratio */
+            overflow: hidden;
+            border-radius: 12px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+        }
+
+        .frame img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            /* crop top/bottom to fit */
+            object-position: center;
+            /* center the image */
+            display: block;
+        }
+    </style>
+
     <!-- Begin:: Banner Section -->
     <section class="page_banner">
         <div class="layer_img move_anim animated">
@@ -23,7 +47,7 @@
         </div>
     </section>
     <!-- End:: Banner Section -->
-    <section class="cartPage">
+    {{-- <section class="cartPage">
         <div class="container">
             <div class="row">
                 <div class="col-lg-12">
@@ -97,27 +121,22 @@
                 </div>
             </div>
         </div>
-    </section>
+    </section> --}}
     <!-- Begin:: Blog Section -->
     <section class="blogPage">
         <div class="container">
             <div class="sectionTitle text-center">
                 <img src="http://127.0.0.1:8000/frontend/images/icons/2.png" alt="">
                 <h5 class="primaryFont">Let's Join</h5>
-                <h2>Upcoming <span class="colorPrimary fontWeight400">Next Events</span></h2>
-                <p>
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut
-                    labore et dolore magna aliqua.
-                    Quis ipsum suspendisse ultrices gravida. Risus commodo viverra maecenas accumsan lacus vel
-                    facilisis.
-                </p>
+                <h2>Upcoming <span class="colorPrimary fontWeight400">Next Events</span></h2>                
             </div>
             <div class="row">
 
                 @foreach ($events as $event)
                     <div class="col-lg-4 col-md-6">
-                        <div class="blog_item_01">
-                            <img src="{{ 'https://picsum.photos/1280/780/?blur' }}" alt="" />
+                        <div class="blog_item_01 frame">
+                            <img src="{{ asset('storage/' . $event->picture) ?? 'https://picsum.photos/1280/780/?blur' }}"
+                                alt="" />
                             <div class="bp_content">
                                 <span>
                                     @php
@@ -163,17 +182,7 @@
                         </div>
                     </div>
                 @endforeach
-            </div>
-            <div class="row">
-                <div class="col-lg-12">
-                    <div class="make_pagination text-center">
-                        <span class="current">1</span>
-                        <a href="blog2.html">2</a>
-                        <a href="blog2.html">3</a>
-                        <a class="next" href="blog2.html"><i class="icofont-simple-right"></i></a>
-                    </div>
-                </div>
-            </div>
+            </div>            
         </div>
     </section>
     <!-- End:: Blog Section -->
@@ -225,7 +234,7 @@
                     } else {
                         tableBody.append(
                             `<tr><td colspan="5" class="text-center">No participation records found.</td></tr>`
-                            );
+                        );
                     }
                 },
                 error: function() {

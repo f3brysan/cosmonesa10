@@ -43,24 +43,7 @@
 
     <!-- Begin:: Products Section -->
     <section class="shopPage">
-        <div class="container">
-            <div class="row shop_sort_count_row">
-                <div class="col-md-7">
-                    <p class="woocommerce-result-count">Showing 1–12 of 36 results</p>
-                </div>
-                <div class="col-md-5 text-right">
-                    <form class="woocommerce-ordering" method="get">
-                        <select name="orderby" class="orderby" aria-label="Shop order">
-                            <option value="menu_order" selected="selected">Default sorting</option>
-                            <option value="popularity">Sort by popularity</option>
-                            <option value="rating">Sort by average rating</option>
-                            <option value="date">Sort by latest</option>
-                            <option value="price">Sort by price: low to high</option>
-                            <option value="price-desc">Sort by price: high to low</option>
-                        </select>
-                    </form>
-                </div>
-            </div>
+        <div class="container">            
             <div class="row">
                 @foreach ($products as $product)                    
                 <div class="col-lg-3 col-md-6">
@@ -90,17 +73,7 @@
                     </div>
                 </div>                
                 @endforeach
-            </div>
-            <div class="row">
-                <div class="col-lg-12">
-                    <div class="make_pagination text-center">
-                        <span class="current">1</span>
-                        <a href="shop.html">2</a>
-                        <a href="shop.html">3</a>
-                        <a class="next" href="shop.html"><i class="icofont-simple-right"></i></a>
-                    </div>
-                </div>
-            </div>
+            </div>            
         </div>
     </section>
     <!-- End:: Products Section -->

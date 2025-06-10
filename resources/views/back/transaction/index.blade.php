@@ -154,75 +154,26 @@
                     },
                 ],
                 order: [
-                    [0, 'asc']
+                    [0, 'desc']
                 ]
-            });
+            });            
 
-            $("#tambah-btn").click(function() {
-                $('#crudForm').trigger("reset");
-                $("#crudModal").modal('show');
-                $("#crudModalLabel").html('Tambah Kategori Produk');
-            });
-
-            $(document).on('click', '.edit', function() {
-                var id = $(this).data('id');
-                $.get("{{ URL::to('back/product-categories/edit') }}/" + id,
-                    function(ress) {
-                        $("#name").val(ress.data.name);
-                        $("#id").val(ress.data.id);
-                        $("#crudModal").modal('show');
-                        $("#crudModalLabel").html('Edit Kategori ' + ress.data.name);
-                    });
-            });
-
-            if ($("#crudForm").length > 0) {
-                $("#crudForm").validate({
-                    submitHandler: function(form) {
-                        var actionType = $('#save-btn').val();
-                        $('#save-btn').html('Menyimpan . .');
-
-                        $.ajax({
-                            type: "POST",
-                            url: "{{ URL::to('back/product-categories/store') }}",
-                            data: $('#crudForm').serialize(),
-                            dataType: 'json',
-                            success: function(data) {
-                                $('#crudForm').trigger("reset");
-                                $('#crudModal').modal("hide");
-                                $('#save-btn').html('Simpan');
-
-                                table.ajax.reload(null, false);
-                                Swal.fire({
-                                    title: "Berhsil!",
-                                    text: data.message,
-                                    icon: "success"
-                                });
-                            },
-                            error: function(data) {
-                                console.log('Error', data);
-                                $('#save-btn').html('Simpan');
-                            }
-                        });
-                    }
-                })
-            }
-
-            $(document).on('click', '.destroy', function() {
+            $(document).on('click', '.approve', function() {
                 var id = $(this).data('id');
                 console.log(id);
                 Swal.fire({
                     title: "Yakin?",
-                    text: "Anda tidak akan bisa mengembalikan data ini!",
+                    text: "Anda mengonfirmasi pembayaran ini?",
                     icon: "warning",
                     showCancelButton: true,
                     confirmButtonColor: "#3085d6",
                     cancelButtonColor: "#d33",
-                    confirmButtonText: "Iya, Hapus!"
+                    confirmButtonText: "Iya!"
                 }).then((result) => {
                     if (result.isConfirmed) {
                         $.ajax({
                             type: "POST",
-                            url: "{{ URL::to('back/product-categories/destroy') }}",
+                            url: "{{ URL::to('back/transaction-history/approve') }}",
                             data: {
                                 id: id
                             },

@@ -6,8 +6,10 @@ use Carbon\Carbon;
 use App\Models\Transaction;
 use Illuminate\Http\Request;
 use Yajra\DataTables\DataTables;
+use App\Models\TransactionDetail;
 use Illuminate\Support\Facades\URL;
 use App\Http\Controllers\Controller;
+use App\Models\Products;
 use Illuminate\Support\Facades\Crypt;
 
 class B_TransactionController extends Controller
@@ -67,13 +69,10 @@ class B_TransactionController extends Controller
                     })                  
                     ->addColumn('action', function ($item) {
                         // Generate action buttons for each event
-                        $btn = '<button type="button" class="btn p-0 dropdown-toggle hide-arrow" data-bs-toggle="dropdown"><i class="icon-base bx bx-dots-vertical-rounded"></i></button>
-                        <div class="dropdown-menu">
-                          <a class="dropdown-item" href="' . URL::to('back/event/detail/' . $item->slug) . '"><i class="icon-base bx bx-show me-1"></i> Detil</a>
-                          <a class="dropdown-item" target="_blank" href="' . URL::to('back/event/edit/' . Crypt::encrypt($item->id) . '') . '"><i class="icon-base bx bx-edit-alt me-1"></i> Ubah</a>
-                          <a class="dropdown-item destroy" data-id="' . Crypt::encrypt($item->id) . '" href="javascript:void(0);" ><i class="icon-base bx bx-trash me-1"></i> Hapus</a>
-                        </div>
-                      </div>';
+                        $btn = '';
+                        if ($item->payment_status == 'paid') {                            
+                            $btn = '<a class="btn btn-sm btn-info approve" data-id="' . Crypt::encrypt($item->id) . '" href="javascript:void(0)"><i class="icon-base fa fa-check"></i> Approve</a>';
+                        }
                         return $btn;
                     })
                     ->rawColumns(['action', 'payment_status', 'price', 'name', 'description'])
@@ -82,6 +81,32 @@ class B_TransactionController extends Controller
             }
 
             return view('back.transaction.index');
+        } catch (\Throwable $th) {
+            return response()->json(['message' => $th->getMessage()], 500);
+        }
+    }
+
+    public function approve(Request $request) 
+    {
+        try {            
+            $id = Crypt::decrypt($request->id);
+            $transaction = Transaction::find($id);
+
+            if ($transaction->type == 'product') {
+                $transactionDetail = TransactionDetail::where('transaction_id', $transaction->id)->get();
+                foreach ($transactionDetail as $key => $value) {
+                    $getProduct = Products::find($value->reference_id);
+                    $getProduct->stock = $getProduct->stock - $value->qty;
+                    $getProduct->save();
+                }                
+            }
+
+            $transaction->payment_status = 'success';
+            $transaction->updated_by = auth()->user()->id;
+            $transaction->save();
+            return response()->json([
+                'status' => 'success',
+                'message' => 'Data berhasil diubah'], 200);
         } catch (\Throwable $th) {
             return response()->json(['message' => $th->getMessage()], 500);
         }

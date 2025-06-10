@@ -33,7 +33,7 @@ Route::group(['middleware' => ['auth', 'role:superadmin|pengelola']], function (
     Route::post('event/store', [B_EventController::class, 'store']);
     Route::get('event/detail/{slug}', [B_EventController::class, 'show']);
     Route::get('event/edit/{id}', [B_EventController::class, 'edit']);
-    
+
     Route::get('product', [B_ProductController::class, 'index']);
     Route::get('product/create', [B_ProductController::class, 'create']);
     Route::post('product/store', [B_ProductController::class, 'store']);
@@ -53,9 +53,9 @@ Route::group(['middleware' => ['auth', 'role:superadmin|pengelola']], function (
     Route::post('service-categories/destroy', [B_ServiceCategoryController::class, 'destroy']);
 
     Route::get('service-provider-list', [B_KioskController::class, 'index']);
-    
 
     Route::get('transaction-history', [B_TransactionController::class, 'index']);
+    Route::post('transaction-history/approve', [B_TransactionController::class, 'approve']);    
 });
 
 Route::group(['middleware' => ['auth', 'role:superadmin|pengelola']], function () {
@@ -67,7 +67,7 @@ Route::group(['middleware' => ['auth', 'role:seller']], function () {
     Route::get('kiosku/service', [B_KioskController::class, 'sellerService']);
     Route::get('kiosku/service-history', [B_KioskController::class, 'serviceHistory']);
     Route::post('kiosku/about/update', [B_KioskController::class, 'aboutUpdate']);
-    
+
     Route::get('kiosku/service/create', [B_ServiceController::class, 'create']);
     Route::get('kiosku/service/edit/{id}', [B_ServiceController::class, 'edit']);
     Route::post('kiosku/service/store', [B_ServiceController::class, 'store']);
@@ -76,7 +76,7 @@ Route::group(['middleware' => ['auth', 'role:seller']], function () {
     Route::get('kiosku/service/edit-slot/{id}', [B_ServiceController::class, 'editSlot']);
     Route::post('kiosku/service/add-slot', [B_ServiceController::class, 'addSlot']);
     Route::post('kiosku/service/destroy-slot', [B_ServiceController::class, 'destroySlot']);
-    
+
 });
 
 // API RAJA ONGKIR

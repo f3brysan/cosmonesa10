@@ -46,7 +46,7 @@
     <ul class="menu-inner py-1">
         <!-- Dashboards -->
         <li class="menu-item active">
-            <a href="cards-basic.html" class="menu-link">
+            <a href="{{ URL::to('back/dashboard') }}" class="menu-link">
                 <i class="menu-icon tf-icons bx bx-home"></i>
                 <div class="text-truncate" data-i18n="Basic">Home</div>
             </a>

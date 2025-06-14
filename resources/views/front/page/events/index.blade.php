@@ -47,7 +47,7 @@
         </div>
     </section>
     <!-- End:: Banner Section -->
-    {{-- <section class="cartPage">
+    <section class="cartPage">
         <div class="container">
             <div class="row">
                 <div class="col-lg-12">
@@ -121,14 +121,14 @@
                 </div>
             </div>
         </div>
-    </section> --}}
+    </section>
     <!-- Begin:: Blog Section -->
     <section class="blogPage">
         <div class="container">
             <div class="sectionTitle text-center">
                 <img src="http://127.0.0.1:8000/frontend/images/icons/2.png" alt="">
                 <h5 class="primaryFont">Let's Join</h5>
-                <h2>Upcoming <span class="colorPrimary fontWeight400">Next Events</span></h2>                
+                <h2>Upcoming <span class="colorPrimary fontWeight400">Next Events</span></h2>
             </div>
             <div class="row">
 
@@ -182,7 +182,7 @@
                         </div>
                     </div>
                 @endforeach
-            </div>            
+            </div>
         </div>
     </section>
     <!-- End:: Blog Section -->
@@ -223,9 +223,9 @@
                         <td class="product-name">${index + 1}</td>
                         <td class="product-price">${participation.title}</td>
                         <td class="product-quantity">${eventDate}</td>
-                        <td class="product-subtotal">${"complete"? "complete": "Pending"}</td>
+                        <td class="product-subtotal">${participation.is_attended === 1 ? "complete": "Pending"}</td>
                         <td class="product-remove">
-                            ${"complete" ? `<a href="/cert/${participation.event_id}" class="btn btn-primary">Print</a>` : `<span class="text-muted">N/A</span>`}
+                            ${participation.is_attended === 1? `<a href="/cert/${participation.event_id}" class="btn btn-primary">Print</a>` : `<span class="text-muted">N/A</span>`}
                         </td>
                     </tr>
                 `;

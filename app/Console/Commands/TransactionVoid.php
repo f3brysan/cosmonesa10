@@ -38,8 +38,8 @@ class TransactionVoid extends Command
 
         // Loop through each transaction and update its status to 'void'
         foreach ($voidTransactions as $transaction) {
-            $transaction->update([
-                'payment_status' => 'void',
+            $update = \App\Models\Transaction::where('id', $transaction->id)->update([
+                'payment_status' => 'void'
             ]);
 
             // Output information about the transaction being voided

@@ -3,6 +3,8 @@
 
 @push('css')
     <link href="https://cdn.jsdelivr.net/npm/summernote@0.9.0/dist/summernote.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.datatables.net/2.2.2/css/dataTables.dataTables.css" />
+    <link rel="stylesheet" href="https://cdn.datatables.net/responsive/3.0.4/css/responsive.bootstrap5.css">
 @endpush
 
 @section('content')
@@ -95,7 +97,7 @@
                     </div>
                     <div class="card-body">
                         <div class="table-responsive">
-                            <table class="table table-bordered table-hover">
+                            <table class="table table-bordered table-hover" id="myTable">
                                 <thead>
                                     <tr>
                                         <th class="text-center">No Register</th>
@@ -111,12 +113,14 @@
                 </div>
             </div>
         </div>
-    </div>
-    </div>
+    </div>    
 @endsection
 
 @push('js')
     <script src="https://code.jquery.com/jquery-3.7.1.js"></script>
+    <script src="https://cdn.datatables.net/2.2.2/js/dataTables.js"></script>
+    <script src="https://cdn.datatables.net/responsive/3.0.4/js/dataTables.responsive.js"></script>
+    <script src="https://cdn.datatables.net/responsive/3.0.4/js/responsive.bootstrap5.js"></script>
 
     {{-- Swal --}}
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
@@ -124,6 +128,36 @@
     <script>
         $(document).ready(function() {
 
+            $('#myTable').DataTable({
+                responsive: true,
+                processing: true,
+                serverSide: true, //aktifkan server-side 
+                ajax: {
+                    url: "{{ URL::to('back/event/participants/'.$event->id) }}",
+                    type: 'GET'
+                },
+                columns: [{
+                        data: 'id',
+                        name: 'id',
+                    },
+                    {
+                        data: 'name',
+                        name: 'name',
+                    },
+                    {
+                        data: 'payment_status',
+                        name: 'payment_status',
+                        className: 'text-center'
+                    },                    
+                    {
+                        data: 'action',
+                        name: 'action',
+                        orderable: false,
+                        searchable: false,
+                        className: 'text-center'
+                    },
+                ],                
+            });
         });
     </script>
 @endpush

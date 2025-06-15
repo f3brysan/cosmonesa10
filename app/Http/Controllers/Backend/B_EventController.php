@@ -8,6 +8,8 @@ use App\Models\EventTypes;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use Yajra\DataTables\DataTables;
+use App\Models\EventParticipants;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\URL;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Crypt;
@@ -19,14 +21,14 @@ class B_EventController extends Controller
     {
         try {
             // Fetch workshops that are not certifications
-            $events = Events::with('eventtype')->orderBy('event_date')->get();            
+            $events = Events::with('eventtype')->orderBy('event_date')->get();
 
             // Handle AJAX request for data tables
             if ($request->ajax()) {
                 return DataTables::of($events)
                     ->addIndexColumn()
                     ->addColumn('register', function ($item) {
-                        $result = $item->start_date . ' s/d ' . $item->end_date;
+                        $result = $item->start_date.' s/d '.$item->end_date;
                         return $result ?? '';
                     })
                     ->editColumn('event_date', function ($item) {
@@ -36,21 +38,21 @@ class B_EventController extends Controller
                         $daysWithInclusive = $start->diffInDays($end) + 1;
                         $result = $item->event_date;
                         $result .= '<br>';
-                        $result .= '(' . $daysWithInclusive . ' Hari lagi)';
+                        $result .= '('.$daysWithInclusive.' Hari lagi)';
 
                         return $result ?? '';
                     })
                     ->addColumn('event_type', function ($item) {
-                        $result = !empty($item->eventtype->name) ? ucfirst($item->eventtype->name) : '';
+                        $result = ! empty($item->eventtype->name) ? ucfirst($item->eventtype->name) : '';
                         return $result;
                     })
                     ->addColumn('action', function ($item) {
                         // Generate action buttons for each event
                         $btn = '<button type="button" class="btn p-0 dropdown-toggle hide-arrow" data-bs-toggle="dropdown"><i class="icon-base bx bx-dots-vertical-rounded"></i></button>
                         <div class="dropdown-menu">
-                          <a class="dropdown-item" href="' . URL::to('back/event/detail/' . $item->slug) . '"><i class="icon-base bx bx-show me-1"></i> Detil</a>
-                          <a class="dropdown-item" target="_blank" href="' . URL::to('back/event/edit/' . Crypt::encrypt($item->id) . '') . '"><i class="icon-base bx bx-edit-alt me-1"></i> Ubah</a>
-                          <a class="dropdown-item destroy" data-id="' . Crypt::encrypt($item->id) . '" href="javascript:void(0);" ><i class="icon-base bx bx-trash me-1"></i> Hapus</a>
+                          <a class="dropdown-item" href="'.URL::to('back/event/detail/'.$item->slug).'"><i class="icon-base bx bx-show me-1"></i> Detil</a>
+                          <a class="dropdown-item" target="_blank" href="'.URL::to('back/event/edit/'.Crypt::encrypt($item->id).'').'"><i class="icon-base bx bx-edit-alt me-1"></i> Ubah</a>
+                          <a class="dropdown-item destroy" data-id="'.Crypt::encrypt($item->id).'" href="javascript:void(0);" ><i class="icon-base bx bx-trash me-1"></i> Hapus</a>
                         </div>
                       </div>';
                         return $btn;
@@ -88,20 +90,20 @@ class B_EventController extends Controller
         ]);
 
         $id = NULL;
-        if (!empty($request->id)) {
+        if (! empty($request->id)) {
             $id = Crypt::decrypt($request->id);
         }
 
         $checkOldImage = Events::where('id', $id)->first();
         $path = '';
         if ($request->file('image') != null) {
-            if (!empty($checkOldImage->picture)) {
+            if (! empty($checkOldImage->picture)) {
                 Storage::disk('public')->delete($checkOldImage->picture);
             }
 
             $file = $request->file('image');
             $type = Str::limit(Str::slug($request->title, '_'), 100);
-            $filename = date('YmdHis') . '_' . $type . '.' . $file->getClientOriginalExtension();
+            $filename = date('YmdHis').'_'.$type.'.'.$file->getClientOriginalExtension();
             $path = $file->storeAs('event', $filename, 'public');
         } else {
             $path = $checkOldImage->picture;
@@ -119,7 +121,7 @@ class B_EventController extends Controller
                 'end_date' => $request->register_date_end,
                 'event_date' => $request->event_date,
                 'picture' => $path,
-                'created_by' => auth()->user()->name,                
+                'created_by' => auth()->user()->name,
                 'price' => $price,
                 'quota' => $request->quota,
                 'event_type_id' => $request->event_type
@@ -134,13 +136,46 @@ class B_EventController extends Controller
         try {
             // Retrieve the event by slug
             $event = Events::with('eventtype')->where('slug', $slug)->first();
+            // Return the view for displaying the event
+            return view('back.event.show', compact('event'));
         } catch (\Throwable $th) {
             // If an error occurs, abort with a 404 error
+            dd($th);
             abort(404);
         }
+    }
 
-        // Return the view for displaying the event
-        return view('back.event.show', compact('event'));
+    public function eventParticipants(Request $request, $id)
+    {
+        try {
+            $participants = DB::table('event_participants as ep')
+                ->select('ep.*', 'u.name', 't.payment_status')
+                ->join('users as u', 'u.id', '=', 'ep.user_id')
+                ->leftJoin('transactions as t', 't.id', '=', 'ep.transaction_id')
+                ->get();
+
+                if ($request->ajax()) {
+                     return DataTables::of($participants)
+                    ->addIndexColumn()                    
+                    ->addColumn('action', function ($item) {
+                        // Generate action buttons for each event
+                        $btn = '<button type="button" class="btn p-0 dropdown-toggle hide-arrow" data-bs-toggle="dropdown"><i class="icon-base bx bx-dots-vertical-rounded"></i></button>
+                        <div class="dropdown-menu">                          
+                          <a class="dropdown-item destroy" data-id="'.Crypt::encrypt($item->id).'" href="javascript:void(0);" ><i class="icon-base bx bx-trash me-1"></i> Hapus</a>
+                        </div>
+                      </div>';
+                        return $btn;
+                    })
+                    ->rawColumns(['action'])
+                    ->addIndexColumn()
+                    ->make(true);
+                }
+        } catch (\Throwable $th) {
+            return response()->json([
+                'status' => false,
+                'message' => $th->getMessage()
+            ]);
+        }
     }
 
     public function edit($id)

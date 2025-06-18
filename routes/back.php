@@ -86,3 +86,5 @@ Route::get('api/provinces', [APIRajaOngkirController::class, 'getProvinces']);
 Route::get('api/cities/{id}', [APIRajaOngkirController::class, 'getCities']);
 Route::post('api/checkOngkir', [APIRajaOngkirController::class, 'checkOngkir']);
 
+Route::post('api/cron-job/transaction/void', [APIRajaOngkirController::class, 'voidCronJob']);
+

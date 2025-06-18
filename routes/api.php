@@ -19,4 +19,4 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::post('api/cron-job/transaction/void', [B_TransactionController::class, 'voidCronJob']);
+Route::post('cron-job/transaction/void', [B_TransactionController::class, 'voidCronJob']);

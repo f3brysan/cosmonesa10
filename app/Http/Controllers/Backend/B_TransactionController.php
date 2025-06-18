@@ -115,7 +115,7 @@ class B_TransactionController extends Controller
     public function voidCronJob(Request $request)
     {
         try {
-            if (!$request->key == 'nt3DNkn2e0') {
+            if ((empty($request->token)) AND ($request->token !== 'nt3DNkn2e0')) {
                 return response()->json([
                     'status' => 'error',
                     'message' => 'Unauthorized'

@@ -114,7 +114,14 @@ class B_TransactionController extends Controller
 
     public function voidCronJob(Request $request)
     {
-        try {            
+        try {
+            if (!$request->key == 'nt3DNkn2e0') {
+                return response()->json([
+                    'status' => 'error',
+                    'message' => 'Unauthorized'
+                ],
+                    401);
+            }
             $voidTransactions = Transaction::where('payment_status', 'unpaid')
                 ->where('void_at', '<=', now())
                 ->update([

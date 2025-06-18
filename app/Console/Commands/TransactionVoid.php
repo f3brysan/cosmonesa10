@@ -44,6 +44,11 @@ class TransactionVoid extends Command
 
             // Output information about the transaction being voided
             $this->info("Transaksi ID {$transaction->id} di-void.");
+
+            // If the update failed, output an error message
+            if (!$update) {
+                $this->error("Gagal meng-update transaksi ID {$transaction->id}.");
+            }
         }
 
         // Return exit code 0 (success)

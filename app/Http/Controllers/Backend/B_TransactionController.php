@@ -18,13 +18,13 @@ class B_TransactionController extends Controller
     {
         try {
             $transactions = Transaction::with('transaction_detail', 'user')->get();
-            
-             if ($request->ajax()) {
+
+            if ($request->ajax()) {
                 return DataTables::of($transactions)
-                    ->addIndexColumn()    
+                    ->addIndexColumn()
                     ->editColumn('created_at', function ($item) {
                         return date('Y-m-d', strtotime($item->created_at));
-                    })                               
+                    })
                     ->editColumn('payment_status', function ($item) {
                         $result = '';
                         if ($item->payment_status == 'unpaid') {
@@ -36,7 +36,7 @@ class B_TransactionController extends Controller
                         } elseif ($item->payment_status == 'paid') {
                             $result = '<span class="badge bg-label-primary me-1">Paid</span>';
                             $result .= '<br>';
-                            $result .= '<a class="btn btn-sm btn-primary m-2" href="' . URL::asset('storage/' . $item->payment_file) . '" target="_blank">Bukti Bayar</a>';
+                            $result .= '<a class="btn btn-sm btn-primary m-2" href="'.URL::asset('storage/'.$item->payment_file).'" target="_blank">Bukti Bayar</a>';
                         }
                         return $result;
                     })
@@ -45,33 +45,33 @@ class B_TransactionController extends Controller
                         $result .= $item->note;
                         $result .= '<br>';
                         $result .= '<ul>';
-                        if ($item->type == 'product') {                                
-                                foreach ($item->transaction_detail as $key => $value) {
-                                    $result .= '<li>';
-                                    $result .= $value->description;
-                                    $result .= ' (' . $value->qty . 'x '. 'Rp ' . number_format($value->price, 0, ',', '.') . ')</li>';
-                                }
-                                $result .= '<li>Ongkir (Rp ' . number_format($item->shipping, 0, ',', '.') . ')</li>';
+                        if ($item->type == 'product') {
+                            foreach ($item->transaction_detail as $key => $value) {
+                                $result .= '<li>';
+                                $result .= $value->description;
+                                $result .= ' ('.$value->qty.'x '.'Rp '.number_format($value->price, 0, ',', '.').')</li>';
                             }
+                            $result .= '<li>Ongkir (Rp '.number_format($item->shipping, 0, ',', '.').')</li>';
+                        }
                         $result .= '</ul>';
                         return $result;
                     })
                     ->addColumn('name', function ($item) {
-                        $result = !empty($item->user->name) ? $item->user->name : '';
+                        $result = ! empty($item->user->name) ? $item->user->name : '';
                         return $result;
                     })
                     ->addColumn('price', function ($item) {
-                        $total = (int) (!empty($item->total)) ? $item->total : 0;
-                        $shipping = (int) (!empty($item->shipping)) ? $item->shipping : 0;
+                        $total = (int) (! empty($item->total)) ? $item->total : 0;
+                        $shipping = (int) (! empty($item->shipping)) ? $item->shipping : 0;
 
-                        $result = 'Rp&nbsp;' . number_format($total + $shipping, 0, ',', '.');
+                        $result = 'Rp&nbsp;'.number_format($total + $shipping, 0, ',', '.');
                         return $result;
-                    })                  
+                    })
                     ->addColumn('action', function ($item) {
                         // Generate action buttons for each event
                         $btn = '';
-                        if ($item->payment_status == 'paid') {                            
-                            $btn = '<a class="btn btn-sm btn-info approve" data-id="' . Crypt::encrypt($item->id) . '" href="javascript:void(0)"><i class="icon-base fa fa-check"></i> Approve</a>';
+                        if ($item->payment_status == 'paid') {
+                            $btn = '<a class="btn btn-sm btn-info approve" data-id="'.Crypt::encrypt($item->id).'" href="javascript:void(0)"><i class="icon-base fa fa-check"></i> Approve</a>';
                         }
                         return $btn;
                     })
@@ -86,9 +86,9 @@ class B_TransactionController extends Controller
         }
     }
 
-    public function approve(Request $request) 
+    public function approve(Request $request)
     {
-        try {            
+        try {
             $id = Crypt::decrypt($request->id);
             $transaction = Transaction::find($id);
 
@@ -98,7 +98,7 @@ class B_TransactionController extends Controller
                     $getProduct = Products::find($value->reference_id);
                     $getProduct->stock = $getProduct->stock - $value->qty;
                     $getProduct->save();
-                }                
+                }
             }
 
             $transaction->payment_status = 'success';
@@ -109,6 +109,29 @@ class B_TransactionController extends Controller
                 'message' => 'Data berhasil diubah'], 200);
         } catch (\Throwable $th) {
             return response()->json(['message' => $th->getMessage()], 500);
+        }
+    }
+
+    public function voidCronJob(Request $request)
+    {
+        try {            
+            $voidTransactions = Transaction::where('payment_status', 'unpaid')
+                ->where('void_at', '<=', now())
+                ->update([
+                    'payment_status' => 'void'
+                ]);
+
+            return response()->json([
+                'status' => 'success',
+                'message' => 'Data berhasil diubah',
+                'data' => $voidTransactions
+            ]);
+        } catch (\Throwable $th) {
+            return response()->json([
+                'status' => 'error',
+                'message' => $th->getMessage()
+            ],
+                500);
         }
     }
 }

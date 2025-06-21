@@ -8,6 +8,7 @@
             <div class="row woocommerce">
                 <div class="col-md-12">
                     <h3 id="order_review_heading">Your order Code : {{ $transaction->code }}</h3>
+                    <h2 style="text-align: center">Ayo segera selesaikan pembayaran, <span id="countdown"></span> lagi</h2>
                     <div class="woocommerce-checkout-review-order checkout_page_only" id="order_review">
                         <table class="shop_table woocommerce-checkout-review-order-table">
                             <thead>
@@ -117,5 +118,27 @@
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
             }
         });
+    </script>
+    <script>
+        // Ambil waktu akhir dari backend (dalam milidetik)
+        let endTime = new Date("{{ date('Y-m-d H:i:s', strtotime($transaction->void_at)) }}").getTime();
+
+        let x = setInterval(function() {
+            let now = new Date().getTime();
+            let distance = endTime - now;
+
+            // Hitung menit dan detik
+            let minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+            let seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+            // Tampilkan
+            document.getElementById("countdown").innerHTML = minutes + " menit " + seconds + " detik";
+
+            // Jika hitung mundur selesai
+            if (distance <= 0) {
+                clearInterval(x);
+                location.reload(); // 🔁 Reload halaman
+            }
+        }, 1000);
     </script>
 @endpush

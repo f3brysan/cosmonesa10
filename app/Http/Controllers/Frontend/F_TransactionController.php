@@ -61,7 +61,7 @@ class F_TransactionController extends Controller
     {
         try {
             $autocode = $this->autocode($type);
-
+            
             if (in_array($type, ['service', 'event'])) {
                 $insertTransaction = $this->nonCart($type, $autocode, $reference_id);
             }
@@ -130,7 +130,7 @@ class F_TransactionController extends Controller
     {
         $uuid = Str::orderedUuid();
         $void_at = date('Y-m-d H:i:s', strtotime(date('Y-m-d H:i:s') . '+1 day'));
-
+        
         if ($type == 'service') {
             $reference = Services::find($reference_id);
             $price = $reference->price;
@@ -138,10 +138,11 @@ class F_TransactionController extends Controller
         }
 
         if ($type == 'event') {
-            $reference = Events::find($reference_id);
+            $reference = Events::find($reference_id);            
             $price = $reference->price;
-            $reference = $reference->name;
-        }
+            $reference = $reference->title;
+            $void_at = date('Y-m-d H:i:s', strtotime(date('Y-m-d H:i:s') . '+30 minutes'));
+        }        
 
         try {
             DB::beginTransaction();
@@ -163,7 +164,7 @@ class F_TransactionController extends Controller
                 'qty' => 1,
                 'price' => $price,
                 'sub_total' => $price * 1
-            ]);
+            ]);            
 
             DB::commit();
             return [

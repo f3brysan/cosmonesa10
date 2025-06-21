@@ -38,7 +38,7 @@
                         @endphp
                         <span class="bpdate">{{ $date->translatedFormat('l, d F Y') }}</span>
                         <h3>{{ $event->title }}</h3>
-                        <button class="mo_btn" onclick="greet(this)" data-id="{{ $event->id }}">Join</button>
+                        {{-- <button class="mo_btn" onclick="greet(this)" data-id="{{ $event->id }}">Join</button> --}}
                         {{-- <button onclick="greet(this)" data-username="Mike">Click me</button> --}}
                         <div class="sic_the_content clearfix">
                             {{-- Description --}}
@@ -61,7 +61,7 @@
                                     @endphp
                                     @if ($status == true)
                                         <div class="col-md-12">
-                                            <a href="{{ '/join' }}" class="mo_btn" type="submit"><i
+                                            <a href="javascript:void(0)" onclick="greet(this)" data-id="{{ $event->id }}" class="mo_btn"><i
                                                     class="icofont-long-arrow-right"></i>Join
                                                 Now</a>
                                         </div>
@@ -115,13 +115,11 @@
 @push('js')
     <script>
         function greet(button) {
-            let id = button.getAttribute("data-id");
-            // alert("Hello, " + id + "!");
+            let id = button.getAttribute("data-id");            
             $.ajax({
                 type: "POST",
-                url: "/join_event",
+                url: "{{ URL::to('/join_event') }}",
                 data: {
-
                     "event_id": id,
                 },
                 headers: {
@@ -129,12 +127,17 @@
                 },
                 dataType: "json",
                 success: function(response) {
+                    if (response.message == "You must login first") {
+                        window.location.href = "{{ URL::to('login') }}";
+                    }
                     if (response.status === 'success') {
                         Swal.fire({
                             title: "Berhsil!",
                             text: response.message,
                             icon: "success"
                         });
+
+                        window.location.href = "{{ URL::to('checkout') }}/" + response.transaction_id;
                     } else if (response.status === false) {
                         Swal.fire({
                             title: "Error!",

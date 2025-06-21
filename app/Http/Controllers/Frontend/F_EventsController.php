@@ -2,17 +2,18 @@
 
 namespace App\Http\Controllers\Frontend;
 
-use App\Models\Events;
-use Dompdf\Dompdf;
-use Dompdf\Options;
-// use PDF;
-
-use Illuminate\Http\Request;
-use App\Http\Controllers\Controller;
-use Illuminate\Support\Str;
-use App\Models\EventParticipants;
 use DateTime;
 use Exception;
+use Dompdf\Dompdf;
+// use PDF;
+
+use Dompdf\Options;
+use App\Models\Events;
+use Illuminate\Support\Str;
+use Illuminate\Http\Request;
+use App\Models\EventParticipants;
+use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Crypt;
 use Illuminate\Database\QueryException;
 
 class F_EventsController extends Controller
@@ -71,7 +72,7 @@ class F_EventsController extends Controller
         $path = public_path('frontend/images/cert/cert.jpg'); // Correct local path
         $type = pathinfo($path, PATHINFO_EXTENSION);
         $data = file_get_contents($path);
-        $base64 = 'data:image/' . $type . ';base64,' . base64_encode($data);
+        $base64 = 'data:image/'.$type.';base64,'.base64_encode($data);
 
         // Set DomPDF options
         $options = new Options();
@@ -106,40 +107,55 @@ class F_EventsController extends Controller
     public function joinEvent(Request $request)
     {
         $eventId = $request['event_id'];
-        // dd($eventId);
+        
         try {
             $userAuth = auth()->user();
-            if (!$userAuth) {
+            if (! $userAuth) {
                 return redirect()->route('login');
             }
             $regist_range = Events::query()
                 ->select('start_date', 'end_date')
                 ->where('id', $eventId)
                 ->first();
-            $open_regist = new DateTime($regist_range['start_date']);
-            $close_regist = new DateTime($regist_range['end_date']);
-            $today = date_create('now');
-            // dd($open_regist, $close_regist, $today);
-            if ($open_regist <= $today && $close_regist > $today) {
-                $userAuth->events()->attach($eventId, ['id' => Str::orderedUuid()]);
+            $open_regist = new DateTime($regist_range->start_date);
+            $close_regist = new DateTime($regist_range->end_date);
+            $today = date_create('now');            
+            
+            if ($open_regist <= $today && $close_regist > $today == false) {
+                return response()->json([
+                    'status' => false,
+                    'message' => "Event registration haas been closed or not yet open"
+                ]);
+            }            
+
+            $checkUserExists = EventParticipants::where('event_id', $eventId)->where('user_id', $userAuth->id)->exists();
+            if ($checkUserExists) {
                 return response()->json([
                     'status' => 'success',
                     'message' => "You've been Success to register this Event"
                 ], 201);
-            };
-            return response()->json([
-                'status' => false,
-                'message' => "Event registration haas been closed or not yet open"
-            ]);
-        } catch (QueryException $ex) { //if user has been registered, user cannot register again/or duplicate input
-            switch ($ex->errorInfo[1]) {
-                case 1062:
-                    return response()->json([
-                        'status' => 409,
-                        'message' => "user has been registered"
-                    ]);
             }
-            return $ex->errorInfo[1];
+
+            $transaction = new F_TransactionController();
+            $createTransaction = $transaction->createTransaction('event', $eventId);
+
+            $transaction_id = $createTransaction['transaction_id'];
+            $transaction_id_crypt = Crypt::encrypt($transaction_id->__tostring());
+
+            $insertParticipant = EventParticipants::create([
+                'event_id' => $eventId,
+                'user_id' => $userAuth->id,
+                'transaction_id' => $createTransaction['transaction_id'],
+                'is_attended' => 0
+            ]);
+
+            return response()->json([
+                'status' => 'success',
+                'message' => "You've been Success to register this Event",
+                'transaction_id' => $transaction_id_crypt
+            ], 201);
+
+        
         } catch (\Throwable $th) {
             return response()->json([
                 'status' => false,

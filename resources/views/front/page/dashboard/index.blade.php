@@ -127,42 +127,9 @@
             </div>
         </div>
     </section>
-    <!-- Begin:: About Section -->
-    <section class="commonSection aboutSection2">
-        <div class="layer_img move_anim">
-            <img src="{{ asset('frontend/images/bg/23.png') }}" alt="" />
-        </div>
-        <div class="container">
-            <div class="row">
-                <div class="col-xl-5 col-lg-6 col-md-6 noPaddingRight">
-                    <div class="abContent">
-                        <h3>About Us</h3>
-                        <h2>
-                            Clean cuts. <span class="fontWeight400 colorPrimary">Close shaves</span>
-                        </h2>
-                        <p class="leads">
-                            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor.
-                        </p>
-                        <p>
-                            Vivamus nec ligula et leo sodales pellentesque id sed lectus. Aliquam viverra velit sagittis
-                            pharetra venenatis. Etiam ut euismod neque. Pellentesque luctus mauris nunc
-                        </p>
-                        <a href="service1.html" class="mo_btn mob_lg mob_shadow"><i
-                                class="icofont-long-arrow-right"></i>Our Services</a>
-                    </div>
-                </div>
-                <div class="col-xl-5  offset-xl-2 col-lg-6 col-md-6">
-                    <div class="ab_thumb">
-                        <img src="{{ asset('frontend/images/home_03/1.jpg') }}" alt="" />
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-    <!-- End:: About Section -->
 
     <!-- Begin:: Service Section -->
-    <div class="commonSection serviceSection3 hasBeforeDecoration">
+    <section class="commonSection serviceSection3 hasBeforeDecoration">
         <div class="layer_img move_anim">
             <img src="{{ asset('frontend/images/bg/24.png') }}" alt="" />
         </div>
@@ -369,290 +336,19 @@
                 </div>
             </div>
         </div>
-    </div>
+    </section>
     <!-- End:: Service Section -->
 
 
 
-    <!-- Begin:: Feature Section -->
-    <section class="commonSection featureSection">
-        <div class="layer_img move_anim">
-            <img src="{{ asset('frontend/images/bg/25.png') }}" alt="" />
-        </div>
-        <div class="container">
-            <div class="row">
-                <div class="col-md-5 col-xl-5 col-lg-5">
-                    <div class="abContent">
-                        <h2>
-                            Our 10 years working <span class="fontWeight400 colorPrimary">experience</span>
-                        </h2>
-                        <p class="leads">
-                            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor.
-                        </p>
-                        <p>
-                            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut
-                            labore mel ei harum appellantur disputationi
-                        </p>
-                    </div>
-                </div>
-                <div class="col-md-7 col-xl-5 offset-xl-1 col-lg-7">
-                    <div class="aboutImg2 text-right">
-                        <img src="{{ asset('frontend/images/home_03/2.jpg') }}" alt="Makeover">
-                        <div class="shape1">
-                            <img src="{{ asset('frontend/images/home_03/3.jpg') }}" alt="">
-                        </div>
-                        <div class="shape2">
-                            <img src="{{ asset('frontend/images/home_03/4.jpg') }}" alt="">
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-    <!-- End:: Feature Section -->
 
-    <!-- Begin:: Client Section -->
-    <section class="clientSection">
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-12">
-                    <div class="clientSlider owl-carousel">
-                        <a href="javascript:void(0);"><img class="hover"
-                                src="{{ asset('frontend/images/client_logo/1.png') }}" alt="" /><img
-                                class="normal" src="{{ asset('frontend/images/client_logo/1.png') }}"
-                                alt="" /></a>
-                        <a href="javascript:void(0);"><img class="hover"
-                                src="{{ asset('frontend/images/client_logo/2.png') }}" alt="" /><img
-                                class="normal" src="{{ asset('frontend/images/client_logo/2.png') }}"
-                                alt="" /></a>
-                        <a href="javascript:void(0);"><img class="hover"
-                                src="{{ asset('frontend/images/client_logo/3.png') }}" alt="" /><img
-                                class="normal" src="{{ asset('frontend/images/client_logo/3.png') }}"
-                                alt="" /></a>
-                        <a href="javascript:void(0);"><img class="hover"
-                                src="{{ asset('frontend/images/client_logo/4.png') }}" alt="" /><img
-                                class="normal" src="{{ asset('frontend/images/client_logo/4.png') }}"
-                                alt="" /></a>
-                        <a href="javascript:void(0);"><img class="hover"
-                                src="{{ asset('frontend/images/client_logo/5.png') }}" alt="" /><img
-                                class="normal" src="{{ asset('frontend/images/client_logo/5.png') }}"
-                                alt="" /></a>
-                        <a href="javascript:void(0);"><img class="hover"
-                                src="{{ asset('frontend/images/client_logo/1.png') }}" alt="" /><img
-                                class="normal" src="{{ asset('frontend/images/client_logo/1.png') }}"
-                                alt="" /></a>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-    <!-- End:: Client Section -->
 
-    <!-- Begin:: Testimonial Section -->
-    <section class="commonSection testimonialSlider">
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-12">
-                    <div class="testimoanial_area">
-                        <div class="tw_testiSlider">
-                            <div class="item">
-                                <div class="quote">
-                                    <img src="{{ asset('frontend/images/home_01/quote.png') }}" alt="" />
-                                    <span></span><span></span><span></span><span></span>
-                                </div>
-                                <p class="quatation">
-                                    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
-                                    incididunt ut labore et dolore magna aliqua.<br>
-                                    Quis ipsum suspendisse ultrices
-                                </p>
-                                <div class="test_author">
-                                    <span>Design Grue</span>
-                                    <p>California, USA</p>
-                                </div>
-                            </div>
-                            <div class="item">
-                                <div class="quote">
-                                    <img src="{{ asset('frontend/images/home_01/quote.png') }}" alt="" />
-                                    <span></span><span></span><span></span><span></span>
-                                </div>
-                                <p class="quatation">
-                                    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
-                                    incididunt ut labore et dolore magna aliqua.<br>
-                                    Quis ipsum suspendisse ultrices
-                                </p>
-                                <div class="test_author">
-                                    <span>William Smith</span>
-                                    <p>New York, USA</p>
-                                </div>
-                            </div>
-                            <div class="item">
-                                <div class="quote">
-                                    <img src="{{ asset('frontend/images/home_01/quote.png') }}" alt="" />
-                                    <span></span><span></span><span></span><span></span>
-                                </div>
-                                <p class="quatation">
-                                    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
-                                    incididunt ut labore et dolore magna aliqua.<br>
-                                    Quis ipsum suspendisse ultrices
-                                </p>
-                                <div class="test_author">
-                                    <span>Mark Smith</span>
-                                    <p>London, UK</p>
-                                </div>
-                            </div>
-                            <div class="item">
-                                <div class="quote">
-                                    <img src="{{ asset('frontend/images/home_01/quote.png') }}" alt="" />
-                                    <span></span><span></span><span></span><span></span>
-                                </div>
-                                <p class="quatation">
-                                    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
-                                    incididunt ut labore et dolore magna aliqua.<br>
-                                    Quis ipsum suspendisse ultrices
-                                </p>
-                                <div class="test_author">
-                                    <span>Design Grue</span>
-                                    <p>California, USA</p>
-                                </div>
-                            </div>
-                            <div class="item">
-                                <div class="quote">
-                                    <img src="{{ asset('frontend/images/home_01/quote.png') }}" alt="" />
-                                    <span></span><span></span><span></span><span></span>
-                                </div>
-                                <p class="quatation">
-                                    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
-                                    incididunt ut labore et dolore magna aliqua.<br>
-                                    Quis ipsum suspendisse ultrices
-                                </p>
-                                <div class="test_author">
-                                    <span>William Smith</span>
-                                    <p>New York, USA</p>
-                                </div>
-                            </div>
-                            <div class="item">
-                                <div class="quote">
-                                    <img src="{{ asset('frontend/images/home_01/quote.png') }}" alt="" />
-                                    <span></span><span></span><span></span><span></span>
-                                </div>
-                                <p class="quatation">
-                                    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
-                                    incididunt ut labore et dolore magna aliqua.<br>
-                                    Quis ipsum suspendisse ultrices
-                                </p>
-                                <div class="test_author">
-                                    <span>Mark Smith</span>
-                                    <p>London, UK</p>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="testiNav">
-                            <div class="navitem">
-                                <img src="{{ asset('frontend/images/home_01/t1.png') }}" alt="" />
-                            </div>
-                            <div class="navitem">
-                                <img src="{{ asset('frontend/images/home_01/t2.png') }}" alt="" />
-                            </div>
-                            <div class="navitem">
-                                <img src="{{ asset('frontend/images/home_01/t3.png') }}" alt="" />
-                            </div>
-                            <div class="navitem">
-                                <img src="{{ asset('frontend/images/home_01/t1.png') }}" alt="" />
-                            </div>
-                            <div class="navitem">
-                                <img src="{{ asset('frontend/images/home_01/t2.png') }}" alt="" />
-                            </div>
-                            <div class="navitem">
-                                <img src="{{ asset('frontend/images/home_01/t3.png') }}" alt="" />
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-    <!-- End:: Testimonial Section -->
 
-    <!-- Begin:: Team Section -->
-    <section class="commonSection teamSection2">
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-10 offset-lg-1">
-                    <div class="sectionTitle text-center">
-                        <img src="{{ asset('frontend/images/icons/3.png') }}" alt="">
-                        <h5 class="primaryFont">Meet With</h5>
-                        <h2>Our <span class="colorPrimary fontWeight400">Team</span></h2>
-                        <p>
-                            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut
-                            labore et dolore magna aliqua.
-                            Quis ipsum suspendisse ultrices gravida. Risus commodo viverra<br> maecenas accumsan lacus vel
-                            facilisis.
-                        </p>
-                    </div>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-lg-4 col-md-6">
-                    <div class="team_01 tm_col_4 text-center">
-                        <div class="tm_thumb">
-                            <img src="{{ asset('frontend/images/home_03/t1.jpg') }}" alt="" />
-                            <div class="tm_social">
-                                <a href="https://www.facebook.com/"><i class="icofont-facebook"></i></a>
-                                <a href="https://envato.com/"><i class="icofont-envato"></i></a>
-                                <a href="https://twitter.com/"><i class="icofont-twitter"></i></a>
-                            </div>
-                        </div>
-                        <p>Founder</p>
-                        <h3><a href="single-team.html">Jan Enno Einfeld</a></h3>
-                    </div>
-                </div>
-                <div class="col-lg-4 col-md-6">
-                    <div class="team_01 tm_col_4 text-center">
-                        <div class="tm_thumb">
-                            <img src="{{ asset('frontend/images/home_03/t2.jpg') }}" alt="" />
-                            <div class="tm_social">
-                                <a href="https://www.facebook.com/"><i class="icofont-facebook"></i></a>
-                                <a href="https://envato.com/"><i class="icofont-envato"></i></a>
-                                <a href="https://twitter.com/"><i class="icofont-twitter"></i></a>
-                            </div>
-                        </div>
-                        <p>Ceo</p>
-                        <h3><a href="single-team.html">Jont Herry</a></h3>
-                    </div>
-                </div>
-                <div class="col-lg-4 col-md-6">
-                    <div class="team_01 tm_col_4 text-center">
-                        <div class="tm_thumb">
-                            <img src="{{ asset('frontend/images/home_03/t3.jpg') }}" alt="" />
-                            <div class="tm_social">
-                                <a href="https://www.facebook.com/"><i class="icofont-facebook"></i></a>
-                                <a href="https://envato.com/"><i class="icofont-envato"></i></a>
-                                <a href="https://twitter.com/"><i class="icofont-twitter"></i></a>
-                            </div>
-                        </div>
-                        <p>Managing Director</p>
-                        <h3><a href="single-team.html">Georgie Haynes</a></h3>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-    <!-- End:: Team Section -->
 
-    <!-- Begin:: Instagram Section -->
-    <div class="my_instagram with_border ovelay">
-        <a href="https://www.instagram.com/themewar/" target="_blank"><img
-                src="{{ asset('frontend/images/instagram/7.jpg') }}" alt="instagram"></a>
-        <a href="https://www.instagram.com/themewar/" target="_blank"><img
-                src="{{ asset('frontend/images/instagram/8.jpg') }}" alt="instagram"></a>
-        <a href="https://www.instagram.com/themewar/" target="_blank"><img
-                src="{{ asset('frontend/images/instagram/9.jpg') }}" alt="instagram"></a>
-        <a href="https://www.instagram.com/themewar/" target="_blank"><img
-                src="{{ asset('frontend/images/instagram/10.jpg') }}" alt="instagram"></a>
-        <a href="https://www.instagram.com/themewar/" target="_blank"><img
-                src="{{ asset('frontend/images/instagram/11.jpg') }}" alt="instagram"></a>
-    </div>
-    <!-- End:: Instagram Section -->
+
+
+
+
 
     <!-- Begin:: Package Section -->
     <section class="commonSection pricingSection2">
@@ -871,6 +567,7 @@
                 url: "{{ URL::to('/get-service-cat') }}",
                 datatype: "json",
                 success: function(response) {
+                    // console.log(response);
                     let svgPaths = [
                         "M1560 2919 c-1285 -156 -1790 -718 -1459 -1625 305 -836 1087 -1375 1835 -1266 826 122 1314 467 1386 982 122 875 -341 1790 -933 1843 -65 6 -154 24 -198 40 -97 37 -431 51 -631 26z",
                         "M1115 2973 c-533 -182 -1118 -1037 -1091 -1597 31 -647 948 -1379 1694 -1351 1127 43 2049 1058 1675 1845 -197 414 -1177 1090 -1581 1090 -27 0 -102 14 -165 30 -170 44 -371 38 -532 -17z",
@@ -895,6 +592,7 @@
                             .length)];
                         let randomIcon = icons[Math.floor(Math.random() * icons.length)];
                         let id_tab = service.name.replace(/[^a-zA-Z0-9]/g, "_");
+<<<<<<< Updated upstream
 
                         serviceHtml += `
                     <li class="nav-item" role="presentation">
@@ -921,6 +619,29 @@
                             .packages; // Store packages for later retrieval
                     });
 
+=======
+                        serviceHtml += `
+                        <li class="nav-item" role="presentation">
+                        <a class="cat-service nav-link ${clicked == service.id ? 'active' : ''}" data-id="${service.id}" data-name = "${service.name}" data-aria ="${id_tab}" id="${id_tab}" data-toggle="tab"
+                                href="#${service.id}" role="tab" aria-controls="${service.id}"
+                                aria-selected="true">
+                                <div class="svgContainer">
+                                    <svg version="1.0" xmlns="http://www.w3.org/2000/svg" width="167.000000pt"
+                                        height="147.000000pt" viewBox="0 0 167.000000 147.000000"
+                                        preserveAspectRatio="xMidYMid meet">
+                                        <g transform="translate(0.000000,147.000000) scale(0.050000,-0.050000)"
+                                            fill="#252525" stroke="none">
+                                            <path d="${randomPath}" />
+                                        </g>
+                                    </svg>
+                                    <i class="${randomIcon}"></i>
+                                </div>
+                                <span>${service.name}</span>
+                            </a>
+                        </li>
+                        `;
+                    });
+>>>>>>> Stashed changes
                     $('#pricingTab').html(serviceHtml);
 
                     // Store package data globally
@@ -935,6 +656,7 @@
             let serviceId = $(this).data("id");
             let id_tab = $(this).attr("id");
 
+<<<<<<< Updated upstream
             let packageHtml = '';
             if (window.packageData[serviceId]) {
                 window.packageData[serviceId].forEach(service => {
@@ -950,6 +672,80 @@
                     <p>20 mins Revitalize Facial</p>
                 </div>
             `;
+=======
+            $(document).on('click', '.cat-service', function(e) {
+                e.preventDefault();
+                let serviceId = $(this).data("id"); // Get ID from data attribute
+                let serviceAria= $(this).data("aria"); // Get ID from data attribute
+                let serviceName= $(this).data("name"); // Get ID from data attribute
+                $.ajax({
+                    url: "/get-service",
+                    type: "POST",
+                    data: {
+                        id: serviceId // Pass the ID
+                    },
+                    success: function(response) {
+                        // Handle success response
+
+                        console.log(response);
+                        let lght = response.length;
+                        if (lght == 0) {
+                            let tabHtml = `<div class="tab-pane show active" id="${serviceId}" role="tabpanel" aria-labelledby="${serviceAria}">
+                               <div class="row">
+                                    <div class="col-md-12">
+                                        <h3 class="text-center">List of ${serviceName}</h3>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <h5 class="text-center">No services available</h5>
+                                    </div>
+                                </div>`;
+                            $('#myTabContent').html(tabHtml);
+                            return;
+                        }
+                        else{
+                            let listHtml = '';
+                            response.forEach(service => {
+                                phone = service.kiosk.phone.replace(/^0/, '62');
+                            listHtml+=`
+                            <div class="package_item pr_area">
+                                            <img src="images/home_01/p7.jpg" alt="">
+                                            <h5>
+                                                <a href="javascript:void(0);">${service.name}</a>
+                                                <span class="piborder"></span>
+                                                <span>from</span>
+                                                IDR ${service.price}
+                                            </h5>
+                                            <p>Tenant Name : ${service.kiosk.name}</p>
+                                            <p>Tenant Phone : <a target="_blank" href="https://wa.me/${phone}">${service.kiosk.phone}</a></p>
+                                            <p>Tenant Address : ${service.kiosk.address}</p>
+                                        </div>
+
+                            `;
+                        });
+
+                        let tabHtml = `<div class="tab-pane show active" id="${serviceId}" role="tabpanel" aria-labelledby="${serviceAria}">
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <h3 class="text-center">List of ${serviceName}</h3>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="${lght < 4 ? 'col-md-12' : 'col-md-6'}">
+                                        ${listHtml}
+                                    </div>
+                                </div>
+                            </div>`;
+                        $('#myTabContent').html(tabHtml);
+                        }
+
+// $('#myTabContent').html(response);
+                    },
+                    error: function(xhr, status, error) {
+                        console.error("Error:", error);
+                    }
+>>>>>>> Stashed changes
                 });
 
                 let tabHtml = `<div class="tab-pane fade" id="${id_tab}_content" aria-labelledby="${id_tab}">

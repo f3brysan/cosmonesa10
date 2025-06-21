@@ -137,8 +137,8 @@
                     type: 'GET'
                 },
                 columns: [{
-                        data: 'id',
-                        name: 'id',
+                        data: 'code',
+                        name: 'code',
                     },
                     {
                         data: 'name',

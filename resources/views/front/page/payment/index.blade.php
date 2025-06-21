@@ -8,7 +8,10 @@
             <div class="row woocommerce">
                 <div class="col-md-12">
                     <h3 id="order_review_heading">Your order Code : {{ $transaction->code }}</h3>
-                    <h2 style="text-align: center">Ayo segera selesaikan pembayaran, <span id="countdown"></span> lagi</h2>
+                    @if ($transaction->payment_status == 'unpaid')
+                        <h2 style="text-align: center">Ayo segera selesaikan pembayaran, <span id="countdown"></span> lagi
+                        </h2>
+                    @endif
                     <div class="woocommerce-checkout-review-order checkout_page_only" id="order_review">
                         <table class="shop_table woocommerce-checkout-review-order-table">
                             <thead>
@@ -41,12 +44,12 @@
                                 </tr>
                                 @if ($transaction->type == 'product')
                                     <tr class="cart-subtotal">
-                                    <th>Shipping</th>
-                                    <td>
-                                        <span class="woocommerce-Price-amount amount"><bdi><span
-                                                    class="woocommerce-Price-currencySymbol">Rp</span>{{ number_format($transaction->shipping, 0, '.', '.') }}</bdi></span>
-                                    </td>
-                                </tr>
+                                        <th>Shipping</th>
+                                        <td>
+                                            <span class="woocommerce-Price-amount amount"><bdi><span
+                                                        class="woocommerce-Price-currencySymbol">Rp</span>{{ number_format($transaction->shipping, 0, '.', '.') }}</bdi></span>
+                                        </td>
+                                    </tr>
                                 @endif
                                 <tr class="order-total">
                                     <th>Total</th>
@@ -119,26 +122,28 @@
             }
         });
     </script>
-    <script>
-        // Ambil waktu akhir dari backend (dalam milidetik)
-        let endTime = new Date("{{ date('Y-m-d H:i:s', strtotime($transaction->void_at)) }}").getTime();
+    @if ($transaction->payment_status == 'unpaid')
+        <script>
+            // Ambil waktu akhir dari backend (dalam milidetik)
+            let endTime = new Date("{{ date('Y-m-d H:i:s', strtotime($transaction->void_at)) }}").getTime();
 
-        let x = setInterval(function() {
-            let now = new Date().getTime();
-            let distance = endTime - now;
+            let x = setInterval(function() {
+                let now = new Date().getTime();
+                let distance = endTime - now;
 
-            // Hitung menit dan detik
-            let minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-            let seconds = Math.floor((distance % (1000 * 60)) / 1000);
+                // Hitung menit dan detik
+                let minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+                let seconds = Math.floor((distance % (1000 * 60)) / 1000);
 
-            // Tampilkan
-            document.getElementById("countdown").innerHTML = minutes + " menit " + seconds + " detik";
+                // Tampilkan
+                document.getElementById("countdown").innerHTML = minutes + " menit " + seconds + " detik";
 
-            // Jika hitung mundur selesai
-            if (distance <= 0) {
-                clearInterval(x);
-                location.reload(); // 🔁 Reload halaman
-            }
-        }, 1000);
-    </script>
+                // Jika hitung mundur selesai
+                if (distance <= 0) {
+                    clearInterval(x);
+                    location.reload(); // 🔁 Reload halaman
+                }
+            }, 1000);
+        </script>
+    @endif
 @endpush

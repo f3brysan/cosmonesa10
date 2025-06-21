@@ -149,9 +149,10 @@ class B_EventController extends Controller
     {
         try {
             $participants = DB::table('event_participants as ep')
-                ->select('ep.*', 'u.name', 't.payment_status')
+                ->select('ep.*', 'u.name', 't.payment_status', 't.code')
                 ->join('users as u', 'u.id', '=', 'ep.user_id')
                 ->leftJoin('transactions as t', 't.id', '=', 'ep.transaction_id')
+                ->where('ep.event_id', $id)
                 ->get();
 
                 if ($request->ajax()) {

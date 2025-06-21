@@ -160,8 +160,8 @@
                                     stroke="none">
                                     <path
                                         d="M1257 2920 c-50 -9 -109 -25 -130 -35 -20 -11 -95 -25 -165 -31 -523
-                                                                                                                                                          -45 -900 -630 -953 -1477 -43 -680 253 -1056 996 -1266 720 -204 1195 -98
-                                                                                                                                                          1691 377 805 772 854 1763 105 2149 -412 213 -1153 349 -1544 283z" />
+                                                                                                                                                                                      -45 -900 -630 -953 -1477 -43 -680 253 -1056 996 -1266 720 -204 1195 -98
+                                                                                                                                                                                      1691 377 805 772 854 1763 105 2149 -412 213 -1153 349 -1544 283z" />
                                 </g>
                             </svg>
                             <div class="bg_icon"><i class="mkov-stone"></i></div>
@@ -183,8 +183,8 @@
                                     stroke="none">
                                     <path
                                         d="M1572 2919 c-708 -80 -1193 -291 -1416 -614 -534 -777 474 -2293
-                                                                                                                                                          1524 -2292 887 1 1576 436 1644 1037 101 889 -356 1757 -949 1804 -69 5 -160
-                                                                                                                                                          22 -202 38 -98 37 -396 51 -601 27z" />
+                                                                                                                                                                                      1524 -2292 887 1 1576 436 1644 1037 101 889 -356 1757 -949 1804 -69 5 -160
+                                                                                                                                                                                      22 -202 38 -98 37 -396 51 -601 27z" />
                                 </g>
                             </svg>
                             <div class="bg_icon"><i class="mkov-candle"></i></div>
@@ -206,8 +206,8 @@
                                     stroke="none">
                                     <path
                                         d="M1115 2973 c-533 -182 -1118 -1037 -1091 -1597 31 -647 948 -1379
-                                                                                                                                                          1694 -1351 1127 43 2049 1058 1675 1845 -197 414 -1177 1090 -1581 1090 -27 0
-                                                                                                                                                          -102 14 -165 30 -170 44 -371 38 -532 -17z" />
+                                                                                                                                                                                      1694 -1351 1127 43 2049 1058 1675 1845 -197 414 -1177 1090 -1581 1090 -27 0
+                                                                                                                                                                                      -102 14 -165 30 -170 44 -371 38 -532 -17z" />
                                 </g>
                             </svg>
                             <div class="bg_icon"><i class="mkov-morter"></i></div>
@@ -229,8 +229,8 @@
                                     stroke="none">
                                     <path
                                         d="M1560 2919 c-1285 -156 -1790 -718 -1459 -1625 305 -836 1087 -1375
-                                                                                                                                                          1835 -1266 826 122 1314 467 1386 982 122 875 -341 1790 -933 1843 -65 6 -154
-                                                                                                                                                          24 -198 40 -97 37 -431 51 -631 26z" />
+                                                                                                                                                                                      1835 -1266 826 122 1314 467 1386 982 122 875 -341 1790 -933 1843 -65 6 -154
+                                                                                                                                                                                      24 -198 40 -97 37 -431 51 -631 26z" />
                                 </g>
                             </svg>
                             <div class="bg_icon"><i class="mkov-bottle"></i></div>
@@ -252,8 +252,8 @@
                                     stroke="none">
                                     <path
                                         d="M1257 2920 c-50 -9 -109 -25 -130 -35 -20 -11 -95 -25 -165 -31 -523
-                                                                                                                                                          -45 -900 -630 -953 -1477 -43 -680 253 -1056 996 -1266 720 -204 1195 -98
-                                                                                                                                                          1691 377 805 772 854 1763 105 2149 -412 213 -1153 349 -1544 283z" />
+                                                                                                                                                                                      -45 -900 -630 -953 -1477 -43 -680 253 -1056 996 -1266 720 -204 1195 -98
+                                                                                                                                                                                      1691 377 805 772 854 1763 105 2149 -412 213 -1153 349 -1544 283z" />
                                 </g>
                             </svg>
                             <div class="bg_icon"><i class="mkov-spa-drop"></i></div>
@@ -275,8 +275,8 @@
                                     stroke="none">
                                     <path
                                         d="M1572 2919 c-708 -80 -1193 -291 -1416 -614 -534 -777 474 -2293
-                                                                                                                                                          1524 -2292 887 1 1576 436 1644 1037 101 889 -356 1757 -949 1804 -69 5 -160
-                                                                                                                                                          22 -202 38 -98 37 -396 51 -601 27z" />
+                                                                                                                                                                                      1524 -2292 887 1 1576 436 1644 1037 101 889 -356 1757 -949 1804 -69 5 -160
+                                                                                                                                                                                      22 -202 38 -98 37 -396 51 -601 27z" />
                                 </g>
                             </svg>
                             <div class="bg_icon"><i class="mkov-massage-oil"></i></div>
@@ -298,8 +298,8 @@
                                     stroke="none">
                                     <path
                                         d="M1115 2973 c-533 -182 -1118 -1037 -1091 -1597 31 -647 948 -1379
-                                                                                                                                                          1694 -1351 1127 43 2049 1058 1675 1845 -197 414 -1177 1090 -1581 1090 -27 0
-                                                                                                                                                          -102 14 -165 30 -170 44 -371 38 -532 -17z" />
+                                                                                                                                                                                      1694 -1351 1127 43 2049 1058 1675 1845 -197 414 -1177 1090 -1581 1090 -27 0
+                                                                                                                                                                                      -102 14 -165 30 -170 44 -371 38 -532 -17z" />
                                 </g>
                             </svg>
                             <div class="bg_icon"><i class="mkov-span-steam"></i></div>
@@ -321,8 +321,8 @@
                                     stroke="none">
                                     <path
                                         d="M1560 2919 c-1285 -156 -1790 -718 -1459 -1625 305 -836 1087 -1375
-                                                                                                                                                          1835 -1266 826 122 1314 467 1386 982 122 875 -341 1790 -933 1843 -65 6 -154
-                                                                                                                                                          24 -198 40 -97 37 -431 51 -631 26z" />
+                                                                                                                                                                                      1835 -1266 826 122 1314 467 1386 982 122 875 -341 1790 -933 1843 -65 6 -154
+                                                                                                                                                                                      24 -198 40 -97 37 -431 51 -631 26z" />
                                 </g>
                             </svg>
                             <div class="bg_icon"><i class="mkov-steam"></i></div>
@@ -383,8 +383,8 @@
                                             fill="#252525" stroke="none">
                                             <path
                                                 d="M1257 2920 c-50 -9 -109 -25 -130 -35 -20 -11 -95 -25 -165 -31 -523
-                                                                                                                                                                  -45 -900 -630 -953 -1477 -43 -680 253 -1056 996 -1266 720 -204 1195 -98
-                                                                                                                                                                  1691 377 805 772 854 1763 105 2149 -412 213 -1153 349 -1544 283z" />
+                                                                                                                                                                                              -45 -900 -630 -953 -1477 -43 -680 253 -1056 996 -1266 720 -204 1195 -98
+                                                                                                                                                                                              1691 377 805 772 854 1763 105 2149 -412 213 -1153 349 -1544 283z" />
                                         </g>
                                     </svg>
                                     <i class="mkov-candle"></i>
@@ -455,112 +455,6 @@
 @endsection
 @push('js')
     <script>
-        // $(document).ready(function() {
-        //             var clicked = '';
-        //             $.ajax({
-        //                 type: "get",
-        //                 url: "{{ URL::to('/get-service-cat') }}",
-        //                 datatype: "json",
-        //                 success: function(response) {
-        //                     let svgPaths = [
-        //                         "M1560 2919 c-1285 -156 -1790 -718 -1459 -1625 305 -836 1087 -1375 1835 -1266 826 122 1314 467 1386 982 122 875 -341 1790 -933 1843 -65 6 -154 24 -198 40 -97 37 -431 51 -631 26z",
-        //                         "M1115 2973 c-533 -182 -1118 -1037 -1091 -1597 31 -647 948 -1379 1694 -1351 1127 43 2049 1058 1675 1845 -197 414 -1177 1090 -1581 1090 -27 0 -102 14 -165 30 -170 44 -371 38 -532 -17z",
-        //                         "M1572 2919 c-708 -80 -1193 -291 -1416 -614 -534 -777 474 -2293 1524 -2292 887 1 1576 436 1644 1037 101 889 -356 1757 -949 1804 -69 5 -160 22 -202 38 -98 37 -396 51 -601 27z",
-        //                         "M1257 2920 c-50 -9 -109 -25 -130 -35 -20 -11 -95 -25 -165 -31 -523-45 -900 -630 -953 -1477 -43 -680 253 -1056 996 -1266 720 -204 1195 -98 1691 377 805 772 854 1763 105 2149 -412 213 -1153 349 -1544 283z",
-        //                         "M1560 2919 c-1285 -156 -1790 -718 -1459 -1625 305 -836 1087 -1375 1835 -1266 826 122 1314 467 1386 982 122 875 -341 1790 -933 1843 -65 6 -154 24 -198 40 -97 37 -431 51 -631 26z",
-        //                         "M1115 2973 c-533 -182 -1118 -1037 -1091 -1597 31 -647 948 -1379 1694 -1351 1127 43 2049 1058 1675 1845 -197 414 -1177 1090 -1581 1090 -27 0 -102 14 -165 30 -170 44 -371 38 -532 -17z",
-        //                         "M1572 2919 c-708 -80 -1193 -291 -1416 -614 -534 -777 474 -2293 1524 -2292 887 1 1576 436 1644 1037 101 889 -356 1757 -949 1804 -69 5 -160 22 -202 38 -98 37 -396 51 -601 27z",
-        //                         "M1257 2920 c-50 -9 -109 -25 -130 -35 -20 -11 -95 -25 -165 -31 -523 -45 -900 -630 -953 -1477 -43 -680 253 -1056 996 -1266 720 -204 1195 -98 1691 377 805 772 854 1763 105 2149 -412 213 -1153 349 -1544 283z"
-        //                     ];
-
-        //                     let icons = [
-        //                         "mkov-stone",
-        //                         "mkov-candle",
-        //                         "mkov-morter",
-        //                         "mkov-bottle",
-        //                         "mkov-spa-drop",
-        //                         "mkov-massage-oil",
-        //                         "mkov-span-steam",
-        //                         "mkov-steam"
-        //                     ];
-        //                     let serviceHtml = '';
-        //                     response.data.forEach(service => {
-        //                         let randomPath = svgPaths[Math.floor(Math.random() * svgPaths.length)];
-        //                         let randomIcon = icons[Math.floor(Math.random() * icons.length)];
-        //                         let id_tab = service.name.replace(/[^a-zA-Z0-9]/g, "_");
-        //                         serviceHtml += `
-    //                 <li class="nav-item" role="presentation">
-    //                 <a class="cat-service nav-link ${clicked == service.id ? 'active' : ''}" data-id="${service.id}" id="${id_tab}" data-toggle="tab"
-    //                         href="#spa_solution_items" role="tab" aria-controls="${id_tab}"
-    //                         aria-selected="true">
-    //                         <div class="svgContainer">
-    //                             <svg version="1.0" xmlns="http://www.w3.org/2000/svg" width="167.000000pt"
-    //                                 height="147.000000pt" viewBox="0 0 167.000000 147.000000"
-    //                                 preserveAspectRatio="xMidYMid meet">
-    //                                 <g transform="translate(0.000000,147.000000) scale(0.050000,-0.050000)"
-    //                                     fill="#252525" stroke="none">
-    //                                     <path d="${randomPath}" />
-    //                                 </g>
-    //                             </svg>
-    //                             <i class="${randomIcon}"></i>
-    //                         </div>
-    //                         <span>${service.name}</span>
-    //                     </a>
-    //                 </li>
-    //                 `;
-
-        //                     });
-
-
-
-        //                     $('#pricingTab').html(serviceHtml);
-        //                 }
-        //             });
-
-
-        //             $(document).on('click', '.cat-service', function(e) {
-        //                     e.preventDefault();
-        //                     let serviceId = $(this).data("id"); // Get ID from data attribute
-        //                     $.ajax({
-        //                             url: "/get-service",
-        //                             type: "POST",
-        //                             data: {
-        //                                 id: serviceId // Pass the ID
-        //                             },
-        //                             success: function(response) {
-        //                                 // Handle success response
-        //                                 console.log(response);
-
-
-        //                                 let packageHtml = '';
-        //                                 response.data.forEach(service => {
-        //                                             packageHtml += `
-    //                                     <div class="package_item pl_area">
-    //                                     <img src="images/home_01/p1.jpg" alt="">
-    //                                     <h5>
-    //                                         <a href="javascript:void(0);">${service.kiosk.name}</a>
-    //                                         <span class="piborder"></span>
-    //                                         <span>from</span>
-    //                                         $50
-    //                                     </h5>
-    //                                     <p>20 mins Revitalize Facial</p>
-    //                                 </div>
-    //                                     `
-        //                                         }
-
-        //                                         let tabHtml = `<div class="tab-pane fade" id="facials_items" role="tabpanel" aria-labelledby="facials_tab">
-    //                         <div class="row">
-    //                             <div class="col-md-6">
-    //                             ${packageHtml}
-    //                                 </div></div></div>`;
-        //                                     },
-        //                                     error: function(xhr, status, error) {
-        //                                         console.error("Error:", error);
-        //                                     }
-        //                             });
-        //                     });
-
-        // });
         $(document).ready(function() {
             $.ajax({
                 type: "get",
@@ -592,7 +486,7 @@
                             .length)];
                         let randomIcon = icons[Math.floor(Math.random() * icons.length)];
                         let id_tab = service.name.replace(/[^a-zA-Z0-9]/g, "_");
-<<<<<<< Updated upstream
+
 
                         serviceHtml += `
                     <li class="nav-item" role="presentation">
@@ -614,70 +508,17 @@
                         </a>
                     </li>
                 `;
-
-                        packageData[service.id] = service
-                            .packages; // Store packages for later retrieval
                     });
 
-=======
-                        serviceHtml += `
-                        <li class="nav-item" role="presentation">
-                        <a class="cat-service nav-link ${clicked == service.id ? 'active' : ''}" data-id="${service.id}" data-name = "${service.name}" data-aria ="${id_tab}" id="${id_tab}" data-toggle="tab"
-                                href="#${service.id}" role="tab" aria-controls="${service.id}"
-                                aria-selected="true">
-                                <div class="svgContainer">
-                                    <svg version="1.0" xmlns="http://www.w3.org/2000/svg" width="167.000000pt"
-                                        height="147.000000pt" viewBox="0 0 167.000000 147.000000"
-                                        preserveAspectRatio="xMidYMid meet">
-                                        <g transform="translate(0.000000,147.000000) scale(0.050000,-0.050000)"
-                                            fill="#252525" stroke="none">
-                                            <path d="${randomPath}" />
-                                        </g>
-                                    </svg>
-                                    <i class="${randomIcon}"></i>
-                                </div>
-                                <span>${service.name}</span>
-                            </a>
-                        </li>
-                        `;
-                    });
->>>>>>> Stashed changes
-                    $('#pricingTab').html(serviceHtml);
-
-                    // Store package data globally
-                    window.packageData = packageData;
                 }
+
             });
-        });
 
-        // Handle service tab click
-        $(document).on('click', '.cat-service', function(e) {
-            e.preventDefault();
-            let serviceId = $(this).data("id");
-            let id_tab = $(this).attr("id");
-
-<<<<<<< Updated upstream
-            let packageHtml = '';
-            if (window.packageData[serviceId]) {
-                window.packageData[serviceId].forEach(service => {
-                    packageHtml += `
-                <div class="package_item pl_area">
-                    <img src="images/home_01/p1.jpg" alt="">
-                    <h5>
-                        <a href="javascript:void(0);">${service.kiosk.name}</a>
-                        <span class="piborder"></span>
-                        <span>from</span>
-                        $50
-                    </h5>
-                    <p>20 mins Revitalize Facial</p>
-                </div>
-            `;
-=======
             $(document).on('click', '.cat-service', function(e) {
                 e.preventDefault();
                 let serviceId = $(this).data("id"); // Get ID from data attribute
-                let serviceAria= $(this).data("aria"); // Get ID from data attribute
-                let serviceName= $(this).data("name"); // Get ID from data attribute
+                let serviceAria = $(this).data("aria"); // Get ID from data attribute
+                let serviceName = $(this).data("name"); // Get ID from data attribute
                 $.ajax({
                     url: "/get-service",
                     type: "POST",
@@ -703,12 +544,11 @@
                                 </div>`;
                             $('#myTabContent').html(tabHtml);
                             return;
-                        }
-                        else{
+                        } else {
                             let listHtml = '';
                             response.forEach(service => {
                                 phone = service.kiosk.phone.replace(/^0/, '62');
-                            listHtml+=`
+                                listHtml += `
                             <div class="package_item pr_area">
                                             <img src="images/home_01/p7.jpg" alt="">
                                             <h5>
@@ -723,9 +563,9 @@
                                         </div>
 
                             `;
-                        });
+                            });
 
-                        let tabHtml = `<div class="tab-pane show active" id="${serviceId}" role="tabpanel" aria-labelledby="${serviceAria}">
+                            let tabHtml = `<div class="tab-pane show active" id="${serviceId}" role="tabpanel" aria-labelledby="${serviceAria}">
                                 <div class="row">
                                     <div class="col-md-12">
                                         <h3 class="text-center">List of ${serviceName}</h3>
@@ -737,35 +577,17 @@
                                     </div>
                                 </div>
                             </div>`;
-                        $('#myTabContent').html(tabHtml);
+                            $('#myTabContent').html(tabHtml);
                         }
 
-// $('#myTabContent').html(response);
+                        // $('#myTabContent').html(response);
                     },
                     error: function(xhr, status, error) {
                         console.error("Error:", error);
                     }
->>>>>>> Stashed changes
+
                 });
-
-                let tabHtml = `<div class="tab-pane fade" id="${id_tab}_content" aria-labelledby="${id_tab}">
-            <div class="row">
-                <div class="col-md-6">${packageHtml}</div>
-            </div>
-        </div>`;
-
-                // Append new tab if it doesn't exist
-                if (!$(`#${id_tab}`).length) {
-                    $('#tabContainer').append(tabHtml);
-                }
-
-                // Activate the new tab
-                $('.nav-link').removeClass('active');
-                $(`#${id_tab}`).addClass('active');
-                $('.tab-pane').removeClass('show active');
-                $(`#${id_tab}_content`).addClass('show active');
-                $(`#${id_tab}_content`).addAttr('role', 'tabpanel');
-            }
+            });
         });
 
         $.ajaxSetup({

@@ -128,221 +128,66 @@
         </div>
     </section>
 
-    <!-- Begin:: Service Section -->
-    <section class="commonSection serviceSection3 hasBeforeDecoration">
-        <div class="layer_img move_anim">
-            <img src="{{ asset('frontend/images/bg/24.png') }}" alt="" />
-        </div>
+
+
+
+
+
+    <section class="shopPage">
         <div class="container">
-            <div class="row">
-                <div class="col-lg-10 offset-lg-1">
-                    <div class="sectionTitle text-center">
-                        <img src="{{ asset('frontend/images/icons/2.png') }}" alt="" />
-                        <h5 class="primaryFont">Welcome</h5>
-                        <h2>Our <span class="colorPrimary fontWeight400">Services</span></h2>
-                        <p>
-                            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut
-                            labore et dolore magna aliqua.
-                            Quis ipsum suspendisse ultrices gravida. Risus commodo viverra<br /> maecenas accumsan lacus vel
-                            facilisis.
-                        </p>
+            <div class="row shop_sort_count_row">
+                <div class="col-md-7">
+                    <p class="woocommerce-result-count">Showing 1–12 of 36 results</p>
+                </div>
+                <div class="col-md-5 text-right">
+                    <form class="woocommerce-ordering" method="get">
+                        <select name="orderby" class="orderby" aria-label="Shop order">
+                            <option value="menu_order" selected="selected">Default sorting</option>
+                            <option value="popularity">Sort by popularity</option>
+                            <option value="rating">Sort by average rating</option>
+                            <option value="date">Sort by latest</option>
+                            <option value="price">Sort by price: low to high</option>
+                            <option value="price-desc">Sort by price: high to low</option>
+                        </select>
+                    </form>
+                </div>
+            </div>
+            <div class="row" id="shop_lists">
+                <div class="col-lg-3 col-md-6">
+                    <div class="product_item text-center">
+                        <div class="pi_thumb">
+                            <img src="images/product/2.jpg" alt="" />
+                            <div class="pi_01_actions">
+                                <a href="cart.html"><i class="icofont-cart-alt"></i></a>
+                                <a href="single-product.html"><i class="icofont-eye"></i></a>
+                            </div>
+                            <div class="prLabels">
+                                <p class="justin">New</p>
+                            </div>
+                        </div>
+                        <div class="pi_content">
+                            <p><a href="shop.html">Cosmetics</a></p>
+                            <h3><a href="single-product.html">Nautral Oliver</a></h3>
+                            <div class="product_price clearfix">
+                                <span class="price"><span class="woocommerce-Price-amount amount"><bdi><span
+                                                class="woocommerce-Price-currencySymbol">$</span>87.00</bdi></span></span>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
             <div class="row">
-                <div class="col-lg-3 col-md-6">
-                    <div class="serviceItem_01 text-center">
-                        <div class="ib_box">
-                            <svg version="1.0" xmlns="http://www.w3.org/2000/svg" width="167.000000pt"
-                                height="147.000000pt" viewBox="0 0 167.000000 147.000000"
-                                preserveAspectRatio="xMidYMid meet">
-                                <g transform="translate(0.000000,147.000000) scale(0.050000,-0.050000)" fill="#252525"
-                                    stroke="none">
-                                    <path
-                                        d="M1257 2920 c-50 -9 -109 -25 -130 -35 -20 -11 -95 -25 -165 -31 -523
-                                                                                                                                                                                      -45 -900 -630 -953 -1477 -43 -680 253 -1056 996 -1266 720 -204 1195 -98
-                                                                                                                                                                                      1691 377 805 772 854 1763 105 2149 -412 213 -1153 349 -1544 283z" />
-                                </g>
-                            </svg>
-                            <div class="bg_icon"><i class="mkov-stone"></i></div>
-                            <i class="mkov-stone"></i>
-                        </div>
-                        <h3><a href="single-service.html">Stone spa</a></h3>
-                        <p>
-                            Risus commodo viverra maecenas accumsan lacus vel facilisis.
-                        </p>
-                    </div>
-                </div>
-                <div class="col-lg-3 col-md-6">
-                    <div class="serviceItem_01 sIlg text-center">
-                        <div class="ib_box">
-                            <svg version="1.0" xmlns="http://www.w3.org/2000/svg" width="167.000000pt"
-                                height="147.000000pt" viewBox="0 0 167.000000 147.000000"
-                                preserveAspectRatio="xMidYMid meet">
-                                <g transform="translate(0.000000,147.000000) scale(0.050000,-0.050000)" fill="#252525"
-                                    stroke="none">
-                                    <path
-                                        d="M1572 2919 c-708 -80 -1193 -291 -1416 -614 -534 -777 474 -2293
-                                                                                                                                                                                      1524 -2292 887 1 1576 436 1644 1037 101 889 -356 1757 -949 1804 -69 5 -160
-                                                                                                                                                                                      22 -202 38 -98 37 -396 51 -601 27z" />
-                                </g>
-                            </svg>
-                            <div class="bg_icon"><i class="mkov-candle"></i></div>
-                            <i class="mkov-candle"></i>
-                        </div>
-                        <h3><a href="single-service.html">Candle Massage</a></h3>
-                        <p>
-                            Risus commodo viverra maecenas accumsan lacus vel facilisis.
-                        </p>
-                    </div>
-                </div>
-                <div class="col-lg-3 col-md-6">
-                    <div class="serviceItem_01 sIlg text-center">
-                        <div class="ib_box">
-                            <svg version="1.0" xmlns="http://www.w3.org/2000/svg" width="175.000000pt"
-                                height="152.000000pt" viewBox="0 0 175.000000 152.000000"
-                                preserveAspectRatio="xMidYMid meet">
-                                <g transform="translate(0.000000,152.000000) scale(0.050000,-0.050000)" fill="#252525"
-                                    stroke="none">
-                                    <path
-                                        d="M1115 2973 c-533 -182 -1118 -1037 -1091 -1597 31 -647 948 -1379
-                                                                                                                                                                                      1694 -1351 1127 43 2049 1058 1675 1845 -197 414 -1177 1090 -1581 1090 -27 0
-                                                                                                                                                                                      -102 14 -165 30 -170 44 -371 38 -532 -17z" />
-                                </g>
-                            </svg>
-                            <div class="bg_icon"><i class="mkov-morter"></i></div>
-                            <i class="mkov-morter"></i>
-                        </div>
-                        <h3><a href="single-service.html">Mortar</a></h3>
-                        <p>
-                            Risus commodo viverra maecenas accumsan lacus vel facilisis.
-                        </p>
-                    </div>
-                </div>
-                <div class="col-lg-3 col-md-6">
-                    <div class="serviceItem_01 text-center">
-                        <div class="ib_box">
-                            <svg version="1.0" xmlns="http://www.w3.org/2000/svg" width="167.000000pt"
-                                height="147.000000pt" viewBox="0 0 167.000000 147.000000"
-                                preserveAspectRatio="xMidYMid meet">
-                                <g transform="translate(0.000000,147.000000) scale(0.050000,-0.050000)" fill="#252525"
-                                    stroke="none">
-                                    <path
-                                        d="M1560 2919 c-1285 -156 -1790 -718 -1459 -1625 305 -836 1087 -1375
-                                                                                                                                                                                      1835 -1266 826 122 1314 467 1386 982 122 875 -341 1790 -933 1843 -65 6 -154
-                                                                                                                                                                                      24 -198 40 -97 37 -431 51 -631 26z" />
-                                </g>
-                            </svg>
-                            <div class="bg_icon"><i class="mkov-bottle"></i></div>
-                            <i class="mkov-bottle"></i>
-                        </div>
-                        <h3><a href="single-service.html">Medicine</a></h3>
-                        <p>
-                            Risus commodo viverra maecenas accumsan lacus vel facilisis.
-                        </p>
-                    </div>
-                </div>
-                <div class="col-lg-3 col-md-6">
-                    <div class="serviceItem_01 text-center">
-                        <div class="ib_box">
-                            <svg version="1.0" xmlns="http://www.w3.org/2000/svg" width="167.000000pt"
-                                height="147.000000pt" viewBox="0 0 167.000000 147.000000"
-                                preserveAspectRatio="xMidYMid meet">
-                                <g transform="translate(0.000000,147.000000) scale(0.050000,-0.050000)" fill="#252525"
-                                    stroke="none">
-                                    <path
-                                        d="M1257 2920 c-50 -9 -109 -25 -130 -35 -20 -11 -95 -25 -165 -31 -523
-                                                                                                                                                                                      -45 -900 -630 -953 -1477 -43 -680 253 -1056 996 -1266 720 -204 1195 -98
-                                                                                                                                                                                      1691 377 805 772 854 1763 105 2149 -412 213 -1153 349 -1544 283z" />
-                                </g>
-                            </svg>
-                            <div class="bg_icon"><i class="mkov-spa-drop"></i></div>
-                            <i class="mkov-spa-drop"></i>
-                        </div>
-                        <h3><a href="single-service.html">Nails Design</a></h3>
-                        <p>
-                            Risus commodo viverra maecenas accumsan lacus vel facilisis.
-                        </p>
-                    </div>
-                </div>
-                <div class="col-lg-3 col-md-6">
-                    <div class="serviceItem_01 text-center">
-                        <div class="ib_box">
-                            <svg version="1.0" xmlns="http://www.w3.org/2000/svg" width="167.000000pt"
-                                height="147.000000pt" viewBox="0 0 167.000000 147.000000"
-                                preserveAspectRatio="xMidYMid meet">
-                                <g transform="translate(0.000000,147.000000) scale(0.050000,-0.050000)" fill="#252525"
-                                    stroke="none">
-                                    <path
-                                        d="M1572 2919 c-708 -80 -1193 -291 -1416 -614 -534 -777 474 -2293
-                                                                                                                                                                                      1524 -2292 887 1 1576 436 1644 1037 101 889 -356 1757 -949 1804 -69 5 -160
-                                                                                                                                                                                      22 -202 38 -98 37 -396 51 -601 27z" />
-                                </g>
-                            </svg>
-                            <div class="bg_icon"><i class="mkov-massage-oil"></i></div>
-                            <i class="mkov-massage-oil"></i>
-                        </div>
-                        <h3><a href="single-service.html">Hair Cutting</a></h3>
-                        <p>
-                            Risus commodo viverra maecenas accumsan lacus vel facilisis.
-                        </p>
-                    </div>
-                </div>
-                <div class="col-lg-3 col-md-6">
-                    <div class="serviceItem_01 text-center">
-                        <div class="ib_box">
-                            <svg version="1.0" xmlns="http://www.w3.org/2000/svg" width="175.000000pt"
-                                height="152.000000pt" viewBox="0 0 175.000000 152.000000"
-                                preserveAspectRatio="xMidYMid meet">
-                                <g transform="translate(0.000000,152.000000) scale(0.050000,-0.050000)" fill="#252525"
-                                    stroke="none">
-                                    <path
-                                        d="M1115 2973 c-533 -182 -1118 -1037 -1091 -1597 31 -647 948 -1379
-                                                                                                                                                                                      1694 -1351 1127 43 2049 1058 1675 1845 -197 414 -1177 1090 -1581 1090 -27 0
-                                                                                                                                                                                      -102 14 -165 30 -170 44 -371 38 -532 -17z" />
-                                </g>
-                            </svg>
-                            <div class="bg_icon"><i class="mkov-span-steam"></i></div>
-                            <i class="mkov-span-steam"></i>
-                        </div>
-                        <h3><a href="single-service.html">Hair Color</a></h3>
-                        <p>
-                            Risus commodo viverra maecenas accumsan lacus vel facilisis.
-                        </p>
-                    </div>
-                </div>
-                <div class="col-lg-3 col-md-6">
-                    <div class="serviceItem_01 text-center">
-                        <div class="ib_box">
-                            <svg version="1.0" xmlns="http://www.w3.org/2000/svg" width="167.000000pt"
-                                height="147.000000pt" viewBox="0 0 167.000000 147.000000"
-                                preserveAspectRatio="xMidYMid meet">
-                                <g transform="translate(0.000000,147.000000) scale(0.050000,-0.050000)" fill="#252525"
-                                    stroke="none">
-                                    <path
-                                        d="M1560 2919 c-1285 -156 -1790 -718 -1459 -1625 305 -836 1087 -1375
-                                                                                                                                                                                      1835 -1266 826 122 1314 467 1386 982 122 875 -341 1790 -933 1843 -65 6 -154
-                                                                                                                                                                                      24 -198 40 -97 37 -431 51 -631 26z" />
-                                </g>
-                            </svg>
-                            <div class="bg_icon"><i class="mkov-steam"></i></div>
-                            <i class="mkov-steam"></i>
-                        </div>
-                        <h3><a href="single-service.html">Steam Massage</a></h3>
-                        <p>
-                            Risus commodo viverra maecenas accumsan lacus vel facilisis.
-                        </p>
+                <div class="col-lg-12">
+                    <div class="make_pagination text-center">
+                        <span class="current">1</span>
+                        <a href="shop.html">2</a>
+                        <a href="shop.html">3</a>
+                        <a class="next" href="shop.html"><i class="icofont-simple-right"></i></a>
                     </div>
                 </div>
             </div>
         </div>
     </section>
-    <!-- End:: Service Section -->
-
-
-
-
-
 
 
 
@@ -383,8 +228,8 @@
                                             fill="#252525" stroke="none">
                                             <path
                                                 d="M1257 2920 c-50 -9 -109 -25 -130 -35 -20 -11 -95 -25 -165 -31 -523
-                                                                                                                                                                                              -45 -900 -630 -953 -1477 -43 -680 253 -1056 996 -1266 720 -204 1195 -98
-                                                                                                                                                                                              1691 377 805 772 854 1763 105 2149 -412 213 -1153 349 -1544 283z" />
+                                                                                                                                                                                                                                      -45 -900 -630 -953 -1477 -43 -680 253 -1056 996 -1266 720 -204 1195 -98
+                                                                                                                                                                                                                                      1691 377 805 772 854 1763 105 2149 -412 213 -1153 349 -1544 283z" />
                                         </g>
                                     </svg>
                                     <i class="mkov-candle"></i>
@@ -458,6 +303,113 @@
         $(document).ready(function() {
             $.ajax({
                 type: "get",
+                url: "{{ URL::to('/shop_lists') }}",
+                dataType: "json",
+                success: function(response) {
+                    const allData = response.data;
+                    const itemsPerPage = 12;
+                    let currentPage = 1; // ✅ Declare here so it's in scope for everything
+
+                    function renderProducts(data, page) {
+                        const start = (page - 1) * itemsPerPage;
+                        const end = start + itemsPerPage;
+                        const pageItems = data.slice(start, end);
+
+                        let shopHtml = "";
+                        const img = [
+                            "https://images.pexels.com/photos/2537930/pexels-photo-2537930.jpeg",
+                            "https://images.pexels.com/photos/2721977/pexels-photo-2721977.jpeg",
+                            "https://images.pexels.com/photos/1499516/pexels-photo-1499516.jpeg"
+                        ];
+
+                        pageItems.forEach(shop => {
+                            const randomImg = img[Math.floor(Math.random() * img.length)];
+                            const rawPrice = shop.price;
+                            const numericPrice = typeof rawPrice === "string" ? parseFloat(
+                                rawPrice) : rawPrice;
+
+                            const formattedPrice = numericPrice.toLocaleString("id-ID", {
+                                style: "currency",
+                                currency: "IDR",
+                                minimumFractionDigits: numericPrice % 1 === 0 ? 0 : 2,
+                                maximumFractionDigits: 2
+
+                            });
+                            // formattedPrice = formattedPrice.replace(/.00$/, "");
+
+
+
+                            shopHtml += `
+                                <div class="col-lg-3 col-md-6">
+                                    <div class="product_item text-center">
+                                    <div class="pi_thumb">
+                                        <img src="${randomImg}" alt="" />
+                                        <div class="pi_01_actions">
+                                        <a href="cart.html"><i class="icofont-cart-alt"></i></a>
+                                        <a href="single-product.html"><i class="icofont-eye"></i></a>
+                                        </div>
+                                        <div class="prLabels">
+                                        <p class="featured">Featured</p>
+                                        </div>
+                                    </div>
+                                    <div class="pi_content">
+                                        <p><a href="shop.html">Kategori produk</a></p>
+                                        <h3><a href="single-product.html">${shop.name}</a></h3>
+                                        <div class="product_price clearfix">
+                                        <span class="price"><span class="woocommerce-Price-amount amount"><p>${formattedPrice}</p></span></span>
+                                        </div>
+                                    </div>
+                                    </div>
+                                </div>`;
+                        });
+
+                        $("#shop_lists").html(shopHtml);
+
+                        // Update "Showing X–Y of Z results"
+                        const showingStart = start + 1;
+                        const showingEnd = Math.min(end, data.length);
+                        $(".woocommerce-result-count").text(
+                            `Showing ${showingStart}–${showingEnd} of ${data.length} results`);
+                    }
+
+                    function renderPagination(data) {
+                        const totalPages = Math.ceil(data.length / itemsPerPage);
+                        let paginationHtml = "";
+
+                        for (let i = 1; i <= totalPages; i++) {
+                            paginationHtml += (i === currentPage) ?
+                                `<span class="current">${i}</span>` :
+                                `<a href="#" class="page-link" data-page="${i}">${i}</a>`;
+                        }
+
+                        if (currentPage < totalPages) {
+                            paginationHtml +=
+                                `<a href="#" class="next page-link" data-page="${currentPage + 1}"><i class="icofont-simple-right"></i></a>`;
+                        }
+
+                        $(".make_pagination").html(paginationHtml);
+                    }
+
+                    function updatePage(page) {
+                        currentPage = page;
+                        renderProducts(allData, currentPage);
+                        renderPagination(allData);
+                    }
+
+                    updatePage(currentPage); // ✅ initial render
+
+                    $(document).on("click", ".page-link", function(e) {
+                        e.preventDefault();
+                        const targetPage = parseInt($(this).data("page"));
+                        if (!isNaN(targetPage)) {
+                            updatePage(targetPage);
+                        }
+                    });
+                }
+            });
+
+            $.ajax({
+                type: "get",
                 url: "{{ URL::to('/get-service-cat') }}",
                 datatype: "json",
                 success: function(response) {
@@ -489,26 +441,27 @@
 
 
                         serviceHtml += `
-                    <li class="nav-item" role="presentation">
-                        <a class="cat-service nav-link" data-id="${service.id}" id="${id_tab}" data-toggle="tab"
-                            href="#${id_tab}_content" role="tab" aria-controls="${id_tab}"
-                            aria-selected="true">
-                            <div class="svgContainer">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="167.000000pt"
-                                    height="147.000000pt" viewBox="0 0 167.000000 147.000000"
-                                    preserveAspectRatio="xMidYMid meet">
-                                    <g transform="translate(0.000000,147.000000) scale(0.050000,-0.050000)"
-                                        fill="#252525" stroke="none">
-                                        <path d="${randomPath}" />
-                                    </g>
-                                </svg>
-                                <i class="${randomIcon}"></i>
-                            </div>
-                            <span>${service.name}</span>
-                        </a>
-                    </li>
-                `;
+                                <li class="nav-item" role="presentation">
+                                    <a class="cat-service nav-link" data-id="${service.id}"  data-name="${service.name}" data-aria="${service.id}" id="${id_tab}" data-toggle="tab"
+                                        href="#${id_tab}_content" role="tab" aria-controls="${id_tab}"
+                                        aria-selected="true">
+                                        <div class="svgContainer">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="167.000000pt"
+                                                height="147.000000pt" viewBox="0 0 167.000000 147.000000"
+                                                preserveAspectRatio="xMidYMid meet">
+                                                <g transform="translate(0.000000,147.000000) scale(0.050000,-0.050000)"
+                                                    fill="#252525" stroke="none">
+                                                    <path d="${randomPath}" />
+                                                </g>
+                                            </svg>
+                                            <i class="${randomIcon}"></i>
+                                        </div>
+                                        <span>${service.name}</span>
+                                    </a>
+                                </li>
+                            `;
                     });
+                    $('#pricingTab').html(serviceHtml);
 
                 }
 
@@ -528,7 +481,7 @@
                     success: function(response) {
                         // Handle success response
 
-                        console.log(response);
+                        // console.log(response);
                         let lght = response.length;
                         if (lght == 0) {
                             let tabHtml = `<div class="tab-pane show active" id="${serviceId}" role="tabpanel" aria-labelledby="${serviceAria}">

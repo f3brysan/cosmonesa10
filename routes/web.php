@@ -70,6 +70,7 @@ Route::get('/book', [F_ServicesController::class, 'schedule']);
 
 // selling page
 Route::get('/shop', [F_ProductController::class, 'index']);
+Route::get('/shop_lists', [F_ProductController::class, 'get_products']);
 Route::get('/product-detail/{slug}', [F_ProductController::class, 'product']);
 Route::get('/co', [F_ProductController::class, 'checkout']);
 

@@ -7,7 +7,7 @@
             <div class="col-lg-8 menu-col">
                 <div class="logo2">
                     <a href="index.html">
-                        <img src="{{ asset('frontend/images/logo2.png') }}" alt="Makeover">
+                        <img width="50" src="{{ asset('frontend/logo.svg') }}" alt="Makeover">
                     </a>
                 </div>
                 <a href="javascript:void(0)" class="menu_btn"><i class="icofont-navigation-menu"></i></a>

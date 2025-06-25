@@ -2,7 +2,6 @@
 @section('title', 'Dashboard')
 
 @section('body')
-
     <!-- popup sidebar widget -->
 
     <!-- Begin:: Slider Section -->
@@ -135,6 +134,21 @@
 
     <section class="shopPage">
         <div class="container">
+            <div class="row">
+                <div class="col-lg-10 offset-lg-1">
+                    <div class="sectionTitle text-center">
+                        <img src="{{ asset('frontend/images/icons/2.png') }}" alt="">
+                        <h5 class="primaryFont">News About Our Company</h5>
+                        <h2>News <span class="colorPrimary fontWeight400">Feed</span></h2>
+                        <p>
+                            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut
+                            labore et dolore magna aliqua.
+                            Quis ipsum suspendisse ultrices gravida. Risus commodo viverra maecenas accumsan lacus vel
+                            facilisis.
+                        </p>
+                    </div>
+                </div>
+            </div>
             <div class="row shop_sort_count_row">
                 <div class="col-md-7">
                     <p class="woocommerce-result-count">Showing 1–12 of 36 results</p>

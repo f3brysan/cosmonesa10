@@ -11,6 +11,11 @@
         content="spa, beauty, care, girly, hair, health, beauty parlour, massage, skincare, saloon, make up, physiotherapy, salon, wellness, yoga website. Yoga & Meditation centers, Barbershop, Health & Wellness Centers, Medical, Physiotherapy, Cosmetic Treatment centers, ayurvedic treatments, pedicure, manicure procedures">
     <meta name="author" content="ThemeWar">
     <meta name="csrf-token" content="{{ csrf_token() }}">
+    <meta name="theme-color" content="#ffffff">
+    <link rel="apple-touch-icon" sizes="180x180" href="{{ asset('frontend/logo.svg') }}">
+    <link rel="icon" type="image/png" sizes="32x32" href="{{ asset('frontend/logo.svg') }}">
+    <link rel="icon" type="image/png" sizes="16x16" href="{{ asset('frontend/logo.svg') }}">
+    {{-- <link rel="manifest" href="{{ asset('frontend/site.webmanifest') }}"> --}}
     <!-- Start Include All CSS -->
     <link rel="stylesheet" href="{{ asset('frontend/css/bootstrap.css') }}" />
     <link rel="stylesheet" href="{{ asset('frontend/css/owl.theme.default.min.css') }}" />
@@ -39,7 +44,7 @@
     <!-- End Include All CSS -->
 
     <!-- Favicon Icon -->
-    <link rel="icon" type="image/png" href="{{ asset('frontend/images/favicon.png') }}">
+    <link rel="icon" type="image/png" href="{{ asset('frontend/logo.svg') }}">
     <!-- Favicon Icon -->
 </head>
 
@@ -131,7 +136,7 @@
             $.get("{{ URL::to('cart/count-unpaid') }}",
                 function (data, textStatus, jqXHR) {
                     $("#cart_count").html(data.count);
-                });            
+                });
         });
     </script>
 

@@ -8,6 +8,6 @@ use Illuminate\Database\Eloquent\Model;
 class DashboardGallery extends Model
 {
     use HasFactory;
-    protected $table = 'dashboard_galley';
+    protected $table = 'dashboard_gallery';
     public $timestamps = false;
 }

@@ -54,7 +54,7 @@ class F_DashboardController extends Controller
                 }
             }
         }
-        return $flatten_profile;
+        return array_values($flatten_profile);
     }
     public function getProfiles()
     {

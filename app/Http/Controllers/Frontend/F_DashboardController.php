@@ -43,6 +43,27 @@ class F_DashboardController extends Controller
     }
     private function profile_stacking(array $data)
     {
+        //jane expect ku koyok ngene, tapi mari tak pikir2 maneh, kok koyok e malah enak an hasil pivotan e sampean:
+        //     $flatten_profile = [];
+
+            // foreach ($data as $entry) {
+            //     $profile = $entry['profile_name'];
+
+            //     if (!isset($flatten_profile[$profile])) {
+            //         $flatten_profile[$profile] = [
+            //             'profile_name' => $profile,
+            //             'images' => []
+            //         ];
+            //     }
+
+            //     $flatten_profile[$profile]['images'][] = [
+            //         'img_name' => $entry['img_name'],
+            //         'img_path' => $entry['img_path'],
+            //         'img_desc' => $entry['img_desc']
+            //     ];
+            // }
+
+            // return array_values($flatten_profile);
         $flatten_profile = [];
         foreach ($data as $entry) {
             $profile = $entry['profile_name'];

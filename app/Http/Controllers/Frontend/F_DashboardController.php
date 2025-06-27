@@ -5,6 +5,8 @@ namespace App\Http\Controllers\Frontend;
 use App\Http\Controllers\Controller;
 use App\Models\DashboardProfile;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use SebastianBergmann\CodeCoverage\Report\Html\Dashboard;
 
 class F_DashboardController extends Controller
 {
@@ -46,24 +48,24 @@ class F_DashboardController extends Controller
         //jane expect ku koyok ngene, tapi mari tak pikir2 maneh, kok koyok e malah enak an hasil pivotan e sampean:
         //     $flatten_profile = [];
 
-            // foreach ($data as $entry) {
-            //     $profile = $entry['profile_name'];
+        // foreach ($data as $entry) {
+        //     $profile = $entry['profile_name'];
 
-            //     if (!isset($flatten_profile[$profile])) {
-            //         $flatten_profile[$profile] = [
-            //             'profile_name' => $profile,
-            //             'images' => []
-            //         ];
-            //     }
+        //     if (!isset($flatten_profile[$profile])) {
+        //         $flatten_profile[$profile] = [
+        //             'profile_name' => $profile,
+        //             'images' => []
+        //         ];
+        //     }
 
-            //     $flatten_profile[$profile]['images'][] = [
-            //         'img_name' => $entry['img_name'],
-            //         'img_path' => $entry['img_path'],
-            //         'img_desc' => $entry['img_desc']
-            //     ];
-            // }
+        //     $flatten_profile[$profile]['images'][] = [
+        //         'img_name' => $entry['img_name'],
+        //         'img_path' => $entry['img_path'],
+        //         'img_desc' => $entry['img_desc']
+        //     ];
+        // }
 
-            // return array_values($flatten_profile);
+        // return array_values($flatten_profile);
         $flatten_profile = [];
         foreach ($data as $entry) {
             $profile = $entry['profile_name'];
@@ -99,5 +101,25 @@ class F_DashboardController extends Controller
             'message' => 'profile terpilih berhasil dimuat',
             'data' => $stacked_profile
         ]);
+    }
+    public function selectProfile(int $profileId)
+    {
+        try {
+            $toBeSelected = DashboardProfile::find($profileId)->toArray();
+            DB::beginTransaction();
+            DashboardProfile::query()->update(['is_selected' => 0]);
+            DashboardProfile::query()->where('id', $profileId)->update(['is_selected' => 1]);
+            DB::commit();
+            return response()->json([
+                'status' => true,
+                'message' => "Profile '$toBeSelected' berhasil dipilih"
+            ]);
+        } catch (\Throwable $th) {
+            DB::rollBack();
+            return response()->json([
+                'status' => false,
+                'message' => $th->getMessage()
+            ]);
+        }
     }
 }

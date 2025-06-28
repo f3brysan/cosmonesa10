@@ -72,7 +72,7 @@ class F_EventsController extends Controller
         $path = public_path('frontend/images/cert/cert.jpg'); // Correct local path
         $type = pathinfo($path, PATHINFO_EXTENSION);
         $data = file_get_contents($path);
-        $base64 = 'data:image/' . $type . ';base64,' . base64_encode($data);
+        $base64 = 'data:image/'.$type.';base64,'.base64_encode($data);
 
         // Set DomPDF options
         $options = new Options();
@@ -106,9 +106,8 @@ class F_EventsController extends Controller
     }
     public function joinEvent(Request $request)
     {
-        $validatedData = $request->validate(['event_id' => 'required|uuid']);
-        $eventId = $validatedData['event_id'];
-
+        $eventId = $request['event_id'];
+        
         try {
             $userAuth = auth()->user();
             if (! $userAuth) {
@@ -120,14 +119,14 @@ class F_EventsController extends Controller
                 ->first();
             $open_regist = new DateTime($regist_range->start_date);
             $close_regist = new DateTime($regist_range->end_date);
-            $today = date_create('now');
-
+            $today = date_create('now');            
+            
             if ($open_regist <= $today && $close_regist > $today == false) {
                 return response()->json([
                     'status' => false,
                     'message' => "Event registration haas been closed or not yet open"
                 ]);
-            }
+            }            
 
             $checkUserExists = EventParticipants::where('event_id', $eventId)->where('user_id', $userAuth->id)->exists();
             if ($checkUserExists) {
@@ -155,6 +154,8 @@ class F_EventsController extends Controller
                 'message' => "You've been Success to register this Event",
                 'transaction_id' => $transaction_id_crypt
             ], 201);
+
+        
         } catch (\Throwable $th) {
             return response()->json([
                 'status' => false,

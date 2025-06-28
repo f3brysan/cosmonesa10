@@ -23,9 +23,7 @@ class F_DashboardController extends Controller
             ->join('profile_gallery_section as dashboard_pivot', 'dashboard_profile.id', '=', 'dashboard_pivot.profile_id')
             ->join('dashboard_gallery as gallery', 'dashboard_pivot.gallery_id', '=', 'gallery.id')
             ->select([
-                'dashboard_profile.id as profile_id',
                 'dashboard_profile.name as profile_name',
-                'gallery.id as img_id',
                 'gallery.name as img_name',
                 'gallery.path as img_path',
                 'gallery.desciption as img_desc',
@@ -56,10 +54,9 @@ class F_DashboardController extends Controller
         // return array_values($flatten_profile);
         $flatten_profile = [];
         foreach ($data as $entry) {
-            $profId = $entry['profile_id'];
             $profile = $entry['profile_name'];
             foreach ($entry as $key => $value) {
-                if ($key === 'profile_name' || $key === 'profile_id') {
+                if ($key === 'profile_name') {
                     $flatten_profile[$profile][$key] = $value;
                 } else {
                     $flatten_profile[$profile][$key][] = $value;
@@ -108,10 +105,8 @@ class F_DashboardController extends Controller
             'data' => $stacked_profile
         ]);
     }
-    public function selectProfile(Request $request)
+    public function selectProfile(int $profileId)
     {
-        $validatedData = $request->validate(['profile_id' => 'required|integer']);
-        $profileId = $validatedData['profile_id'];
         try {
             $toBeSelected = DashboardProfile::find($profileId)->toArray();
             DB::beginTransaction();

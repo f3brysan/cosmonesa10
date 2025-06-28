@@ -10,20 +10,6 @@ use SebastianBergmann\CodeCoverage\Report\Html\Dashboard;
 
 class F_DashboardController extends Controller
 {
-    /**
-     * Display the dashboard page.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
-    {
-        // Retrieve data from the database
-        // $users = User::all();
-
-        // Return the view
-
-        return view('front.page.dashboard.index');
-    }
     private function profileList()
     {
         // // Get the authenticated user
@@ -79,6 +65,23 @@ class F_DashboardController extends Controller
         }
         return array_values($flatten_profile);
     }
+    /**
+     * Display the dashboard page.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function index()
+    {
+        $selected_profile = $this->profileList()
+            ->where('dashboard_profile.is_selected', 1)
+            ->get()
+            ->toArray();
+        $stacked_profile = $this->profile_stacking($selected_profile);
+        $imgs = $stacked_profile [0]['img_path'];
+        $descs = $stacked_profile [0]['img_desc'];
+        return view('front.page.dashboard.index',compact(['imgs', 'descs']));
+    }
+
     public function getProfiles()
     {
         $profile_list = $this->profileList()->get()->toArray();

@@ -9,25 +9,31 @@
         <div class="rev_slider_wrapper">
             <div id="rev_slider_3" class="rev_slider fullwidthabanner" style="display:none;" data-version="5.4.1">
                 <ul>
-                    <li data-index="rs-3048" data-transition="random-premium" data-slotamount="default" data-hideafterloop="0"
-                        data-hideslideonmobile="off" data-easein="Power3.easeInOut" data-easeout="Power3.easeInOut"
-                        data-masterspeed="1000" data-thumb="" data-rotate="0" data-saveperformance="off" data-title=""
-                        data-param1="" data-param2="" data-param3="" data-param4="" data-param5="" data-param6=""
-                        data-param7="" data-param8="" data-param9="" data-param10="" data-description="">
-                        <img src="{{ asset('frontend/images/bg/9.jpg') }}" alt="" data-bgposition="center center"
-                            data-bgfit="cover" data-bgrepeat="no-repeat" data-bgparallax="0" class="rev-slidebg"
-                            data-no-retina>
-                        <div class="tp-caption headFont ws_nowrap" data-x="['center']" data-hoffset="['0'"
-                            data-y="['middle']" data-voffset="['0']" data-fontsize="['60','55','60','45']"
-                            data-fontweight="900" data-lineheight="['75','75','75','60']"
-                            data-width="['470','470','470','100%']" data-height="['auto']" data-whitesapce="['normal']"
-                            data-color="['#f8f8f8']" data-type="text" data-responsive_offset="off"
-                            data-frames='[{"delay":1500,"speed":500,"frame":"0","from":"y:50px;opacity:0;","to":"o:1;","ease":"power3.inOut"},{"delay":"wait","speed":300,"frame":"999","to":"opacity:0;","ease":"power3.inOut"}]'
-                            data-textAlign="['center']" data-paddingtop="[0,0,0,0]" data-paddingright="[0,0,0,20]"
-                            data-paddingbottom="[0,0,0,250]" data-paddingleft="[0,0,0,20]">BEST HAIR CUTTING EVER
-                        </div>
-                    </li>
-                    <li data-index="rs-3049" data-transition="random-premium" data-slotamount="default"
+
+                    @foreach ($imgs as $i => $img)
+                        <li data-index="rs-{{ $i }}" data-transition="random-premium" data-slotamount="default"
+                            data-hideafterloop="0" data-hideslideonmobile="off" data-easein="Power3.easeInOut"
+                            data-easeout="Power3.easeInOut" data-masterspeed="1000" data-thumb="" data-rotate="0"
+                            data-saveperformance="off" data-title="" data-param1="" data-param2="" data-param3=""
+                            data-param4="" data-param5="" data-param6="" data-param7="" data-param8="" data-param9=""
+                            data-param10="" data-description="">
+                            <img src="{{ asset('frontend/images/gallery/' . $img) }}" alt=""
+                                data-bgposition="center center" data-bgfit="cover" data-bgrepeat="no-repeat"
+                                data-bgparallax="0" class="rev-slidebg" data-no-retina>
+                            <div class="tp-caption headFont ws_nowrap" data-x="['center']" data-hoffset="['0'"
+                                data-y="['middle']" data-voffset="['0']" data-fontsize="['60','55','60','45']"
+                                data-fontweight="900" data-lineheight="['75','75','75','60']"
+                                data-width="['470','470','470','100%']" data-height="['auto']" data-whitesapce="['normal']"
+                                data-color="['#f8f8f8']" data-type="text" data-responsive_offset="off"
+                                data-frames='[{"delay":1500,"speed":500,"frame":"0","from":"y:50px;opacity:0;","to":"o:1;","ease":"power3.inOut"},{"delay":"wait","speed":300,"frame":"999","to":"opacity:0;","ease":"power3.inOut"}]'
+                                data-textAlign="['center']" data-paddingtop="[0,0,0,0]" data-paddingright="[0,0,0,20]"
+                                data-paddingbottom="[0,0,0,250]" data-paddingleft="[0,0,0,20]">BEST HAIR CUTTING EVER
+                            </div>
+                        </li>
+                    @endforeach
+
+
+                    {{-- <li data-index="rs-3049" data-transition="random-premium" data-slotamount="default"
                         data-hideafterloop="0" data-hideslideonmobile="off" data-easein="Power3.easeInOut"
                         data-easeout="Power3.easeInOut" data-masterspeed="1000" data-thumb="" data-rotate="0"
                         data-saveperformance="off" data-title="" data-param1="" data-param2="" data-param3=""
@@ -45,7 +51,7 @@
                             data-textAlign="['center']" data-paddingtop="[0,0,0,0]" data-paddingright="[0,0,0,20]"
                             data-paddingbottom="[0,0,0,250]" data-paddingleft="[0,0,0,20]">WELCOME TO SERENITY
                         </div>
-                    </li>
+                    </li> --}}
                 </ul>
             </div>
         </div>
@@ -242,8 +248,8 @@
                                             fill="#252525" stroke="none">
                                             <path
                                                 d="M1257 2920 c-50 -9 -109 -25 -130 -35 -20 -11 -95 -25 -165 -31 -523
-                                                                                                                                                                                                                                      -45 -900 -630 -953 -1477 -43 -680 253 -1056 996 -1266 720 -204 1195 -98
-                                                                                                                                                                                                                                      1691 377 805 772 854 1763 105 2149 -412 213 -1153 349 -1544 283z" />
+                                                                                                                                                                                                                                                                                                  -45 -900 -630 -953 -1477 -43 -680 253 -1056 996 -1266 720 -204 1195 -98
+                                                                                                                                                                                                                                                                                                  1691 377 805 772 854 1763 105 2149 -412 213 -1153 349 -1544 283z" />
                                         </g>
                                     </svg>
                                     <i class="mkov-candle"></i>
@@ -315,52 +321,24 @@
 @push('js')
     <script>
         $(document).ready(function() {
+
             $.ajax({
-            type: "get",
-            url: "/current_profile",
-            data: "data",
-            dataType: "json",
-            success: function (response) {
-                console.log(response.data);
-            let carouselHtml='';
-            response.forEach(function (item) {
-                carouselHtml += `<li data-index="rs-3048" data-transition="random-premium" data-slotamount="default" data-hideafterloop="0"
-                    data-hideslideonmobile="off" data-easein="Power3.easeInOut" data-easeout="Power3.easeInOut"
-                    data-masterspeed="1000" data-thumb="" data-rotate="0" data-saveperformance="off" data-title=""
-                    data-param1="" data-param2="" data-param3="" data-param4="" data-param5="" data-param6=""
-                    data-param7="" data-param8="" data-param9="" data-param10="" data-description="">
-                    <img width="1820" height="853" src="/frontend/images/gallery/${item.img_path}" alt="" data-bgposition="center center"
-                        data-bgfit="cover" data-bgrepeat="no-repeat" data-bgparallax="0" class="rev-slidebg"
-                        data-no-retina>
-                    <div class="tp-caption headFont ws_nowrap" data-x="['center']" data-hoffset="['0']"
-                        data-y="['middle']" data-voffset="['0']" data-fontsize="['60','55','60','45']"
-                        data-fontweight="900" data-lineheight="['75','75','75','60']"
-                        data-width="['470','470','470','100%']" data-height="['auto']" data-whitesapce="['normal']"
-                        data-color="['#f8f8f8']" data-type="text" data-responsive_offset="off"
-                        data-frames='[{"delay":1500,"speed":500,"frame":"0","from":"y:50px;opacity:0;","to":"o:1;","ease":"power3.inOut"},{"delay":"wait","speed":300,"frame":"999","to":"opacity:0;","ease":"power3.inOut"}]'
-                        data-textAlign="['center']" data-paddingtop="[0,0,0,0]" data-paddingright="[0,0,0,20]"
-                        data-paddingbottom="[0,0,0,250]" data-paddingleft="[0,0,0,20]">BEST HAIR CUTTING EVER
-                    </div>
-                </li>`;
+                type: "GET",
+                url: "/current_profile",
+                dataType: "json",
+                success: function(response) {
+                    const paths = response.data[0].img_path;
+                    const captions = response.data[0].img_desc;
 
+                    $('#rev_slider_3 ul li').each(function(i) {
+                        if (paths[i]) {
+                            $(this).find('img.rev-slidebg').attr('src',
+                                `/frontend/images/gallery/${paths[i]}`);
+                            $(this).find('.tp-caption').text(captions[i] || 'Default Caption');
+                        }
+                    });
+                }
             });
-            // $('#rev_slider_3').revkill(); // remove old instance
-            // $('#rev_slider_3').show().revolution({
-            //     sliderType: "standard",
-            //     jsFileLocation: "/path/to/revslider/js/", // adjust as needed
-            //     sliderLayout: "fullwidth",
-            //     delay: 9000,
-            //     navigation: {
-            //         arrows:{enable:true}
-            //     },
-            //     responsiveLevels:[1240,1024,778,480],
-            //     gridwidth:[1170,1024,778,480],
-            //     gridheight:[600,600,500,400]
-            // });
-            $("#rev_slider_3 ul").html(carouselHtml);
-
-            }
-        });
             $.ajax({
                 type: "get",
                 url: "{{ URL::to('/shop_lists') }}",

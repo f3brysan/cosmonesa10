@@ -24,7 +24,7 @@
     <link rel="stylesheet" href="{{ asset('frontend/css/icofont.css') }}" />
     <link rel="stylesheet" href="{{ asset('frontend/css/nounicon.css') }}" />
     <link rel="stylesheet" href="{{ asset('frontend/css/makeover-icon.css') }}" />
-    <link rel="stylesheet" href="{{ asset('frontend/css/nice-select.css') }}"/>
+    <link rel="stylesheet" href="{{ asset('frontend/css/nice-select.css') }}" />
     <link rel="stylesheet" href="{{ asset('frontend/css/jquery.datetimepicker.min.css') }}" />
     <link rel="stylesheet" href="{{ asset('frontend/css/slick.css') }}" />
     <link rel="stylesheet" href="{{ asset('frontend/css/lightcase.css') }}" />
@@ -39,7 +39,9 @@
     <link rel="stylesheet" href="{{ asset('frontend/css/responsive.css') }}" />
 
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css" />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
+        integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
 
     <!-- End Include All CSS -->
 
@@ -125,16 +127,16 @@
     <script src="{{ asset('frontend/js/extensions/revolution.extension.slideanims.min.js') }}"></script>
     <script src="{{ asset('frontend/js/extensions/revolution.extension.video.min.js') }}"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-
-
-
     <script src="{{ asset('frontend/js/theme.js') }}"></script>
+
+
+
     <!-- End Include All JS -->
 
     <script>
-        $(document).on("mouseenter", "#userMenu", function () {
+        $(document).on("mouseenter", "#userMenu", function() {
             $.get("{{ URL::to('cart/count-unpaid') }}",
-                function (data, textStatus, jqXHR) {
+                function(data, textStatus, jqXHR) {
                     $("#cart_count").html(data.count);
                 });
         });

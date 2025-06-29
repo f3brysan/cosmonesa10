@@ -128,8 +128,7 @@ class F_DashboardController extends Controller
     }
     public function selectProfile(Request $request)
     {
-        $validatedData = $request->validate(['profile_id' => 'required|integer']);
-        $profileId = $validatedData['profile_id'];
+        $profileId = $request['profile_id'];
         try {
             $toBeSelected = DashboardProfile::find($profileId)->toArray();
             DB::beginTransaction();
@@ -150,16 +149,9 @@ class F_DashboardController extends Controller
     }
     public function composeProfile(Request $request)
     {
-        $validatedData = $request->validate(
-            [
-                'profile_id' => 'required|integer',
-                'profile_name' => 'string',
-                'img_list' => 'array'
-            ]
-        );
-        $profileId = $validatedData['profile_id'];
-        $profileName = $validatedData['profile_name'];
-        $gallery = $validatedData['img_list'];
+        $profileId = $request['profile_id'];
+        $profileName = $request['profile_name'];
+        $gallery = $request['img_list'];
         try {
             DB::beginTransaction();
             if ($profileName != null) {
@@ -171,6 +163,16 @@ class F_DashboardController extends Controller
             } else {
             }
             DB::commit();
+            if ($profileId === null) {
+                return response()->json([
+                    'status' => true,
+                    'message' => 'profile berhasil dibuat'
+                ], 201);
+            }
+            return response()->json([
+                'status' => true,
+                'message' => 'profile behasil disunting'
+            ], 202);
         } catch (\Throwable $th) {
             DB::rollBack();
             return response()->json([
@@ -179,4 +181,23 @@ class F_DashboardController extends Controller
             ]);
         }
     }
+    public function deleteProfile(Request $request)
+    {
+        $profileId = $request['profile_id'];
+        $profileToDelete = DashboardProfile::find($profileId);
+        if ($profileToDelete['is_selected'] === 0) {
+            $profileToDelete->delete();
+            return response()->json([
+                'status' => false,
+                'message' => 'profile berhasil dihapus'
+            ], 204);
+        }
+        return response()->json([
+            'status' => false,
+            'message' => 'profile sedang digunakan'
+        ], 400);
+    }
+    public function uploadImage(Request $request) {}
+    public function renameImage(Request $request) {}
+    public function deleteImage(Request $request) {}
 }

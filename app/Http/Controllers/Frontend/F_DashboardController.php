@@ -4,9 +4,9 @@ namespace App\Http\Controllers\Frontend;
 
 use App\Http\Controllers\Controller;
 use App\Models\DashboardProfile;
+use App\Models\DashboardPivotTab;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
-use SebastianBergmann\CodeCoverage\Report\Html\Dashboard;
 
 class F_DashboardController extends Controller
 {
@@ -68,6 +68,24 @@ class F_DashboardController extends Controller
         }
         return array_values($flatten_profile);
     }
+    private function editProfName($profId = null, $profName = null)
+    {
+        return DashboardProfile::upsert([
+            $values = ['id' => $profId, 'name' => $profName],
+            $update = ['name']
+        ]);
+    }
+    private function editImgList($profId = null, $imgList = null)
+    {
+        $imgGallery = [];
+        foreach ($imgList as $picId) {
+            $imgGallery[] = ['profile_id' => $profId, 'gallery_id' => $picId];
+        }
+        return DashboardPivotTab::upsert([
+            $values = $imgGallery,
+            $update = ['gallery_id']
+        ]);
+    }
     /**
      * Display the dashboard page.
      *
@@ -80,9 +98,9 @@ class F_DashboardController extends Controller
             ->get()
             ->toArray();
         $stacked_profile = $this->profile_stacking($selected_profile);
-        $imgs = $stacked_profile [0]['img_path'];
-        $descs = $stacked_profile [0]['img_desc'];
-        return view('front.page.dashboard.index',compact(['imgs', 'descs']));
+        $imgs = $stacked_profile[0]['img_path'];
+        $descs = $stacked_profile[0]['img_desc'];
+        return view('front.page.dashboard.index', compact(['imgs', 'descs']));
     }
 
     public function getProfiles()
@@ -122,6 +140,37 @@ class F_DashboardController extends Controller
                 'status' => true,
                 'message' => "Profile '$toBeSelected' berhasil dipilih"
             ]);
+        } catch (\Throwable $th) {
+            DB::rollBack();
+            return response()->json([
+                'status' => false,
+                'message' => $th->getMessage()
+            ]);
+        }
+    }
+    public function composeProfile(Request $request)
+    {
+        $validatedData = $request->validate(
+            [
+                'profile_id' => 'required|integer',
+                'profile_name' => 'string',
+                'img_list' => 'array'
+            ]
+        );
+        $profileId = $validatedData['profile_id'];
+        $profileName = $validatedData['profile_name'];
+        $gallery = $validatedData['img_list'];
+        try {
+            DB::beginTransaction();
+            if ($profileName != null) {
+                $this->editProfName($profileId, $profileName);
+            } else {
+            }
+            if ($gallery != null) {
+                $this->editImgList($profileId, $gallery);
+            } else {
+            }
+            DB::commit();
         } catch (\Throwable $th) {
             DB::rollBack();
             return response()->json([

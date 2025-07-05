@@ -38,7 +38,7 @@ class B_DashboardController extends Controller
         $monthNow = date('Y-m');
         $profit = Transaction::whereIn('payment_status', ['paid', 'success'])
             ->sum('total');
-        $profitMonth = Transaction::where('created_at', 'like', $monthNow . '%')
+        $profitMonth = Transaction::where('created_at', 'like', $monthNow.'%')
             ->whereIn('payment_status', ['paid', 'success'])
             ->sum('total');
 
@@ -48,9 +48,24 @@ class B_DashboardController extends Controller
             ->select('transaction_details.*')
             ->join('transactions', 'transactions.id', '=', 'transaction_details.transaction_id')
             ->where('transactions.type', '=', 'product')
-            ->whereIn('transactions.payment_status', ['success', 'paid']);                
-        
+            ->whereIn('transactions.payment_status', ['success', 'paid']);
+
         return view('back.dashboard.index', compact('profitMonth', 'profit', 'kiosks', 'productSold'));
+    }
+
+    public function seller_dashboard()
+    {
+        $kiosks = Kiosks::where('user_id', auth()->user()->id)->first();
+        $getTransactionSuccess = DB::table('services as s')
+            ->select('s.*', 't.payment_status', 't.total')
+            ->join('transaction_details as td', 'td.reference_id', '=', 's.id')
+            ->join('transactions as t', 't.id', '=', 'td.transaction_id')
+            ->where('s.kiosk_id', $kiosks->id)
+            ->whereIn('t.payment_status', ['success', 'paid'])
+            ->get();
+        
+
+        return view('back.dashboard.index-seller', compact('kiosks', 'getTransactionSuccess'));
     }
 
 }

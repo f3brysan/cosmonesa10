@@ -27,7 +27,7 @@ use App\Http\Controllers\Frontend\F_TransactionController;
 Route::get('/', [F_DashboardController::class, 'index']);
 
 Route::get('/get_profiles', [F_DashboardController::class, 'getProfiles']);
-Route::get('/current_profile', [F_DashboardController::class, 'currentProfile']);
+Route::get('/get_images', [F_DashboardController::class, 'getImages']);
 
 Route::group(['middleware' => ['auth']], function () {
     // account

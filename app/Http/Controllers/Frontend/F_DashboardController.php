@@ -3,14 +3,16 @@
 namespace App\Http\Controllers\Frontend;
 
 use App\Http\Controllers\Controller;
+use App\Models\DashboardGallery;
 use App\Models\DashboardProfile;
 use App\Models\DashboardPivotTab;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use SebastianBergmann\CodeCoverage\Report\Html\Dashboard;
 
 class F_DashboardController extends Controller
 {
-    private function profileList()
+    private function profileQuery()
     {
         // // Get the authenticated user
         // $userAuth = auth()->user();
@@ -19,6 +21,7 @@ class F_DashboardController extends Controller
         // if (!$userAuth) {
         //     return redirect()->route('login');
         // }
+        // return DashboardProfile::all()->toArray();
         return DashboardProfile::query()
             ->join('profile_gallery_section as dashboard_pivot', 'dashboard_profile.id', '=', 'dashboard_pivot.profile_id')
             ->join('dashboard_gallery as gallery', 'dashboard_pivot.gallery_id', '=', 'gallery.id')
@@ -31,43 +34,32 @@ class F_DashboardController extends Controller
                 'gallery.desciption as img_desc',
             ]);
     }
-    private function profile_stacking(array $data)
+
+    private function profileList(array $data)
     {
         //jane expect ku koyok ngene, tapi mari tak pikir2 maneh, kok koyok e malah enak an hasil pivotan e sampean:
-        //     $flatten_profile = [];
-
-        // foreach ($data as $entry) {
-        //     $profile = $entry['profile_name'];
-
-        //     if (!isset($flatten_profile[$profile])) {
-        //         $flatten_profile[$profile] = [
-        //             'profile_name' => $profile,
-        //             'images' => []
-        //         ];
-        //     }
-
-        //     $flatten_profile[$profile]['images'][] = [
-        //         'img_name' => $entry['img_name'],
-        //         'img_path' => $entry['img_path'],
-        //         'img_desc' => $entry['img_desc']
-        //     ];
-        // }
-
-        // return array_values($flatten_profile);
         $flatten_profile = [];
+
         foreach ($data as $entry) {
-            $profId = $entry['profile_id'];
             $profile = $entry['profile_name'];
-            foreach ($entry as $key => $value) {
-                if ($key === 'profile_name' || $key === 'profile_id') {
-                    $flatten_profile[$profile][$key] = $value;
-                } else {
-                    $flatten_profile[$profile][$key][] = $value;
-                }
+
+            if (!isset($flatten_profile[$profile])) {
+                $flatten_profile[$profile] = [
+                    'profile_name' => $profile,
+                    'images' => []
+                ];
             }
+
+            $flatten_profile[$profile]['images'][] = [
+                'img_name' => $entry['img_name'],
+                'img_path' => $entry['img_path'],
+                'img_desc' => $entry['img_desc']
+            ];
         }
+
         return array_values($flatten_profile);
     }
+
     private function editProfName($profId = null, $profName = null)
     {
         return DashboardProfile::upsert([
@@ -86,44 +78,42 @@ class F_DashboardController extends Controller
             $update = ['gallery_id']
         ]);
     }
-    /**
-     * Display the dashboard page.
-     *
-     * @return \Illuminate\Http\Response
-     */
+
+    public function profileDetail($profileId)
+    {
+        $imgList = $this->profileQuery()
+            ->where('dashboard_pivot.profile_id', $profileId)
+            ->get()
+            ->toArray();
+        return $imgList;
+    }
+
     public function index()
     {
-        $selected_profile = $this->profileList()
+        $selected_profile = $this->profileQuery()
             ->where('dashboard_profile.is_selected', 1)
             ->get()
             ->toArray();
-        $stacked_profile = $this->profile_stacking($selected_profile);
-        $imgs = $stacked_profile[0]['img_path'];
-        $descs = $stacked_profile[0]['img_desc'];
-        return view('front.page.dashboard.index', compact(['imgs', 'descs']));
+        $images = $this->profileList($selected_profile)[0]['images'];
+        return view('front.page.dashboard.index', compact(['images']));
     }
 
     public function getProfiles()
     {
-        $profile_list = $this->profileList()->get()->toArray();
-        $stacked_profile = $this->profile_stacking($profile_list);
+        $profile_list = DashboardProfile::all()->toArray();
         return response()->json([
             'status' => true,
             'message' => 'daftar profile berhasil dimuat',
-            'data' => $stacked_profile
+            'data' => $profile_list
         ]);
     }
-    public function currentProfile()
+    public function getImages()
     {
-        $selected_profile = $this->profileList()
-            ->where('dashboard_profile.is_selected', 1)
-            ->get()
-            ->toArray();
-        $stacked_profile = $this->profile_stacking($selected_profile);
+        $imgList = DashboardGallery::all()->toArray();
         return response()->json([
             'status' => true,
-            'message' => 'profile terpilih berhasil dimuat',
-            'data' => $stacked_profile
+            'message' => 'daftar gambar berhasil dimuat',
+            'data' => $imgList
         ]);
     }
     public function selectProfile(Request $request)

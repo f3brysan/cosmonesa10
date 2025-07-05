@@ -74,7 +74,7 @@
                         href="{{ URL::to('back/kiosku/service') }}"><i
                             class="icon-base bx bx-archive icon-sm me-1_5"></i> Daftar Jasa</a>
                 </li>
-                <li class="nav-item">
+                <li class="nav-item">                    
                     <a class="nav-link {{ $active == 'history-service' ? 'active' : '' }}"
                         href="{{ URL::to('back/kiosku/service-history') }}"><i
                             class="icon-base bx bxs-store-alt icon-sm me-1_5"></i> Riwayat Pesanan</a>

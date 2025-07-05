@@ -16,14 +16,14 @@ class B_KioskController extends Controller
     {
         $kiosks = Kiosks::with('user')->get();
 
-        
+
     }
     public function kioskDetail()
     {
-        $kiosk = Kiosks::where('user_id', auth()->user()->id)->first();      
+        $kiosk = Kiosks::where('user_id', auth()->user()->id)->first();
 
         return [
-            'kiosk' => $kiosk,           
+            'kiosk' => $kiosk,
         ];
     }
 
@@ -67,7 +67,7 @@ class B_KioskController extends Controller
 
     public function sellerService()
     {
-        $kiosk = $this->kioskDetail()['kiosk'];       
+        $kiosk = $this->kioskDetail()['kiosk'];
         $services = Services::with('category')->where('kiosk_id', $kiosk->id)->get();
         $user = User::find(auth()->user()->id);
         $active = 'service';
@@ -78,8 +78,17 @@ class B_KioskController extends Controller
     public function serviceHistory()
     {
         $kiosk = Kiosks::where('user_id', auth()->user()->id)->first();
-        $services = Services::with('category')->where('kiosk_id', $kiosk->id)->get();
-        $user = User::find(auth()->user()->id);
-        $active = 'service';
+        $transactionHistories = DB::table('services as s')
+            ->select('t.*', 'u.name', 'sb.date as booking_date')
+            ->join('transaction_details as td', 'td.reference_id', '=', 's.id')
+            ->join('transactions as t', 't.id', '=', 'td.transaction_id')
+            ->join('users as u', 'u.id', '=', 't.customer_id')
+            ->join('service_bookings as sb', 'sb.transaction_id', '=', 't.id')
+            ->where('s.kiosk_id', $kiosk->id)
+            ->whereIn('t.payment_status', ['success', 'paid'])
+            ->orderByDesc('t.created_at')
+            ->get();
+        $active = 'history-service';
+        return view('back.kiosk.seller.service-history', compact('kiosk', 'transactionHistories', 'active'));
     }
 }

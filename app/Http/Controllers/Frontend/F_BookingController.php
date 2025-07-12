@@ -39,6 +39,11 @@ class F_BookingController extends Controller
         DB::commit();        
 
         $transaction_id = $createTransaction['transaction_id'];
+
+        $updateBooking = ServiceBooking::where('id', $insertBooking->id)->update([
+            'transaction_id' => $transaction_id
+        ]);
+        
         $transaction_id_crypt = Crypt::encrypt($transaction_id->__tostring());
 
         return redirect(URL::to('checkout/' . $transaction_id_crypt))->with('success', 'Service booking created successfully. Please complete the payment.');

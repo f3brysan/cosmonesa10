@@ -62,6 +62,8 @@ Route::group(['middleware' => ['auth', 'role:superadmin|pengelola']], function (
 
 Route::group(['middleware' => ['auth', 'role:superadmin|pengelola']], function () {
     Route::get('master/pengguna', [B_UsersController::class, 'index']);
+    Route::get('master/pengguna/view/{id}', [B_UsersController::class, 'view']);
+    Route::post('master/pengguna/update', [B_UsersController::class, 'update']);
 });
 
 

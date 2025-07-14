@@ -49,6 +49,48 @@
             </div>
         </div>
     </div>
+
+    {{-- Edit Modal --}}
+    <div class="modal fade" id="editModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Ubah Peran</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <form id="editRoleForm">
+                    @csrf
+                    <input type="hidden" name="id" id="id">
+                    <div class="modal-body">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-group mb-3">
+                                    <label for="name">Nama</label>
+                                    <input type="text" class="form-control" id="name" name="name" readonly>
+                                </div>
+                                <div class="form-group mb-3">
+                                    <label for="role">Peran</label>
+                                    <select class="js-example-basic-multiple form-select form-class" id="roles"
+                                        name="roles[]" multiple="multiple" style="width: 100%" required>
+                                        @foreach ($roles as $role)
+                                            <option value="{{ $role }}">{{ $role }}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-primary">Save changes</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    {{-- Edit Modal --}}
+
 @endsection
 
 @push('js')
@@ -60,8 +102,18 @@
     {{-- Swal --}}
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
+    {{-- select2 --}}
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+
     <script>
         $(document).ready(function() {
+            $('.js-example-basic-multiple').select2({
+                dropdownParent: $('#editModal'),
+                multiple: true,
+                placeholder: 'Pilih Role'
+            });
+
             $('#myTable').DataTable({
                 responsive: true,
                 processing: true,
@@ -98,10 +150,32 @@
 
             $(document).on('click', '.view', function() {
                 var id = $(this).data('id');
-                console.log(id);
+                $.getJSON("{{ URL::to('back/master/pengguna/view') }}/" + id,
+                    function(response, textStatus, jqXHR) {
+                        $("#name").val(response.data.user.name);
+                        $("#id").val(response.data.user.id);
+                        $("#roles").val(response.data.userRoles).change();
+                        $("#editModal").modal('show');
+                    }
+                );
+            });
 
-            });            
-
+            $("#editRoleForm").on("submit", function(e) {
+                e.preventDefault();
+                var formData = new FormData(this);
+                $.ajax({
+                    type: 'POST',
+                    url: "{{ URL::to('back/master/pengguna/update') }}",
+                    data: formData,
+                    cache: false,
+                    contentType: false,
+                    processData: false,
+                    success: function(data) {
+                        $('#editModal').modal('hide');
+                        $('#myTable').DataTable().ajax.reload();
+                    }
+                });
+            });
 
             $(document).on('click', '.destroy', function() {
                 var id = $(this).data('id');

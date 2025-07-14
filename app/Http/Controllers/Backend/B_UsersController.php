@@ -33,8 +33,15 @@ class B_UsersController extends Controller
                       <a class="text-heading text-truncate fw-medium">'.$user->name.'</a>                      
                     </div>
                   </div>';
-
                     return $result;
+                })
+                ->addColumn('status', function ($user) {
+                    if ($user->is_active == 0) {
+                        $status = '<span class="badge bg-danger">Inactive</span>';
+                    }else{
+                        $status = '<span class="badge bg-success">Active</span>';
+                    }                    
+                    return $status;
                 })
                 ->editColumn('email', function ($user) {
                     $maskEmail = substr($user->email, 0, 3).str_repeat('*', 5).substr($user->email, strpos($user->email, '@'));
@@ -75,7 +82,7 @@ class B_UsersController extends Controller
                     }
                     return $role;
                 })
-                ->rawColumns(['action', 'role', 'name'])
+                ->rawColumns(['action', 'role', 'name', 'status'])
                 ->addIndexColumn()
                 ->make(true);
         }
@@ -141,7 +148,7 @@ class B_UsersController extends Controller
 
             // Toggle the user's is_active status
             $status = $user->is_active == 1 ? 0 : 1;
-            dd($status);
+        
             // Update the user's is_active status
             $update = $user->update(['is_active' => $status]);
 

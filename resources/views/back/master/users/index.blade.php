@@ -36,6 +36,7 @@
                                     <tr>
                                         <th class="text-center">Nama</th>
                                         <th class="text-center">Email</th>
+                                        <th class="text-center">Status</th>
                                         <th class="text-center">Role</th>
                                         <th class="text-center">Aksi</th>
                                     </tr>
@@ -129,6 +130,11 @@
                     {
                         data: 'email',
                         name: 'email',
+                    },
+                    {
+                        data: 'status',
+                        name: 'status',
+                        className: 'text-center'
                     },
                     {
                         data: 'role',

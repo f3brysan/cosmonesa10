@@ -48,11 +48,12 @@ class B_UsersController extends Controller
                     return $maskEmail;
                 })
                 ->addColumn('action', function ($user) {
+                    $status = $user->is_active == 0 ? 'Activate' : 'Deactivate';
                     // Initialize the $btn variable
                     $btn = '<button type="button" class="btn p-0 dropdown-toggle hide-arrow" data-bs-toggle="dropdown"><i class="icon-base bx bx-dots-vertical-rounded"></i></button>
                     <div class="dropdown-menu">
-                      <a class="dropdown-item view" data-id="'.Crypt::encrypt($user->id).'" href="javascript:void(0);"><i class="icon-base bx bx-edit-alt me-1"></i> View Details</a>
-                      <a class="dropdown-item destroy" data-id="'.Crypt::encrypt($user->id).'" href="javascript:void(0);"><i class="icon-base bx bx-trash me-1"></i> Deactivate</a>
+                      <a class="dropdown-item view" data-id="'.Crypt::encrypt($user->id).'" href="javascript:void(0);">View Details</a>
+                      <a class="dropdown-item destroy" data-id="'.Crypt::encrypt($user->id).'" data-status="'.$status.'" href="javascript:void(0);">'.$status.'</a>
                     </div>
                   </div>';
                     // Return the generated action buttons

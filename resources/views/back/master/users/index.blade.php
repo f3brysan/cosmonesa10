@@ -185,6 +185,7 @@
 
             $(document).on('click', '.destroy', function() {
                 var id = $(this).data('id');
+                var status = $(this).data('status');
                 console.log(id);
                 Swal.fire({
                     title: "Are you sure?",
@@ -193,7 +194,7 @@
                     showCancelButton: true,
                     confirmButtonColor: "#3085d6",
                     cancelButtonColor: "#d33",
-                    confirmButtonText: "Yes, delete it!"
+                    confirmButtonText: "Yes, "+status+" it!"
                 }).then((result) => {
                     if (result.isConfirmed) {
                         $.ajax({

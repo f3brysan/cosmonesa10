@@ -51,13 +51,7 @@
                     <p style="color: red">{{ Session::get('error') }}</p>
                 @endif
 
-                <div class="social-login" style="margin-top: 50px">
-                    {{-- <a href="{{ route('oauth.google') }}">
-                        <div class="fb">
-                            <i class="fab fa-facebook-f"></i>
-                            <p>Login with Facebook</p>
-                        </div>
-                    </a> --}}
+                <div class="social-login" style="margin-top: 50px">                    
                     <a href="{{ route('oauth.google') }}">
                         <div class="gg">
                             <i class="fab fa-google"></i>&nbsp; Login with Google                            

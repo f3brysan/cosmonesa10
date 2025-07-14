@@ -129,4 +129,33 @@ class B_UsersController extends Controller
             ], 500);
         }
     }
+    
+    public function deactivate(Request $request)
+    {
+        try {
+            // Decrypt the user ID
+            $id = Crypt::decrypt($request->id);
+
+            // Retrieve the user
+            $user = User::where('id', $id)->first();
+
+            // Toggle the user's is_active status
+            $status = $user->is_active == 1 ? 0 : 1;
+            dd($status);
+            // Update the user's is_active status
+            $update = $user->update(['is_active' => $status]);
+
+            // Return the updated user data in JSON format
+            return response()->json([
+                'status' => 'success',
+                'data' => $user
+            ], 200);
+        } catch (\Throwable $th) {
+            // Return an error response if an exception occurs
+            return response()->json([
+                'status' => 'error',
+                'message' => $th->getMessage()
+            ], 500);
+        }
+    }
 }

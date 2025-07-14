@@ -60,8 +60,7 @@
                     </a> --}}
                     <a href="{{ route('oauth.google') }}">
                         <div class="gg">
-                            <i class="fab fa-google"></i>
-                            <p>Login with Google</p>
+                            <i class="fab fa-google"></i>&nbsp; Login with Google                            
                         </div>
                     </a>
                 </div>

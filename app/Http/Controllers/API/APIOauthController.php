@@ -36,6 +36,10 @@ class APIOauthController extends Controller
 
             if ($finduser) {
 
+                if ($finduser->is_active == 0) {
+                    return redirect()->route('login')->with('error', 'Your account is not active. Please contact your administrator.');
+                }
+
                 // Update the user's email and Google Auth ID if the user exists                
                 $update = $finduser->update([                                        
                     'email' => $user->email,                    

@@ -47,31 +47,11 @@
             <div class="login-form" id="login-form">
                 <h1>Welcome to Cosmonesa</h1>
                 <p>please login with your member account</p>
+                @if (Session::has('error'))
+                    <p style="color: red">{{ Session::get('error') }}</p>
+                @endif
 
-                <!-- <form id="login"> -->
-                <div class="input-group">
-                    <!-- <label for="username">Username</label> -->
-                    <i class="fas fa-user"></i>
-                    <input type="text" id="username" name="username" placeholder="Username" />
-                </div>
-                <div class="input-group">
-                    <!-- <label for="password">Password</label> -->
-                    <i class="fas fa-key"></i>
-                    <input type="password" id="password" name="password" placeholder="Password" />
-                </div>
-                <div class="forget-pwd">
-                    <a href="#">Lupa password?</a>
-                </div>
-                <button type="submit">Login <i class="fas fa-sign-in"></i></button>
-                <!-- </form> -->
-                <p>
-                    Don't have an account?
-                    <a class="reg" onclick="showRegister()">Register here</a>
-                </p>
-
-                <p style="margin: 10px">or</p>
-
-                <div class="social-login">
+                <div class="social-login" style="margin-top: 50px">
                     {{-- <a href="{{ route('oauth.google') }}">
                         <div class="fb">
                             <i class="fab fa-facebook-f"></i>

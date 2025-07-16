@@ -28,6 +28,7 @@ class F_DashboardController extends Controller
             ->select([
                 'dashboard_profile.id as profile_id',
                 'dashboard_profile.name as profile_name',
+                'dashboard_profile.is_selected',
                 'gallery.id as img_id',
                 'gallery.name as img_name',
                 'gallery.path as img_path',
@@ -35,7 +36,7 @@ class F_DashboardController extends Controller
             ]);
     }
 
-    private function profileList(array $data)
+    private function userProfileTranspose(array $data)
     {
         //jane expect ku koyok ngene, tapi mari tak pikir2 maneh, kok koyok e malah enak an hasil pivotan e sampean:
         $flatten_profile = [];
@@ -59,6 +60,23 @@ class F_DashboardController extends Controller
 
         return array_values($flatten_profile);
     }
+    private function adminProfileTranspose(array $data)
+    {
+        $flatten_profile = [];
+        foreach ($data as $entry) {
+            $profId = $entry['profile_id'];
+            $profile = $entry['profile_name'];
+            $sel_status = $entry['is_selected'];
+            foreach ($entry as $key => $value) {
+                if ($key === 'profile_name' || $key === 'profile_id' || $key === 'is_selected') {
+                    $flatten_profile[$profile][$key] = $value;
+                } else {
+                    $flatten_profile[$profile][$key][] = $value;
+                }
+            }
+        }
+        return array_values($flatten_profile);
+    }
 
     private function editProfName($profId = null, $profName = null)
     {
@@ -67,8 +85,29 @@ class F_DashboardController extends Controller
             $update = ['name']
         ]);
     }
+    private function listDiff(array $currentList, array $newList)
+    {
+        $addition = array_diff($newList, $currentList);
+        $substract = array_diff($currentList, $newList);
+        return [
+            'add' => array_values($addition),
+            'remove' => array_values($substract)
+        ];
+    }
     private function editImgList($profId = null, $imgList = null)
     {
+        $selectedImg = DashboardPivotTab::query()
+            ->where('profile_id', $profId)
+            ->select('gallery_id')
+            ->get()
+            ->toArray();
+        $currentImgList = collect($selectedImg)->flatten()->toArray();
+        $additionalImg = array_diff($imgList, $currentImgList);
+        $substractImg = array_diff($currentImgList, $imgList);
+
+        //Assoc Image if any additional image listed
+
+
         $imgGallery = [];
         foreach ($imgList as $picId) {
             $imgGallery[] = ['profile_id' => $profId, 'gallery_id' => $picId];
@@ -88,13 +127,23 @@ class F_DashboardController extends Controller
         return $imgList;
     }
 
+    public function admIndex()
+    {
+        $profile_list = $this->profileQuery()->get()->toArray();
+        return response()->json([
+            'status' => true,
+            'message' => 'daftar profile berhasil dimuat',
+            'data' => $this->adminProfileTranspose($profile_list)
+        ]);
+    }
+
     public function index()
     {
         $selected_profile = $this->profileQuery()
             ->where('dashboard_profile.is_selected', 1)
             ->get()
             ->toArray();
-        $images = $this->profileList($selected_profile)[0]['images'];
+        $images = $this->userProfileTranspose($selected_profile)[0]['images'];
         return view('front.page.dashboard.index', compact(['images']));
     }
 

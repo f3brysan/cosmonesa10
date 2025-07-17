@@ -160,11 +160,18 @@ class B_EventController extends Controller
                 ->join('users as u', 'u.id', '=', 'ep.user_id')
                 ->leftJoin('transactions as t', 't.id', '=', 'ep.transaction_id')
                 ->where('ep.event_id', $id)
-                ->get();
-
+                ->get();            
                 if ($request->ajax()) {
                      return DataTables::of($participants)
-                    ->addIndexColumn()                    
+                    ->addIndexColumn()      
+                    ->addColumn('is_attended', function ($item) {
+                        if ($item->is_attended == 1) {
+                          $result =  '<span class="badge bg-label-success">Attended</span>';
+                        } else {
+                          $result = '<span class="badge bg-label-danger">Not Attended</span>';
+                        }     
+                        return $result;                   
+                    })              
                     ->addColumn('action', function ($item) {
                         // Generate action buttons for each event
                         $btn = '<button type="button" class="btn p-0 dropdown-toggle hide-arrow" data-bs-toggle="dropdown"><i class="icon-base bx bx-dots-vertical-rounded"></i></button>
@@ -176,7 +183,7 @@ class B_EventController extends Controller
                       </div>';
                         return $btn;
                     })
-                    ->rawColumns(['action'])
+                    ->rawColumns(['action', 'is_attended'])
                     ->addIndexColumn()
                     ->make(true);
                 }
@@ -185,6 +192,33 @@ class B_EventController extends Controller
                 'status' => false,
                 'message' => $th->getMessage()
             ]);
+        }
+    }
+
+    public function attend(Request $request) 
+    {
+        try {
+            // Decrypt the id
+            $id = Crypt::decrypt($request->id);
+
+            // Retrieve the participant by id
+            $participant = EventParticipants::where('id', $id)->first();
+
+            // Mark the participant as attended
+            $participant->is_attended = 1;
+            $participant->save();
+
+            // Return a success response
+            return response()->json([
+                'status' => true,
+                'message' => 'Success'
+            ], 200);
+        } catch (\Throwable $th) {
+            // Return an error response if an exception occurs
+            return response()->json([
+                'status' => false,
+                'message' => $th->getMessage()
+            ], 500);
         }
     }
 

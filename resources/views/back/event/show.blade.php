@@ -106,6 +106,7 @@
                                         <th class="text-center">No Register</th>
                                         <th class="text-center">Nama</th>
                                         <th class="text-center">Status</th>
+                                        <th class="text-center">Hadir</th>
                                         <th class="text-center">Aksi</th>
                                     </tr>
                                 </thead>
@@ -116,7 +117,7 @@
                 </div>
             </div>
         </div>
-    </div>    
+    </div>
 @endsection
 
 @push('js')
@@ -131,12 +132,18 @@
     <script>
         $(document).ready(function() {
 
-            $('#myTable').DataTable({
+            $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                }
+            });
+
+            table = $('#myTable').DataTable({
                 responsive: true,
                 processing: true,
                 serverSide: true, //aktifkan server-side 
                 ajax: {
-                    url: "{{ URL::to('back/event/participants/'.$event->id) }}",
+                    url: "{{ URL::to('back/event/participants/' . $event->id) }}",
                     type: 'GET'
                 },
                 columns: [{
@@ -151,7 +158,12 @@
                         data: 'payment_status',
                         name: 'payment_status',
                         className: 'text-center'
-                    },                    
+                    },
+                    {
+                        data: 'is_attended',
+                        name: 'is_attended',
+                        className: 'text-center'
+                    },
                     {
                         data: 'action',
                         name: 'action',
@@ -159,7 +171,45 @@
                         searchable: false,
                         className: 'text-center'
                     },
-                ],                
+                ],
+            });
+
+            $(document).on('click', '.attend', function(e) {
+                e.preventDefault();
+                var id = $(this).data('id');
+                console.log(id);
+
+                Swal.fire({
+                    title: "Apakah anda yakin?",
+                    text: "Yang bersangkutan hadir pada event ini?",
+                    icon: "warning",
+                    showCancelButton: true,
+                    confirmButtonColor: "#3085d6",
+                    cancelButtonColor: "#d33",
+                    confirmButtonText: "Yes, approve it!"
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        $.ajax({
+                            type: "POST",
+                            url: "{{ URL::to('back/event/participants/attend') }}",
+                            data: {
+                                id: id
+                            },
+                            dataType: "JSON",
+                            success: function(response) {
+                                console.log(response);
+                                table.ajax.reload(null, false);
+                                Swal.fire({
+                                    title: "Success!",
+                                    text: "Yang bersangkutan hadir pada event ini!",
+                                    icon: "success"
+                                });
+                            }
+                        });
+                    }
+                });
+
+
             });
         });
     </script>

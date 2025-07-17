@@ -33,8 +33,8 @@ Route::group(['middleware' => ['auth', 'role:superadmin|pengelola']], function (
     Route::post('event/store', [B_EventController::class, 'store']);
     Route::get('event/detail/{slug}', [B_EventController::class, 'show']);
     Route::get('event/edit/{id}', [B_EventController::class, 'edit']);
-
     Route::get('event/participants/{id}', [B_EventController::class, 'eventParticipants']);
+    Route::post('event/participants/attend', [B_EventController::class, 'attend']);
 
     Route::get('product', [B_ProductController::class, 'index']);
     Route::get('product/create', [B_ProductController::class, 'create']);

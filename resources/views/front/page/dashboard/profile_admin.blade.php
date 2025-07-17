@@ -40,6 +40,7 @@
                                 <thead>
                                     <tr>
                                         <th class="text-center">No.</th>
+                                        <th class="text-center">Id Profile</th>
                                         <th class="text-center">Nama</th>
                                         <th class="text-center">list gambar</th>
                                         <th class="text-center">path</th>
@@ -113,6 +114,11 @@
                 columns: [{
                         data: 'DT_RowIndex',
                         name: 'DT_RowIndex',
+                        className: 'text-center'
+                    },
+                    {
+                        data: 'profile_id',
+                        name: 'profile_id',
                         className: 'text-center'
                     },
                     {

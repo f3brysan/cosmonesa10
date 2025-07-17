@@ -44,16 +44,16 @@ class F_DashboardController extends Controller
         $flatten_profile = [];
 
         foreach ($data as $entry) {
-            $profile = $entry['profile_name'];
+            $profId = $entry['profile_id'];
 
-            if (!isset($flatten_profile[$profile])) {
-                $flatten_profile[$profile] = [
-                    'profile_name' => $profile,
+            if (!isset($flatten_profile[$profId])) {
+                $flatten_profile[$profId] = [
+                    'profile_name' => $profId,
                     'images' => []
                 ];
             }
 
-            $flatten_profile[$profile]['images'][] = [
+            $flatten_profile[$profId]['images'][] = [
                 'img_name' => $entry['img_name'],
                 'img_path' => $entry['img_path'],
                 'img_desc' => $entry['img_desc']
@@ -71,9 +71,9 @@ class F_DashboardController extends Controller
             $sel_status = $entry['is_selected'];
             foreach ($entry as $key => $value) {
                 if ($key === 'profile_name' || $key === 'profile_id' || $key === 'is_selected') {
-                    $flatten_profile[$profile][$key] = $value;
+                    $flatten_profile[$profId][$key] = $value;
                 } else {
-                    $flatten_profile[$profile][$key][] = $value;
+                    $flatten_profile[$profId][$key][] = $value;
                 }
             }
         }

@@ -9,9 +9,11 @@ use App\Models\DashboardPivotTab;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use SebastianBergmann\CodeCoverage\Report\Html\Dashboard;
+use Yajra\DataTables\Facades\DataTables;
 
 class F_DashboardController extends Controller
 {
+
     private function profileQuery()
     {
         // // Get the authenticated user
@@ -78,6 +80,23 @@ class F_DashboardController extends Controller
         return array_values($flatten_profile);
     }
 
+    public function profileDetail($profileId)
+    {
+        $imgList = $this->profileQuery()
+            ->where('dashboard_pivot.profile_id', $profileId)
+            ->get()
+            ->toArray();
+        return $imgList;
+    }
+
+    public function admin_profile()
+    {
+
+        return view('front.page.dashboard.profile_admin');
+
+        // $images = $this->profileList($profile_list);
+        // return view('front.page.dashboard.profile_admin', compact(['images']));
+    }
     private function editProfName($profId = null, $profName = null)
     {
         return DashboardProfile::upsert([
@@ -118,23 +137,27 @@ class F_DashboardController extends Controller
         ]);
     }
 
-    public function profileDetail($profileId)
-    {
-        $imgList = $this->profileQuery()
-            ->where('dashboard_pivot.profile_id', $profileId)
-            ->get()
-            ->toArray();
-        return $imgList;
-    }
+
 
     public function admIndex()
     {
         $profile_list = $this->profileQuery()->get()->toArray();
-        return response()->json([
-            'status' => true,
-            'message' => 'daftar profile berhasil dimuat',
-            'data' => $this->adminProfileTranspose($profile_list)
-        ]);
+        $data = $this->adminProfileTranspose($profile_list);
+        // dd($data);
+        if (request()->ajax()) {
+            return DataTables::of($data)
+                ->addIndexColumn()
+                // ->addColumn('action', function ($row) {
+                //     return view('front.page.dashboard.partials.action', compact('row'));
+                // })
+                // ->rawColumns(['action'])
+                ->make(true);
+        }
+        // return response()->json([
+        //     'status' => true,
+        //     'message' => 'daftar profile berhasil dimuat',
+        //     'data' => $this->adminProfileTranspose($profile_list)
+        // ]);
     }
 
     public function index()

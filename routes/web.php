@@ -30,6 +30,8 @@ Route::get('/get_profiles', [F_DashboardController::class, 'getProfiles']);
 Route::get('/get_images', [F_DashboardController::class, 'getImages']);
 
 Route::group(['middleware' => ['auth']], function () {
+    Route::get('/admin_profile', [F_DashboardController::class, 'admin_profile']);
+    Route::get('/admindex', [F_DashboardController::class, 'admIndex']);
     // account
     Route::get('/account', [F_AccountController::class, 'index']);
     Route::get('/profile', [F_AccountController::class, 'profile']);

@@ -95,7 +95,7 @@ class B_TransactionController extends Controller
         try {
             $id = Crypt::decrypt($request->id);
             $transaction = Transaction::find($id);
-
+            
             if ($transaction->type == 'product') {
                 $transactionDetail = TransactionDetail::where('transaction_id', $transaction->id)->get();
                 foreach ($transactionDetail as $key => $value) {

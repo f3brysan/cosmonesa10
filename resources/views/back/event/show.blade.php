@@ -177,7 +177,6 @@
             $(document).on('click', '.attend', function(e) {
                 e.preventDefault();
                 var id = $(this).data('id');
-                console.log(id);
 
                 Swal.fire({
                     title: "Apakah anda yakin?",
@@ -208,7 +207,42 @@
                         });
                     }
                 });
+            });
 
+            $(document).on('click', '.approve', function(e) {
+                e.preventDefault();
+                var id = $(this).data('id');
+                console.log(id);
+                
+                Swal.fire({
+                    title: "Apakah anda yakin?",
+                    text: "Validasi pembayaran yang bersangkutan.",
+                    icon: "warning",
+                    showCancelButton: true,
+                    confirmButtonColor: "#3085d6",
+                    cancelButtonColor: "#d33",
+                    confirmButtonText: "Yes, approve it!"
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        $.ajax({
+                            type: "POST",
+                            url: "{{ URL::to('back/transaction-history/approve') }}",
+                            data: {
+                                id: id
+                            },
+                            dataType: "JSON",
+                            success: function(response) {
+                                console.log(response);
+                                table.ajax.reload(null, false);
+                                Swal.fire({
+                                    title: "Success!",
+                                    text: "Yang bersangkutan hadir pada event ini!",
+                                    icon: "success"
+                                });
+                            }
+                        });
+                    }
+                });
 
             });
         });

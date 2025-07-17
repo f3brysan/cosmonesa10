@@ -142,7 +142,7 @@ class B_EventController extends Controller
                 ->leftJoin('transactions as t', 't.id', '=', 'ep.transaction_id')
                 ->where('ep.event_id', $event->id)
                 ->whereIn('t.payment_status', ['success', 'paid'])
-                ->count();                
+                ->count();
             // Return the view for displaying the event
             return view('back.event.show', compact('event', 'countParticipants'));
         } catch (\Throwable $th) {
@@ -160,24 +160,28 @@ class B_EventController extends Controller
                 ->join('users as u', 'u.id', '=', 'ep.user_id')
                 ->leftJoin('transactions as t', 't.id', '=', 'ep.transaction_id')
                 ->where('ep.event_id', $id)
-                ->get();            
-                if ($request->ajax()) {
-                     return DataTables::of($participants)
-                    ->addIndexColumn()      
+                ->get();
+            if ($request->ajax()) {
+                return DataTables::of($participants)
+                    ->addIndexColumn()
                     ->addColumn('is_attended', function ($item) {
                         if ($item->is_attended == 1) {
-                          $result =  '<span class="badge bg-label-success">Attended</span>';
+                            $result = '<span class="badge bg-label-success">Attended</span>';
                         } else {
-                          $result = '<span class="badge bg-label-danger">Not Attended</span>';
-                        }     
-                        return $result;                   
-                    })              
+                            $result = '<span class="badge bg-label-danger">Not Attended</span>';
+                        }
+                        return $result;
+                    })
                     ->addColumn('action', function ($item) {
                         // Generate action buttons for each event
                         $btn = '<button type="button" class="btn p-0 dropdown-toggle hide-arrow" data-bs-toggle="dropdown"><i class="icon-base bx bx-dots-vertical-rounded"></i></button>
-                        <div class="dropdown-menu">';   
-                        $btn .= '<a class="dropdown-item approve" data-id="'.Crypt::encrypt($item->id).'" href="javascript:void(0);" ><i class="icon-base bx bx-check me-1"></i> Approve Payment</a>';
-                        if ($item->is_attended == 0) {                            
+                        <div class="dropdown-menu">';
+                        if ($item->payment_status == 'success') {
+                            $btn .= '<a class="dropdown-item certificate" data-id="'.Crypt::encrypt($item->transaction_id).'" href="javascript:void(0);" ><i class="icon-base bx bx-note me-1"></i> Certificate</a>';
+                        } else if ($item->payment_status == 'paid') {
+                            $btn .= '<a class="dropdown-item approve" data-id="'.Crypt::encrypt($item->transaction_id).'" href="javascript:void(0);" ><i class="icon-base bx bx-check me-1"></i> Approve Payment</a>';
+                        }
+                        if ($item->is_attended == 0) {
                             $btn .= ' <a class="dropdown-item attend" data-id="'.Crypt::encrypt($item->id).'" href="javascript:void(0);" ><i class="icon-base bx bx-user me-1"></i> Attend</a>';
                         }
                         $btn .= '</div>
@@ -187,7 +191,7 @@ class B_EventController extends Controller
                     ->rawColumns(['action', 'is_attended'])
                     ->addIndexColumn()
                     ->make(true);
-                }
+            }
         } catch (\Throwable $th) {
             return response()->json([
                 'status' => false,
@@ -196,7 +200,7 @@ class B_EventController extends Controller
         }
     }
 
-    public function attend(Request $request) 
+    public function attend(Request $request)
     {
         try {
             // Decrypt the id

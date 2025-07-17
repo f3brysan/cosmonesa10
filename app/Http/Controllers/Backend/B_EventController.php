@@ -136,8 +136,15 @@ class B_EventController extends Controller
         try {
             // Retrieve the event by slug
             $event = Events::with('eventtype')->where('slug', $slug)->first();
+            $countParticipants = DB::table('event_participants as ep')
+                ->select('ep.*', 'u.name', 't.payment_status', 't.code')
+                ->join('users as u', 'u.id', '=', 'ep.user_id')
+                ->leftJoin('transactions as t', 't.id', '=', 'ep.transaction_id')
+                ->where('ep.event_id', $event->id)
+                ->whereIn('t.payment_status', ['success', 'paid'])
+                ->count();                
             // Return the view for displaying the event
-            return view('back.event.show', compact('event'));
+            return view('back.event.show', compact('event', 'countParticipants'));
         } catch (\Throwable $th) {
             // If an error occurs, abort with a 404 error
             dd($th);

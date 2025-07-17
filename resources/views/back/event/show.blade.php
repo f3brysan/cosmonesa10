@@ -55,7 +55,10 @@
                             </tr>
                             <tr>
                                 <td><b>Kuota</b></td>
-                                <td>{{ $event->quota }} Kursi</td>
+                                @php
+                                    $quota = $event->quota - $countParticipants;
+                                @endphp
+                                <td>{{ $quota }} Kursi</td>
                             </tr>
                             <tr>
                                 <td><b>Status</b></td>

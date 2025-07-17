@@ -175,11 +175,12 @@ class B_EventController extends Controller
                     ->addColumn('action', function ($item) {
                         // Generate action buttons for each event
                         $btn = '<button type="button" class="btn p-0 dropdown-toggle hide-arrow" data-bs-toggle="dropdown"><i class="icon-base bx bx-dots-vertical-rounded"></i></button>
-                        <div class="dropdown-menu">   
-                        <a class="dropdown-item approve" data-id="'.Crypt::encrypt($item->id).'" href="javascript:void(0);" ><i class="icon-base bx bx-check me-1"></i> Approve Payment</a>                       
-                        <a class="dropdown-item attend" data-id="'.Crypt::encrypt($item->id).'" href="javascript:void(0);" ><i class="icon-base bx bx-user me-1"></i> Attend</a>                       
-                          <a class="dropdown-item destroy" data-id="'.Crypt::encrypt($item->id).'" href="javascript:void(0);" ><i class="icon-base bx bx-trash me-1"></i> Hapus</a>
-                        </div>
+                        <div class="dropdown-menu">';   
+                        $btn .= '<a class="dropdown-item approve" data-id="'.Crypt::encrypt($item->id).'" href="javascript:void(0);" ><i class="icon-base bx bx-check me-1"></i> Approve Payment</a>';
+                        if ($item->is_attended == 0) {                            
+                            $btn .= ' <a class="dropdown-item attend" data-id="'.Crypt::encrypt($item->id).'" href="javascript:void(0);" ><i class="icon-base bx bx-user me-1"></i> Attend</a>';
+                        }
+                        $btn .= '</div>
                       </div>';
                         return $btn;
                     })

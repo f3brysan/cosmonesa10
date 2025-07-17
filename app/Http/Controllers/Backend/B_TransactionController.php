@@ -29,14 +29,18 @@ class B_TransactionController extends Controller
                         $result = '';
                         if ($item->payment_status == 'unpaid') {
                             $result = '<span class="badge bg-label-warning me-1">Unpaid</span>';
-                        } elseif ($item->payment_status == 'success') {
-                            $result = '<span class="badge bg-label-success me-1">Success</span>';
                         } elseif ($item->payment_status == 'failed') {
                             $result = '<span class="badge bg-label-danger me-1">Failed</span>';
                         } elseif ($item->payment_status == 'paid') {
                             $result = '<span class="badge bg-label-primary me-1">Paid</span>';
                             $result .= '<br>';
-                            $result .= '<a class="btn btn-sm btn-primary m-2" href="'.URL::asset('storage/'.$item->payment_file).'" target="_blank">Bukti Bayar</a>';
+                            $result .= '<a class="btn btn-sm btn-primary m-2" href="'.URL::asset('storage/'.$item->payment_file).'" target="_blank">Attachment</a>';
+                        } elseif ($item->payment_status == 'success') {
+                            $result = '<span class="badge bg-label-success me-1">Success</span>';
+                            $result .= '<br>';
+                            $result .= '<a class="btn btn-sm btn-primary m-2" href="'.URL::asset('storage/'.$item->payment_file).'" target="_blank">Attachment</a>';
+                        } else if ($item->payment_status == 'void') {
+                            $result = '<span class="badge bg-label-dark me-1">Void</span>';
                         }
                         return $result;
                     })

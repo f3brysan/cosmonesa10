@@ -138,7 +138,7 @@
                     </a>
                 </li>
                 <li class="menu-item">
-                    <a href="{{ URL::to('back/seller/service-list') }}" class="menu-link">
+                    <a href="{{ URL::to('back/kiosku/service-history') }}" class="menu-link">
                         <div class="text-truncate" data-i18n="Workshop">Riwayat Service</div>
                     </a>
                 </li>

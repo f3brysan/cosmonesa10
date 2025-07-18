@@ -55,6 +55,7 @@ Route::group(['middleware' => ['auth', 'role:superadmin|pengelola']], function (
     Route::post('service-categories/destroy', [B_ServiceCategoryController::class, 'destroy']);
 
     Route::get('service-provider-list', [B_KioskController::class, 'index']);
+    Route::post('service-provider-list/approve', [B_KioskController::class, 'approve']);
 
     Route::get('transaction-history', [B_TransactionController::class, 'index']);
     Route::post('transaction-history/approve', [B_TransactionController::class, 'approve']);    

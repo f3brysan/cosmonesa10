@@ -6,17 +6,72 @@ use App\Models\User;
 use App\Models\Kiosks;
 use App\Models\Services;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
-use App\Http\Controllers\Controller;
 use App\Models\KioskActiveDay;
+use Yajra\DataTables\DataTables;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\URL;
+use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Crypt;
 
 class B_KioskController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $kiosks = Kiosks::with('user')->get();
+        $kiosks = Kiosks::with('user', 'services')->get();
 
+        try {
+            if ($request->ajax()) {
+                return DataTables::of($kiosks)
+                    ->addIndexColumn()
+                    ->addColumn('user', function ($item) {
+                        return $item->user->name;
+                    })
+                    ->addColumn('countServices', function ($item) {
+                        return $item->services->count();
+                    })
+                    ->addColumn('action', function ($item) {
+                        if ($item->is_verified == 0) {
+                            $btn = '<a href="javascript:void(0)" data-id="'.Crypt::encrypt($item->id).'" class="btn btn-primary approve" data-value="'.$item->is_verified.'" title="Approve"><i class="icon-base bx bx-check"></i></a>';
+                        } else {
+                            $btn = '<a href="javascript:void(0)" data-id="'.Crypt::encrypt($item->id).'" class="btn btn-warning approve" data-value="'.$item->is_verified.'" title="Disapprove"><i class="icon-base bx bx-x"></i></a>';
+                        }
+                        return $btn;
+                    })
+                    ->rawColumns(['user', 'countServices', 'action'])
+                    ->make(true);
+            }
+        } catch (\Throwable $th) {
+            return response()->json(['error' => $th->getMessage()], 500);
+        }
+        return view('back.seller_list.index');
+    }
 
+    public function approve(Request $request)
+    {
+        try {
+            $id = Crypt::decrypt($request->id);
+
+            $kiosk = Kiosks::find($id);
+            
+            if ($kiosk->is_verified == 0) {
+                $kiosk->update([
+                    'is_verified' => 1,
+                ]);
+            } else {
+                $kiosk->update([
+                    'is_verified' => 0,
+                ]);
+            }
+
+            return response()->json([
+                'status' => 'success',
+                'message' => 'Kiosks updated successfully'
+            ], 200);
+        } catch (\Throwable $th) {
+            return response()->json([
+                'status' => 'error',
+                'message' => $th->getMessage()], 500);
+        }
     }
     public function kioskDetail()
     {

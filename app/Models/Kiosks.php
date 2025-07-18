@@ -10,14 +10,19 @@ class Kiosks extends Model
 {
     use HasFactory;
     use HasUuids;
-    protected $table = 'kiosks';    
+    protected $table = 'kiosks';
     public $incrementing = false;
     protected $guarded = [
-        
+
     ];
 
     public function user()
     {
         return $this->belongsTo(User::class);
+    }
+
+    public function services()
+    {
+        return $this->hasMany(Services::class, 'kiosk_id', 'id');
     }
 }

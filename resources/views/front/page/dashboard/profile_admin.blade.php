@@ -21,7 +21,7 @@
                         <li class="breadcrumb-item">
                             <a href="{{ URL::to('back/master/dashboard') }}">Home</a>
                         </li>
-                        <li class="breadcrumb-item active">Daftar Pengguna</li>
+                        <li class="breadcrumb-item active">Profile Tampilan Dashboard</li>
                     </ol>
                 </nav>
             </div>
@@ -32,7 +32,7 @@
             <div class="col-xl-12 mb-6">
                 <div class="card">
                     <div class="card-header">
-                        <h5>Daftar Pengguna</h5>
+                        <h5>Profile Tampilan Dashboard</h5>
                     </div>
                     <div class="card-body">
                         <div class="card-datatable text-nowrap">
@@ -41,9 +41,7 @@
                                     <tr>
                                         <th class="text-center">No.</th>
                                         <th class="text-center">Id Profile</th>
-                                        <th class="text-center">Nama</th>
-                                        <th class="text-center">list gambar</th>
-                                        <th class="text-center">path</th>
+                                        <th class="text-center">Carousel show</th>
                                         <th class="text-center">Aksi</th>
                                     </tr>
                                 </thead>
@@ -121,18 +119,14 @@
                         name: 'profile_id',
                         className: 'text-center'
                     },
+
                     {
-                        data: 'profile_name',
-                        name: 'profile_name'
-                    },
-                    {
-                        data: 'img_name',
-                        name: 'img_name'
-                    },
-                    {
-                        data: 'img_path',
-                        name: 'img_path',
-                        className: 'text-center'
+                        data: 'img',
+                        name: 'img',
+                        className: 'text-center', // Use text-center to center carousel
+                        render: function(data, type, row) {
+                            return `<div class="d-flex justify-content-center">${data}</div>`;
+                        }
                     },
                     {
                         data: 'action',

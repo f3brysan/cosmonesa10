@@ -147,17 +147,48 @@ class F_DashboardController extends Controller
         if (request()->ajax()) {
             return DataTables::of($data)
                 ->addIndexColumn()
-                // ->addColumn('action', function ($row) {
-                //     return view('front.page.dashboard.partials.action', compact('row'));
-                // })
-                // ->rawColumns(['action'])
+                ->addColumn('img', function ($rows) {
+                    $carouselId = 'carousel-' . uniqid();
+                    $count = count($rows['img_path']);
+                    if ($count === 0) {
+                        return '';
+                    }
+                    $indicators = '';
+                    $items = '';
+                    for ($i = 0; $i < $count; $i++) {
+                        $active = $i === 0 ? 'active' : '';
+                        $imgName = htmlspecialchars($rows['img_name'][$i]);
+                        $imgDesc = htmlspecialchars($rows['img_desc'][$i]);
+                        $imgPath = asset('frontend/images/gallery/' . $rows['img_path'][$i]);
+                        $queueNum = ($i + 1) . ' / ' . $count;
+                        $indicators .= '<button type="button" data-bs-target="#' . $carouselId . '" data-bs-slide-to="' . $i . '" class="' . $active . '" aria-current="' . ($active ? 'true' : 'false') . '" aria-label="Slide ' . ($i + 1) . '"></button>';
+                        $items .= '<div class="carousel-item ' . $active . '">';
+                        $items .= '<img src="' . $imgPath . '" class="d-block w-500 img-fluid" alt="' . $imgName . '" style="max-height: 400px;">';
+                        $items .= '<div class="carousel-caption d-none d-md-block">';
+                        $items .= '<h5>' . $imgName . '</h5>';
+                        $items .= '<p>' . $imgDesc . '</p>';
+                        $items .= '<span class="badge bg-secondary">' . $queueNum . '</span>';
+                        $items .= '</div></div>';
+                    }
+                    return '
+                        <div id="' . $carouselId . '" class="carousel slide" data-bs-ride="false" style="max-width: 220px;">
+                            <div class="carousel-indicators">' . $indicators . '</div>
+                            <div class="carousel-inner">' . $items . '</div>
+                            <button class="carousel-control-prev" type="button" data-bs-target="#' . $carouselId . '" data-bs-slide="prev">
+                                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                                <span class="visually-hidden">Previous</span>
+                            </button>
+                            <button class="carousel-control-next" type="button" data-bs-target="#' . $carouselId . '" data-bs-slide="next">
+                                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                                <span class="visually-hidden">Next</span>
+                            </button>
+                        </div>
+                    ';
+                })
+
+                ->rawColumns(['img'])
                 ->make(true);
         }
-        // return response()->json([
-        //     'status' => true,
-        //     'message' => 'daftar profile berhasil dimuat',
-        //     'data' => $this->adminProfileTranspose($profile_list)
-        // ]);
     }
 
     public function index()

@@ -350,39 +350,41 @@
                             const numericPrice = typeof rawPrice === "string" ? parseFloat(
                                 rawPrice) : rawPrice;
 
-                            const formattedPrice = numericPrice.toLocaleString("id-ID", {
-                                style: "currency",
-                                currency: "IDR",
-                                minimumFractionDigits: numericPrice % 1 === 0 ? 0 : 2,
-                                maximumFractionDigits: 2
+                                const formattedPrice = numericPrice.toLocaleString("id-ID", {
+                                    style: "currency",
+                                    currency: "IDR",
+                                    minimumFractionDigits: numericPrice % 1 === 0 ? 0 : 2,
+                                    maximumFractionDigits: 2
 
-                            });
-                            // formattedPrice = formattedPrice.replace(/.00$/, "");
+                                });
+                                // formattedPrice = formattedPrice.replace(/.00$/, "");
+                                console.log(shop);
+                                // console.log(shop.images.find(imgObj => imgObj.is_cover === "1"));
 
-
-
-                            shopHtml += `
-                                <div class="col-lg-3 col-md-6">
-                                    <div class="product_item text-center">
-                                    <div class="pi_thumb">
-                                        <img src="${randomImg}" alt="" />
-                                        <div class="pi_01_actions">
-                                        <a href="cart.html"><i class="icofont-cart-alt"></i></a>
-                                        <a href="single-product.html"><i class="icofont-eye"></i></a>
+                                const coverImage = shop.images.find(imgObj => imgObj.is_cover === "1");
+                            if (coverImage) {
+                                shopHtml += `
+                                    <div class="col-lg-3 col-md-6">
+                                        <div class="pi_thumb">
+                                            <img src="{{URL::to('storage/${coverImage.filename}')}}" alt="" />
+                                            <div class="pi_01_actions">
+                                                <a href="cart.html"><i class="icofont-cart-alt"></i></a>
+                                                <a href="{{ 'product-detail/${shop.slug}'}}"><i class="icofont-eye"></i></a>
+                                            </div>
+                                            <div class="prLabels">
+                                                <p class="featured">Featured</p>
+                                            </div>
                                         </div>
-                                        <div class="prLabels">
-                                        <p class="featured">Featured</p>
+                                        <div class="pi_content">
+                                            <p><a href="shop.html">Kategori produk</a></p>
+                                            <h3><a href="{{ 'product-detail/${shop.slug}'}}">${shop.name}</a></h3>
+                                            <div class="product_price clearfix">
+                                                <span class="price"><span class="woocommerce-Price-amount amount"><p>${formattedPrice}</p></span></span>
+                                            </div>
                                         </div>
-                                    </div>
-                                    <div class="pi_content">
-                                        <p><a href="shop.html">Kategori produk</a></p>
-                                        <h3><a href="single-product.html">${shop.name}</a></h3>
-                                        <div class="product_price clearfix">
-                                        <span class="price"><span class="woocommerce-Price-amount amount"><p>${formattedPrice}</p></span></span>
-                                        </div>
-                                    </div>
-                                    </div>
-                                </div>`;
+                                    </div>`;
+                                }
+
                         });
 
                         $("#shop_lists").html(shopHtml);

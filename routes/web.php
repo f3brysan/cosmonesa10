@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\API\APIOauthController;
 use App\Http\Controllers\Frontend\F_DashboardController;
@@ -94,9 +95,16 @@ Route::get('/login', function () {
     return view('front.page.login.login');
 })->name('login');
 
-Route::post('logout', function () {
-    // Log out user
+Route::post('/logout', function () {
+    // Log out the user
     Auth::logout();
+
+    // Invalidate the session
+    Session::invalidate();
+
+    // Regenerate CSRF token
+    Session::regenerateToken();
+
     // Redirect to login page
     return redirect()->route('login');
 });

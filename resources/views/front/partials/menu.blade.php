@@ -13,9 +13,16 @@
                 <li><a href="/account">My Account</a></li>
                 <li><a href="{{ '/riwayat-transaksi' }}">Transactions History</a></li>
                 <li><a href="{{ '/tenant-register' }}">Register Tenant</a></li>
-                <li><a href="{{ URL::to('logout') }}">Logout</a></li>
+                <li class="d-flex">
+                    <span class="ml-auto">
+                    <form id="logout-form" action="{{ URL::to('/logout') }}" method="POST" >
+                        @csrf
+                        <input type="hidden" name="_method" value="POST">
+                        <button class="btn btn-danger" type="submit" >Logout</button>
+                    </form></span>
+                </li>
             </ul>
-        </li>        
+        </li>
         @else
             <li><a href="/login">Login</a></li>
         @endif

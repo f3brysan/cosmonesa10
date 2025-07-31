@@ -17,7 +17,8 @@ class F_ProductController extends Controller
     }
     public function get_products()
     {
-        $products = Products::with(['category'])->inRandomOrder()->get();
+        // $products = Products::with('ProductImages')->get();
+        $products = Products::with(['category', 'images'])->inRandomOrder()->get();
         return response()->json([
             'status' => true,
             'message' => 'Products retrieved successfully',

@@ -249,4 +249,38 @@ class B_EventController extends Controller
         // Return the view for editing the event
         return view('back.event.edit', compact('event', 'eventTypes'));
     }
+
+    public function setSignature(Request $request) 
+    {
+        $id = Crypt::decrypt($request->event_id);
+        $this->validate($request, [
+            'signature' => [
+                'image',
+                'mimes:jpg,png,jpeg,gif,svg',
+                'max:2048'
+            ],
+        ]);
+        
+        $checkOldImage = Events::where('id', $id)->first();
+        if ($request->file('signature') != null) {
+            if (! empty($checkOldImage->signature_picture)) {
+                Storage::disk('public')->delete($checkOldImage->signature_picture);
+            }
+
+            $file = $request->file('signature');
+            
+            $filename = date('YmdHis').'_'.$id.'.'.$file->getClientOriginalExtension();
+            $path = $file->storeAs('event_signature', $filename, 'public');
+        } else {
+            $path = $checkOldImage->picture;
+        }
+        
+        $update = Events::where('id', $id)->update([
+            'signature_picture' => $path,
+            'signature_name' => $request->siganture_name
+        ]);
+
+        return redirect(URL::to('back/event/detail/'.$checkOldImage->slug))->with('success', 'Data Berhasil Disimpan');
+        
+    }
 }

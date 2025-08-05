@@ -99,6 +99,13 @@
                         <h5 class="card-title">Daftar Peserta</h5>
                     </div>
                     <div class="card-body">
+                        <div class="row mb-4">
+                            <div class="col-12">
+                                <button class="btn btn-primary float-end m-1" onclick="generateCertificate()">Buat
+                                    Sertifikat</button>
+                                <button class="btn btn-primary float-end m-1" onclick="setPDFSignature()">Set PDF</button>
+                            </div>
+                        </div>
                         <div class="table-responsive">
                             <table class="table table-bordered table-hover" id="myTable">
                                 <thead>
@@ -118,6 +125,37 @@
             </div>
         </div>
     </div>
+
+    {{-- Modal --}}
+    <div class="modal fade" id="setPDFSignature" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="exampleModalLabel">Signature Event</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <form action="{{ URL::to('back/event/set-signature') }}" enctype="multipart/form-data" method="POST">
+                    @csrf
+                    <input type="hidden" name="event_id" id="event_id" value="{{ Crypt::encrypt($event->id) }}">                
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label for="siganture-name">Name Signature</label>
+                        <input type="text" class="form-control" id="siganture_name" name="siganture_name">
+                    </div>
+                    <div class="form-group">
+                        <label for="signature">Signature</label>
+                        <input type="file" class="form-control" id="signature" name="signature">
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-primary">Save changes</button>
+                </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    {{-- End Modal --}}
 @endsection
 
 @push('js')
@@ -213,7 +251,7 @@
                 e.preventDefault();
                 var id = $(this).data('id');
                 console.log(id);
-                
+
                 Swal.fire({
                     title: "Apakah anda yakin?",
                     text: "Validasi pembayaran yang bersangkutan.",
@@ -246,5 +284,26 @@
 
             });
         });
+    </script>
+    <script>
+
+        function setPDFSignature() {
+            $('#setPDFSignature').modal('show');
+        }
+        function generateCertificate() {
+            Swal.fire({
+                title: "Apakah anda yakin?",
+                text: "Generate sertifikat peserta yang telah hadir.",
+                icon: "warning",
+                showCancelButton: true,
+                confirmButtonColor: "#3085d6",
+                cancelButtonColor: "#d33",
+                confirmButtonText: "Yes, generate it!"
+            }).then((result) => {
+                if (result.isConfirmed) {
+
+                }
+            });
+        }
     </script>
 @endpush

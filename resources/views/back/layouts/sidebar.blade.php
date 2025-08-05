@@ -59,6 +59,19 @@
             </li>
             <li class="menu-item">
                 <a href="javascript:void(0);" class="menu-link menu-toggle">
+                    <i class="menu-icon tf-icons bx bx-list-ul"></i>
+                    <div class="text-truncate" data-i18n="Menu">Dasboard Config</div>
+                </a>
+                <ul class="menu-sub">
+                    <li class="menu-item">
+                        <a href="{{ URL::to('admin_profile') }}" class="menu-link">
+                            <div class="text-truncate" data-i18n="Workshop">Landingpage Profile</div>
+                        </a>
+                    </li>
+                </ul>
+            </li>
+            <li class="menu-item">
+                <a href="javascript:void(0);" class="menu-link menu-toggle">
                     <i class="menu-icon tf-icons bx bx-layout"></i>
                     <div class="text-truncate" data-i18n="Menu">Menu</div>
                 </a>
@@ -130,7 +143,7 @@
             <a href="javascript:void(0);" class="menu-link menu-toggle">
                 <i class="menu-icon tf-icons bx bx-layout"></i>
                 <div class="text-truncate" data-i18n="Menu">Kiosku</div>
-            </a>            
+            </a>
             <ul class="menu-sub">
                 <li class="menu-item">
                     <a href="{{ URL::to('back/kiosku/service') }}" class="menu-link">

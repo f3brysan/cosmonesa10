@@ -32,6 +32,10 @@ Route::get('/get_images', [F_DashboardController::class, 'getImages']);
 
 Route::group(['middleware' => ['auth']], function () {
     Route::get('/admin_profile', [F_DashboardController::class, 'admin_profile']);
+    Route::post('/add_profile', [F_DashboardController::class, 'add_profile']);
+    Route::post('/store_img', [F_DashboardController::class, 'storeImages']);
+
+    Route::delete('/del_profile/{id}', [F_DashboardController::class, 'destroy_profile']);
     Route::get('/admindex', [F_DashboardController::class, 'admIndex']);
     // account
     Route::get('/account', [F_AccountController::class, 'index']);

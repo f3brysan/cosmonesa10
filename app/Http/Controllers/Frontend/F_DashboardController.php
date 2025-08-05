@@ -10,6 +10,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use SebastianBergmann\CodeCoverage\Report\Html\Dashboard;
 use Yajra\DataTables\Facades\DataTables;
+use Illuminate\Support\Facades\Crypt;
+use Illuminate\Support\Str;
 
 class F_DashboardController extends Controller
 {
@@ -96,6 +98,61 @@ class F_DashboardController extends Controller
 
         // $images = $this->profileList($profile_list);
         // return view('front.page.dashboard.profile_admin', compact(['images']));
+    }
+    public function storeImages(Request $request)
+    {
+        try {
+            $request->validate([
+                'files.*' => 'required|image|mimes:jpg,jpeg,png|max:2048'
+            ]);
+
+            // $product_id = Crypt::decrypt($request->product_id);
+
+            foreach ($request->file('files') as $file) {
+                $filename = 'Banner_' . time() . '_' . Str::random(10) . '.' . $file->getClientOriginalExtension();
+                $path = $file->storeAs('images/dash_banner', $filename, 'public');
+
+                DashboardGallery::create([
+                    'path' => $path,
+                ]);
+            }
+
+            // // check cover
+            // $dashboardGallery= DashboardGallery::where('product_id', $product_id)->where('is_cover', 1)->exists();
+
+            // if (!$dashboardGallery) {
+            //     $update = DashboardGallery::where('product_id', $product_id)->first();
+            //     $update->is_cover = 1;
+            //     $update->save();
+            // }
+
+            return response()->json([
+                'success' => true,
+            ]);
+        } catch (\Exception $th) {
+            return response()->json([
+                'status' => 'error',
+                'message' => $th->getMessage()
+            ], 500);
+        }
+    }
+    public function add_profile(Request $request)
+    {
+        $data = $request->all();
+        dd($data);
+    }
+    public function destroy_profile($profileId)
+    {
+        // $profile = DashboardProfile::find($profileId);
+        DB::beginTransaction();
+        try {
+            DB::delete('DELETE FROM profile_gallery_section WHERE profile_id = ?', [$profileId]);
+            DB::delete('DELETE FROM dashboard_profile WHERE id = ?', [$profileId]);
+            DB::commit();
+        } catch (\Exception $e) {
+            DB::rollBack();
+            throw $e;
+        }
     }
     private function editProfName($profId = null, $profName = null)
     {
@@ -185,8 +242,13 @@ class F_DashboardController extends Controller
                         </div>
                     ';
                 })
+                ->addColumn('action', function ($data) {
+                    $edit = '<button class="btn btn-sm btn-primary" onclick="editProfile(' . $data['profile_id'] . ')">Edit</button>';
+                    $delete = '<button class="btn btn-sm btn-danger destroy" data-id="' . $data['profile_id'] . ' ">Delete</button>';
+                    return $edit . ' ' . $delete;
+                })
 
-                ->rawColumns(['img'])
+                ->rawColumns(['img', 'action'])
                 ->make(true);
         }
     }

@@ -17,7 +17,7 @@
                              data-title="" data-param1="" data-param2="" data-param3=""
                             data-param4="" data-param5="" data-param6="" data-param7="" data-param8="" data-param9=""
                             data-param10="" data-description="">
-                            <img src="{{ asset('frontend/images/gallery/' . $img['img_path']) }}" alt=""
+                            <img src="{{ asset($img['img_path']) }}" alt=""
                                 data-bgposition="center center" data-bgfit="cover" data-bgrepeat="no-repeat"
                                 data-bgparallax="0" class="rev-slidebg" data-no-retina>
                             <div class="tp-caption headFont ws_nowrap" data-x="['center']" data-hoffset="['0'"

@@ -279,6 +279,7 @@
                 });
             },
             autoProcessQueue: false,
+            parallelUploads: 4,
             paramName: "files",
             uploadMultiple: true,
             acceptedFiles: ".jpeg,.jpg,.png,.gif",

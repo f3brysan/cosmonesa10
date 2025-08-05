@@ -8,7 +8,6 @@ use App\Models\DashboardProfile;
 use App\Models\DashboardPivotTab;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
-use SebastianBergmann\CodeCoverage\Report\Html\Dashboard;
 use Yajra\DataTables\Facades\DataTables;
 use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Str;
@@ -36,7 +35,7 @@ class F_DashboardController extends Controller
                 'gallery.id as img_id',
                 'gallery.name as img_name',
                 'gallery.path as img_path',
-                'gallery.desciption as img_desc',
+                'gallery.description as img_desc',
             ]);
     }
 
@@ -106,25 +105,18 @@ class F_DashboardController extends Controller
                 'files.*' => 'required|image|mimes:jpg,jpeg,png|max:2048'
             ]);
 
-            // $product_id = Crypt::decrypt($request->product_id);
+
 
             foreach ($request->file('files') as $file) {
+
                 $filename = 'Banner_' . time() . '_' . Str::random(10) . '.' . $file->getClientOriginalExtension();
                 $path = $file->storeAs('images/dash_banner', $filename, 'public');
+                // $files_path[] = $path;
 
                 DashboardGallery::create([
                     'path' => $path,
                 ]);
             }
-
-            // // check cover
-            // $dashboardGallery= DashboardGallery::where('product_id', $product_id)->where('is_cover', 1)->exists();
-
-            // if (!$dashboardGallery) {
-            //     $update = DashboardGallery::where('product_id', $product_id)->first();
-            //     $update->is_cover = 1;
-            //     $update->save();
-            // }
 
             return response()->json([
                 'success' => true,
@@ -170,7 +162,7 @@ class F_DashboardController extends Controller
             'remove' => array_values($substract)
         ];
     }
-    private function editImgList($profId = null, $imgList = null)
+    public function editImgList($profId = null, $imgList = null)
     {
         $selectedImg = DashboardPivotTab::query()
             ->where('profile_id', $profId)
@@ -178,20 +170,16 @@ class F_DashboardController extends Controller
             ->get()
             ->toArray();
         $currentImgList = collect($selectedImg)->flatten()->toArray();
-        $additionalImg = array_diff($imgList, $currentImgList);
-        $substractImg = array_diff($currentImgList, $imgList);
-
-        //Assoc Image if any additional image listed
-
-
+        $diff = $this->listDiff($currentImgList, $imgList);
         $imgGallery = [];
-        foreach ($imgList as $picId) {
-            $imgGallery[] = ['profile_id' => $profId, 'gallery_id' => $picId];
+        foreach ($imgList as $imgId) {
+            $imgGallery[] = ['profile_id' => $profId, 'gallery_id' => $imgId];
         }
-        return DashboardPivotTab::upsert([
-            $values = $imgGallery,
-            $update = ['gallery_id']
-        ]);
+        return $imgGallery;
+        // return DashboardPivotTab::upsert([
+        //     $values = $imgGallery,
+        //     $update = ['gallery_id']
+        // ]);
     }
 
 

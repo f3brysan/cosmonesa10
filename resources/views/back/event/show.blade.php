@@ -101,7 +101,7 @@
                     <div class="card-body">
                         <div class="row mb-4">
                             <div class="col-12">
-                                <button class="btn btn-primary float-end m-1" onclick="generateCertificate()">Buat
+                                <button class="btn btn-primary float-end m-1" onclick="generateCertificate()" {{ empty($event->signature_picture) ? 'disabled' : '' }}>Buat
                                     Sertifikat</button>
                                 <button class="btn btn-primary float-end m-1" onclick="setPDFSignature()">Set PDF</button>
                             </div>
@@ -140,12 +140,17 @@
                 <div class="modal-body">
                     <div class="form-group">
                         <label for="siganture-name">Name Signature</label>
-                        <input type="text" class="form-control" id="siganture_name" name="siganture_name">
+                        <input type="text" class="form-control" id="siganture_name" name="siganture_name" value="{{ $event->siganture_name }}">
                     </div>
                     <div class="form-group">
                         <label for="signature">Signature</label>
                         <input type="file" class="form-control" id="signature" name="signature">
                     </div>
+                    @if ($event->signature_picture != null)                        
+                    <div class="form-group">
+                        <a href="{{ asset('storage/' . $event->signature_picture) }}" class="btn btn-sm btn-info" target="_blank">png Signature</a>
+                    </div>
+                    @endif
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>

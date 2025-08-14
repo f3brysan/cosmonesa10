@@ -140,7 +140,7 @@
                 <div class="modal-body">
                     <div class="form-group">
                         <label for="siganture-name">Name Signature</label>
-                        <input type="text" class="form-control" id="siganture_name" name="siganture_name" value="{{ $event->siganture_name }}">
+                        <input type="text" class="form-control" id="siganture_name" name="siganture_name" value="{{ $event->signature_name }}">
                     </div>
                     <div class="form-group">
                         <label for="signature">Signature</label>

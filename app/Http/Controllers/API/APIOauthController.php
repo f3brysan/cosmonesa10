@@ -3,9 +3,10 @@
 namespace App\Http\Controllers\API;
 
 use App\Models\User;
-use Illuminate\Http\Request;
-use App\Http\Controllers\Controller;
 use App\Models\UserProfiles;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\URL;
+use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use Laravel\Socialite\Facades\Socialite;
 
@@ -86,7 +87,7 @@ class APIOauthController extends Controller
                 }
 
                 // Redirect the new user to the customer dashboard
-                return redirect('/');
+                return redirect(URL::to('/'));
             }
         } catch (\Exception $th) {
             // If there is an error, display the error message

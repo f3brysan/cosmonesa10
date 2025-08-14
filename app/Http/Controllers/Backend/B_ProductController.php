@@ -5,11 +5,12 @@ namespace App\Http\Controllers\Backend;
 use App\Models\Products;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
+use App\Models\ProductImages;
 use Yajra\DataTables\DataTables;
 use App\Models\ProductCategories;
+use App\Models\TransactionDetail;
 use Illuminate\Support\Facades\URL;
 use App\Http\Controllers\Controller;
-use App\Models\ProductImages;
 use Illuminate\Support\Facades\Crypt;
 
 class B_ProductController extends Controller
@@ -134,7 +135,10 @@ class B_ProductController extends Controller
     public function show($slug)
     {
         $product = Products::with(['category'])->where('slug', $slug)->first();
-        return view('back.product.show', compact('product'));
+        
+        $sold = TransactionDetail::with('transaction.user')->where('reference_id', $product->id)->get();
+        
+        return view('back.product.show', compact('product', 'sold'));
     }
 
     public function imagesShow($id, Request $request)

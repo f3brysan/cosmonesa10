@@ -101,7 +101,7 @@
                     <div class="card-body">
                         <div class="row mb-4">
                             <div class="col-12">
-                                <button class="btn btn-primary float-end m-1" onclick="generateCertificate()" {{ empty($event->signature_picture) ? 'disabled' : '' }}>Buat
+                                <button class="btn btn-primary float-end m-1" onclick="generateCertificate('{{ Crypt::encrypt($event->id) }}')" {{ empty($event->signature_picture) ? 'disabled' : '' }}>Buat
                                     Sertifikat</button>
                                 <button class="btn btn-primary float-end m-1" onclick="setPDFSignature()">Set PDF</button>
                             </div>
@@ -295,7 +295,7 @@
         function setPDFSignature() {
             $('#setPDFSignature').modal('show');
         }
-        function generateCertificate() {
+        function generateCertificate(id) {
             Swal.fire({
                 title: "Apakah anda yakin?",
                 text: "Generate sertifikat peserta yang telah hadir.",
@@ -306,7 +306,30 @@
                 confirmButtonText: "Yes, generate it!"
             }).then((result) => {
                 if (result.isConfirmed) {
-
+                    $.ajax({
+                        type: "POST",   
+                        url: "{{ URL::to('back/event/generate-certificate') }}",
+                        data: {
+                            id: id
+                        },
+                        dataType: "JSON",
+                        success: function(response) {
+                            console.log(response);
+                            Swal.fire({
+                                title: "Success!",
+                                text: response.message,
+                                icon: "success"
+                            });
+                        },
+                        error: function(xhr, status, error) {
+                            console.log(xhr.responseText);
+                            Swal.fire({
+                                title: "Error!",
+                                text: xhr.responseJSON.message,
+                                icon: "error"
+                            });
+                        }
+                    });
                 }
             });
         }

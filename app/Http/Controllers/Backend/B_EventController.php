@@ -6,6 +6,7 @@ use Carbon\Carbon;
 use App\Models\Events;
 use App\Models\EventTypes;
 use Illuminate\Support\Str;
+use App\Models\Certificates;
 use Illuminate\Http\Request;
 use Yajra\DataTables\DataTables;
 use App\Models\EventParticipants;
@@ -250,9 +251,12 @@ class B_EventController extends Controller
         return view('back.event.edit', compact('event', 'eventTypes'));
     }
 
-    public function setSignature(Request $request) 
+    public function setSignature(Request $request)
     {
+        // Decrypt the id
         $id = Crypt::decrypt($request->event_id);
+
+        // Validate the signature field
         $this->validate($request, [
             'signature' => [
                 'image',
@@ -260,27 +264,86 @@ class B_EventController extends Controller
                 'max:2048'
             ],
         ]);
-        
+
+        // Retrieve the event by id
         $checkOldImage = Events::where('id', $id)->first();
+
+        // Process the signature image
         if ($request->file('signature') != null) {
+            // Delete the old signature image
             if (! empty($checkOldImage->signature_picture)) {
                 Storage::disk('public')->delete($checkOldImage->signature_picture);
             }
 
+            // Store the new signature image
             $file = $request->file('signature');
-            
             $filename = date('YmdHis').'_'.$id.'.'.$file->getClientOriginalExtension();
             $path = $file->storeAs('event_signature', $filename, 'public');
         } else {
+            // No new signature image, use the old one
             $path = $checkOldImage->picture;
         }
-        
+
+        // Update the event with the new signature
         $update = Events::where('id', $id)->update([
             'signature_picture' => $path,
             'signature_name' => $request->siganture_name
         ]);
 
+        // Redirect to the detail page of the event
         return redirect(URL::to('back/event/detail/'.$checkOldImage->slug))->with('success', 'Data Berhasil Disimpan');
-        
+
+    }
+
+    public function generateCertificate(Request $request)
+    {
+        try {
+            $id = Crypt::decrypt($request->id);
+            $event = Events::where('id', $id)->first();
+            $participants = EventParticipants::where('event_id', $id)->get();
+
+            $arrParticipant = $participants->pluck('id')->toArray();
+            $checkCertificate = Certificates::whereIn('event_participant_id', $arrParticipant)->get();
+            
+            if($checkCertificate->count() == $participants->count()) {
+                return response()->json([
+                    'status' => false,
+                    'message' => 'Certificate sudah dibuat'
+                ], 400);
+            }
+
+            $allowedParticipant = $participants->whereNotIn('id', $checkCertificate->pluck('event_participant_id'));
+            
+            foreach ($allowedParticipant as $item) {
+                $serialNumber = $this->generateSerialNumber($id, $item->user_id);
+                $createCertificate = Certificates::create([
+                    'event_participant_id' => $item->id,
+                    'serial_number' => $serialNumber,
+                    'pic' => $event->signature_name,
+                    'issued_at' => date('Y-m-d'),
+                    'valid_until' => date('Y-m-d', strtotime('+2 year')),                    
+                ]);
+            }
+
+            return response()->json([
+                'status' => true,
+                'message' => 'Certificate berhasil dibuat'
+            ], 200);
+
+        } catch (\Throwable $th) {
+            return response()->json([
+                'status' => false,
+                'message' => $th->getMessage()
+            ], 500);
+        }
+    }
+
+    public function generateSerialNumber($event_id, $user_id)
+    {
+        $string = $event_id.$user_id.date('YmdHis');
+        $hash = md5($string);
+        $serialNumber = strtoupper('CERT-'.$hash);
+        $serialNumber = Str::limit($serialNumber, 25, '');
+        return $serialNumber;
     }
 }

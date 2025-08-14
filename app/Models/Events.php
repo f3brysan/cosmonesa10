@@ -22,8 +22,6 @@ class Events extends Model
     }
     public function participants()
     {
-        return User::query()
-            ->join('event_participants', 'users.id', '=', 'event_participants.user_id')
-            ->where('event_participants.event_id', $this->id);
+       return $this->hasMany(EventParticipants::class, 'event_id', 'id');
     }
 }

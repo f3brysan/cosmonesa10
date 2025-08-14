@@ -13,18 +13,12 @@ class Certificates extends Model
     use HasFactory;
     use HasUuids;
     protected $table = 'certificates';
-    public $incrementing = false;
-    public $timestamps = false;
+    public $incrementing = false;    
     /**
      * The attributes that are mass assignable.
      *
      * @var array<int, string>
-     */
-    protected $fillable = [
-        'event_participant_id',
-        'serial_number',
-        'pic',
-    ];
+     */    
     protected $guarded = [];
     /**
      * The attributes that should be cast.

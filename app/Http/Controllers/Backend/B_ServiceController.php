@@ -117,13 +117,7 @@ class B_ServiceController extends Controller
             abort(404);
         }
     }
-
-    /**
-     * Store a newly created slot in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
+    
     public function addSlot(Request $request)
     {
         try {
@@ -221,15 +215,7 @@ class B_ServiceController extends Controller
             ], 500);
         }
     }
-
-    /**
-     * Deletes or restores a service by toggling its active status.
-     *
-     * If the service is active, it will be set to inactive, and vice versa.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
+    
     public function destroy(Request $request)
     {
         try {

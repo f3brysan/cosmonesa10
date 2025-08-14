@@ -28,7 +28,7 @@ class EventParticipants extends Pivot
     {
         return $this->belongsTo(Events::class, 'event_id', 'id');
     }
-    public function participants(): BelongsTo
+    public function user(): BelongsTo
     {
         return $this->belongsTo(User::class, 'user_id', 'id');
     }

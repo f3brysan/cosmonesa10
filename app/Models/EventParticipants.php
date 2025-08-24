@@ -15,20 +15,15 @@ class EventParticipants extends Pivot
     use HasUuids;
     protected $table = 'event_participants';
     public $incrementing = false;
-    protected $fillable = [
-        'user_id',
-        'event_id',
-        'transaction_id',
+    protected $guarded = [
+
     ];
-    public function certificate(): HasOne
-    {
-        return $this->hasOne(Certificates::class, 'event_participant_id', 'id');
-    }
-    public function events(): BelongsTo
+
+    public function events()
     {
         return $this->belongsTo(Events::class, 'event_id', 'id');
     }
-    public function user(): BelongsTo
+    public function user()
     {
         return $this->belongsTo(User::class, 'user_id', 'id');
     }

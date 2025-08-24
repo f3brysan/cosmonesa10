@@ -14,28 +14,12 @@ class Certificates extends Model
     use HasUuids;
     protected $table = 'certificates';
     public $incrementing = false;    
-    /**
-     * The attributes that are mass assignable.
-     *
-     * @var array<int, string>
-     */    
+    
     protected $guarded = [];
-    /**
-     * The attributes that should be cast.
-     *
-     * @var array<string, string>
-     */
-    protected $casts = [
-        'issued_at' => 'date',
-        'valid_until' => 'date',
-    ];
+    
 
-    private function event(): BelongsTo
+    public function participant()
     {
-        return $this->belongsTo(EventParticipants::class, 'event_participant_id', 'id');
-    }
-    public function holder()
-    {
-        return $this->event()->user_id();
-    }
+        return $this->hasOne(EventParticipants::class, 'id', 'event_participant_id');
+    }   
 }

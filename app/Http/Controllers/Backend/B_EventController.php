@@ -397,7 +397,7 @@ class B_EventController extends Controller
         // Set paper size & render PDF
         $dompdf->setPaper('A4', 'landscape');
         $dompdf->render();
-        // return $dompdf->stream('certificate.pdf');
-        return $dompdf->stream('certificate.pdf', ["Attachment" => false]);
+        $filename = 'certificate-'.$certificate->serial_number.'.pdf';
+        return $dompdf->stream($filename, ["Attachment" => false]);
     }
 }

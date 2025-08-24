@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\Backend;
 
 use Carbon\Carbon;
+use Dompdf\Dompdf;
+use Dompdf\Options;
 use App\Models\Events;
 use App\Models\EventTypes;
 use Illuminate\Support\Str;
@@ -157,11 +159,13 @@ class B_EventController extends Controller
     {
         try {
             $participants = DB::table('event_participants as ep')
-                ->select('ep.*', 'u.name', 't.payment_status', 't.code')
+                ->select('ep.*', 'u.name', 't.payment_status', 't.code', 'c.serial_number')
                 ->join('users as u', 'u.id', '=', 'ep.user_id')
                 ->leftJoin('transactions as t', 't.id', '=', 'ep.transaction_id')
+                ->leftJoin('certificates as c', 'c.event_participant_id', '=', 'ep.id')
                 ->where('ep.event_id', $id)
                 ->get();
+
             if ($request->ajax()) {
                 return DataTables::of($participants)
                     ->addIndexColumn()
@@ -178,7 +182,11 @@ class B_EventController extends Controller
                         $btn = '<button type="button" class="btn p-0 dropdown-toggle hide-arrow" data-bs-toggle="dropdown"><i class="icon-base bx bx-dots-vertical-rounded"></i></button>
                         <div class="dropdown-menu">';
                         if ($item->payment_status == 'success') {
-                            $btn .= '<a class="dropdown-item certificate" data-id="'.Crypt::encrypt($item->transaction_id).'" href="javascript:void(0);" ><i class="icon-base bx bx-note me-1"></i> Certificate</a>';
+                            if (! empty($item->serial_number)) {
+                                $btn .= '<a class="dropdown-item certificate" data-id="'.Crypt::encrypt($item->transaction_id).'" target="_blank" href="'.URL::to('back/event/certificate-detail/'.$item->serial_number).'" ><i class="icon-base bx bx-note me-1"></i> Certificate</a>';
+                            } else {
+                                $btn .= '<a class="dropdown-item certificate" data-id="'.Crypt::encrypt($item->transaction_id).'" href="javascript:void(0);" ><i class="icon-base bx bx-note me-1"></i> Certificate</a>';
+                            }
                         } else if ($item->payment_status == 'paid') {
                             $btn .= '<a class="dropdown-item approve" data-id="'.Crypt::encrypt($item->transaction_id).'" href="javascript:void(0);" ><i class="icon-base bx bx-check me-1"></i> Approve Payment</a>';
                         }
@@ -304,8 +312,8 @@ class B_EventController extends Controller
 
             $arrParticipant = $participants->pluck('id')->toArray();
             $checkCertificate = Certificates::whereIn('event_participant_id', $arrParticipant)->get();
-            
-            if($checkCertificate->count() == $participants->count()) {
+
+            if ($checkCertificate->count() == $participants->count()) {
                 return response()->json([
                     'status' => false,
                     'message' => 'Certificate sudah dibuat'
@@ -313,7 +321,7 @@ class B_EventController extends Controller
             }
 
             $allowedParticipant = $participants->whereNotIn('id', $checkCertificate->pluck('event_participant_id'));
-            
+
             foreach ($allowedParticipant as $item) {
                 $serialNumber = $this->generateSerialNumber($id, $item->user_id);
                 $createCertificate = Certificates::create([
@@ -321,7 +329,7 @@ class B_EventController extends Controller
                     'serial_number' => $serialNumber,
                     'pic' => $event->signature_name,
                     'issued_at' => date('Y-m-d'),
-                    'valid_until' => date('Y-m-d', strtotime('+2 year')),                    
+                    'valid_until' => date('Y-m-d', strtotime('+2 year')),
                 ]);
             }
 
@@ -345,5 +353,51 @@ class B_EventController extends Controller
         $serialNumber = strtoupper('CERT-'.$hash);
         $serialNumber = Str::limit($serialNumber, 25, '');
         return $serialNumber;
+    }
+
+    public function certificateDetail($id)
+    {
+        $certificate = Certificates::where('serial_number', $id)
+            ->with(['participant.user', 'participant.events'])
+            ->first();
+        $signaturePic = $certificate->participant->events->signature_picture;
+        
+        $signaturePic = storage_path('app/public/'.$signaturePic);
+        $type = pathinfo($signaturePic, PATHINFO_EXTENSION);
+        $siganturePicBase64 = 'data:image/'.$type.';base64,'.base64_encode(file_get_contents($signaturePic));
+
+        // Prepare data for the certificate view
+        $data_cert = [
+            'name' => $certificate->participant->user->name ?? '',
+            'serial_number' => $certificate->serial_number,
+            'issued_at' => $certificate->issued_at,
+            'valid_until' => $certificate->valid_until,
+            'pic' => $certificate->pic,
+            'title' => $certificate->participant->events->title ?? '',
+            'signature_pic' => $siganturePicBase64,
+            'signature_name' => $certificate->participant->events->signature_name ?? '',
+            'event_date' => $certificate->participant->events->event_date ?? '',
+            'qrcode_url' => URL::to('certificate/'.$certificate->serial_number),
+        ];
+        
+        $path = public_path('frontend/images/cert/cert.jpg'); // Correct local path
+        $type = pathinfo($path, PATHINFO_EXTENSION);
+        $data = file_get_contents($path);
+        $base64 = 'data:image/'.$type.';base64,'.base64_encode($data);
+
+        // Set DomPDF options
+        $options = new Options();
+        $options->set('isRemoteEnabled', true); // Allows loading external images
+
+        // Create a new DomPDF instance with options
+        $dompdf = new Dompdf($options);
+        $pdfContent = view('front.page.events.cert', compact(['base64', 'data_cert']))->render();
+        $dompdf->loadHtml($pdfContent);
+
+        // Set paper size & render PDF
+        $dompdf->setPaper('A4', 'landscape');
+        $dompdf->render();
+        // return $dompdf->stream('certificate.pdf');
+        return $dompdf->stream('certificate.pdf', ["Attachment" => false]);
     }
 }

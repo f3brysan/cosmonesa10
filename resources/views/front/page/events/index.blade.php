@@ -225,7 +225,7 @@
                         <td class="product-quantity">${eventDate}</td>
                         <td class="product-subtotal">${participation.is_attended === 1 ? "complete": "Pending"}</td>
                         <td class="product-remove">
-                            ${participation.is_attended === 1? `<a href="/cert/${participation.event_id}" class="btn btn-primary">Print</a>` : `<span class="text-muted">N/A</span>`}
+                            ${participation.is_attended === 1? `<a href="/certificate/${participation.serial_number}" class="btn btn-primary text-white">Show Certificate</a>` : `<span class="text-muted">N/A</span>`}
                         </td>
                     </tr>
                 `;

@@ -37,6 +37,7 @@ Route::group(['middleware' => ['auth', 'role:superadmin|pengelola']], function (
     Route::post('event/participants/attend', [B_EventController::class, 'attend']);
     Route::post('event/set-signature', [B_EventController::class, 'setSignature']);
     Route::post('event/generate-certificate', [B_EventController::class, 'generateCertificate']);
+    Route::get('event/certificate-detail/{id}', [B_EventController::class, 'certificateDetail']);
 
     Route::get('product', [B_ProductController::class, 'index']);
     Route::get('product/create', [B_ProductController::class, 'create']);

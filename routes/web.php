@@ -63,7 +63,7 @@ Route::get('/events', [F_EventsController::class, 'index']);
 Route::get('/detail-event/{slug}', [F_EventsController::class, 'detail']);
 Route::get('/join', [F_EventsController::class, 'join']);
 Route::get('/participations', [F_AccountController::class, 'participation']);
-Route::get('/cert/{id}', [F_EventsController::class, 'cert']);
+Route::get('/certificate/{id}', [F_EventsController::class, 'cert']);
 Route::post('/join_event', [F_EventsController::class, 'joinEvent']);
 Route::get('/test_id', [F_EventsController::class, 'test_id']);
 

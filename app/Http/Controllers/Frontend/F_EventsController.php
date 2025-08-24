@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Frontend;
 
+use App\Http\Controllers\Backend\B_EventController;
 use DateTime;
 use Exception;
 use Dompdf\Dompdf;
@@ -42,52 +43,11 @@ class F_EventsController extends Controller
         // Return the view with the events and last events
         return view('front.page.events.index', compact('events', 'lastEvents'));
     }
-    /**
-     * Detail page for an event
-     *
-     * @param string $slug The slug for the event
-     * @return \Illuminate\Contracts\View\View
-     */
-
+    
     public function cert($id)
-    {
-        $userAuth = auth()->user();
-        $data_cert = $userAuth
-            ->hasParticipated()
-            ->select(
-                'events.id AS event_id',
-                'events.title',
-                'events.slug',
-                'event_date',
-                'users.name AS fullname',
-                'certificates.id AS certificate_id',
-                'certificates.serial_number',
-                'certificates.pic AS signatory',
-                'issued_at',
-                'valid_until'
-            )->where('event_id', $id)
-            ->where('is_attended', 1)
-            ->first();
-        // dd($data_cert);
-        $path = public_path('frontend/images/cert/cert.jpg'); // Correct local path
-        $type = pathinfo($path, PATHINFO_EXTENSION);
-        $data = file_get_contents($path);
-        $base64 = 'data:image/' . $type . ';base64,' . base64_encode($data);
-
-        // Set DomPDF options
-        $options = new Options();
-        $options->set('isRemoteEnabled', true); // Allows loading external images
-
-        // Create a new DomPDF instance with options
-        $dompdf = new Dompdf($options);
-        $pdfContent = view('front.page.events.cert', compact(['base64', 'data_cert']))->render();
-        $dompdf->loadHtml($pdfContent);
-
-        // Set paper size & render PDF
-        $dompdf->setPaper('A4', 'landscape');
-        $dompdf->render();
-        // return $dompdf->stream('certificate.pdf');
-        return $dompdf->stream('certificate.pdf', ["Attachment" => false]);
+    {        
+        $certificateTemplate = new B_EventController();
+        return $certificateTemplate->certificateDetail($id);                        
     }
     public function detail($slug)
     {

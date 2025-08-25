@@ -11,6 +11,7 @@ use Illuminate\Support\Facades\DB;
 use Yajra\DataTables\Facades\DataTables;
 use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Str;
+use SebastianBergmann\CodeCoverage\Report\Html\Dashboard;
 
 class F_DashboardController extends Controller
 {
@@ -153,6 +154,16 @@ class F_DashboardController extends Controller
             $update = ['name']
         ]);
     }
+
+    /**
+     * Compare two arrays and return the differences between them.
+     *
+     * @param array $currentList The original to compare against
+     * @param array $newList The new array to compare with
+     * @return array Associative array containing:
+     *               'add' => array of elements will be added to current list
+     *               'remove' => array of elements will be removed to current list
+     */
     private function listDiff(array $currentList, array $newList)
     {
         $addition = array_diff($newList, $currentList);
@@ -162,20 +173,42 @@ class F_DashboardController extends Controller
             'remove' => array_values($substract)
         ];
     }
+
     public function editImgList($profId = null, $imgList = null)
     {
-        $selectedImg = DashboardPivotTab::query()
-            ->where('profile_id', $profId)
-            ->select('gallery_id')
-            ->get()
-            ->toArray();
+        $selectedProfile = DashboardPivotTab::query()->where('profile_id', $profId);
+        $selectedImg = $selectedProfile->select('gallery_id')->get()->toArray();
         $currentImgList = collect($selectedImg)->flatten()->toArray();
         $diff = $this->listDiff($currentImgList, $imgList);
         $imgGallery = [];
         foreach ($imgList as $imgId) {
             $imgGallery[] = ['profile_id' => $profId, 'gallery_id' => $imgId];
         }
-        return $imgGallery;
+        // return $diff;
+        if ($diff['add'] != null and $diff['remove'] != null) {
+            try {
+                DB::beginTransaction();
+                if ($diff['add'] != null) {
+                    $add_stack = [];
+                    foreach ($diff['add'] as $adata) {
+                        $add_stack[] = ['profile_id' => $profId, 'gallery_id' => $adata];
+                    }
+                    DashboardPivotTab::insert($add_stack);
+                } else {
+                };
+                if ($diff['remove'] != null) {
+                    $selectedProfile->whereIn('gallery_id', $diff['remove'])->delete();
+                } else {
+                };
+            } catch (\Throwable $th) {
+                return response()->json(['error' => $th->getMessage()], 500);
+            }
+            return response()->json([
+                'status' => true,
+                'message' => 'Profil berhasil disunting'
+            ]);
+        }
+
         // return DashboardPivotTab::upsert([
         //     $values = $imgGallery,
         //     $update = ['gallery_id']
@@ -340,7 +373,6 @@ class F_DashboardController extends Controller
             'message' => 'profile sedang digunakan'
         ], 400);
     }
-    public function uploadImage(Request $request) {}
     public function renameImage(Request $request) {}
     public function deleteImage(Request $request) {}
 }

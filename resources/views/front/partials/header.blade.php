@@ -2,7 +2,7 @@
     <div class="container-fluid">
         <div class="row">
             <div class="col-lg-2">
-                <a href="booking.html" class="mo_btn">Make Appointment</a>
+                {{-- <a href="booking.html" class="mo_btn">Make Appointment</a> --}}
             </div>
             <div class="col-lg-8 menu-col">
                 <div class="logo2">

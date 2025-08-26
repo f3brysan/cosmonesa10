@@ -135,7 +135,7 @@
                 @foreach ($events as $event)
                     <div class="col-lg-4 col-md-6">
                         <div class="blog_item_01 frame">
-                            <img src="{{ asset('storage/' . $event->picture) ?? 'https://picsum.photos/1280/780/?blur' }}"
+                            <img src="{{ asset('storage/'.$event->picture) ?? 'https://picsum.photos/1280/780/?blur' }}"
                                 alt="" />
                             <div class="bp_content">
                                 <span>
@@ -144,8 +144,8 @@
                                         echo $date->translatedFormat('l, d F Y');
                                     @endphp
                                 </span>
-                                <h3><a href="{{ URL::to('detail-event/' . $event->slug) }}">{{ $event->title }}</a></h3>
-                                <a class="lr_more" href="{{ URL::to('detail-event/' . $event->slug) }}">
+                                <h3><a href="{{ URL::to('detail-event/'.$event->slug) }}">{{ $event->title }}</a></h3>
+                                <a class="lr_more" href="{{ URL::to('detail-event/'.$event->slug) }}">
                                     Learn More
                                     <svg width="300%" height="100%" viewBox="0 0 1200 60" preserveAspectRatio="none">
                                         <path
@@ -169,8 +169,8 @@
                                         echo $date->translatedFormat('l, d F Y');
                                     @endphp
                                 </span>
-                                <h3><a href="{{ URL::to('detail-event/' . $event->slug) }}">{{ $event->title }}</a></h3>
-                                <a class="lr_more" href="{{ URL::to('detail-event/' . $event->slug) }}">
+                                <h3><a href="{{ URL::to('detail-event/'.$event->slug) }}">{{ $event->title }}</a></h3>
+                                <a class="lr_more" href="{{ URL::to('detail-event/'.$event->slug) }}">
                                     Learn More
                                     <svg width="300%" height="100%" viewBox="0 0 1200 60" preserveAspectRatio="none">
                                         <path
@@ -190,19 +190,19 @@
 @endsection
 @push('js')
     <script>
-        $(document).ready(function() {
+        $(document).ready(function () {
             $.ajax({
                 type: "get",
                 url: "{{ URL::to('/participations') }}",
                 dataType: "json",
-                success: function(response) {
+                success: function (response) {
                     console.log(response); // Debugging purpose
 
                     let tableBody = $("#participationTable tbody"); // Select the table body
                     tableBody.empty(); // Clear previous entries
 
                     if (response.data.length > 0) {
-                        $.each(response.data, function(index, participation) {
+                        $.each(response.data, function (index, participation) {
                             // Format start and end date into Indonesian format
                             let eventDate = new Date(participation.event_date)
                                 .toLocaleDateString('id-ID', {
@@ -219,16 +219,16 @@
 
                             // Create row dynamically
                             let row = `
-                    <tr class="cart_item">
-                        <td class="product-name">${index + 1}</td>
-                        <td class="product-price">${participation.title}</td>
-                        <td class="product-quantity">${eventDate}</td>
-                        <td class="product-subtotal">${participation.is_attended == '1' ? "complete": "Pending"}</td>
-                        <td class="product-remove">
-                            ${participation.is_attended == '1'? `<a href="/certificate/${participation.serial_number}" class="btn btn-primary text-white">Show Certificate</a>` : `<span class="text-muted">N/A</span>`}
-                        </td>
-                    </tr>
-                `;
+                        <tr class="cart_item">
+                            <td class="product-name">${index + 1}</td>
+                            <td class="product-price">${participation.title}</td>
+                            <td class="product-quantity">${eventDate}</td>
+                            <td class="product-subtotal">${String(participation.is_attended).trim() === '1'? "complete" : "Pending"}</td>
+                            <td class="product-remove">
+                                ${participation.serial_number !== null ? `<a href="/certificate/${participation.serial_number}" class="btn btn-primary text-white">Show Certificate</a>` : `<span class="text-muted">N/A</span>`}
+                            </td>
+                        </tr>
+                    `;
                             tableBody.append(row); // Append row to table
                         });
                     } else {
@@ -237,7 +237,7 @@
                         );
                     }
                 },
-                error: function() {
+                error: function () {
                     $("#participationTable tbody").append(
                         `<tr><td colspan="5" class="text-center">Failed to load data.</td></tr>`);
                 }

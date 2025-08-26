@@ -70,15 +70,16 @@
                                     required>
                                     <option value="">Silahkan Pilih</option>
                                     @foreach ($categories as $item)
-                                        <option value="{{ $item->id }}"
-                                            {{ $item->id == old('category_id', $product->category_id) ? 'selected' : '' }}>
-                                            {{ ucfirst($item->name) }}</option>
+                                        <option value="{{ $item->id }}" {{ $item->id == old('category_id', $product->category_id) ? 'selected' : '' }}>
+                                            {{ ucfirst($item->name) }}
+                                        </option>
                                     @endforeach
                                 </select>
                             </div>
                             <div class="mb-4">
                                 <label for="exampleFormControlTextarea1" class="form-label">Deskrispi</label>
-                                <textarea class="form-control" id="summernote" name="description" rows="10">{{ old('description') }}</textarea>
+                                <textarea class="form-control" id="summernote" name="description"
+                                    rows="10">{{ old('description') }}</textarea>
                             </div>
                             <div class="mb-4">
                                 <label for="exampleFormControlTextarea1" class="form-label">Harga</label>
@@ -92,7 +93,7 @@
                             </div>
                             <div class="mb-4">
                                 <label for="exampleFormControlTextarea1" class="form-label">Bobot <code>*(Dalam
-                                        Gram)</code></label>
+                                            Gram)</code></label>
                                 <input type="numeric" class="form-control numeric" id="weight" name="weight" required
                                     value="{{ old('weight', $product->weight) }}" max="10000" />
                             </div>
@@ -145,10 +146,10 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <form action="{{ URL('back/product/store-images') }}" method="post"
-                        enctype="multipart/form-data" class="dropzone" id="image-upload">
+                    <form action="{{ URL('back/product/store-images') }}" method="post" enctype="multipart/form-data"
+                        class="dropzone" id="image-upload">
                         @csrf
-                        <input type="hidden" name="product_id" id="product_id" value="{{ Crypt::encrypt($product->id) }}">                    
+                        <input type="hidden" name="product_id" id="product_id" value="{{ Crypt::encrypt($product->id) }}">
                     </form>
                 </div>
                 <div class="modal-footer">
@@ -182,7 +183,7 @@
     <script src="https://cdn.datatables.net/responsive/3.0.4/js/responsive.bootstrap5.js"></script>
 
     <script>
-        $(document).ready(function() {
+        $(document).ready(function () {
 
             $('.js-example-basic-single').select2({
                 theme: 'bootstrap-5',
@@ -194,7 +195,7 @@
             var htmlString = '{!! $product->description !!}';
             $("#summernote").summernote("code", htmlString);
 
-            $('#image').change(function() {
+            $('#image').change(function () {
                 let reader = new FileReader();
                 reader.onload = (e) => {
                     $('#preview-image-before-upload').attr('src', e.target.result);
@@ -206,33 +207,33 @@
                 reverse: true
             });
 
-           table = $('#myTable').DataTable({
+            table = $('#myTable').DataTable({
                 responsive: true,
                 processing: true,
                 serverSide: true, //aktifkan server-side 
                 ajax: {
-                    url: "{{ URL::to('back/product/images/' . Crypt::encrypt($product->id)) }}",
+                    url: "{{ URL::to('back/product/images/'.Crypt::encrypt($product->id)) }}",
                     type: 'GET'
                 },
                 columns: [{
-                        data: 'image',
-                        name: 'image',
-                        className: 'text-center'
-                    },
-                    {
-                        data: 'action',
-                        name: 'action',
-                        orderable: false,
-                        searchable: false,
-                        className: 'text-center'
-                    },
+                    data: 'image',
+                    name: 'image',
+                    className: 'text-center'
+                },
+                {
+                    data: 'action',
+                    name: 'action',
+                    orderable: false,
+                    searchable: false,
+                    className: 'text-center'
+                },
                 ],
                 order: [
                     [0, 'asc']
                 ]
             });
 
-            $("#tambah-btn").click(function(e) {
+            $("#tambah-btn").click(function (e) {
                 e.preventDefault();
                 $('#crudModalLabel').html('Tambah Gambar');
                 $('#save-btn').html('Simpan');
@@ -244,8 +245,36 @@
             $(document).on('click', '.destroy', function () {
                 var id = $(this).data('id');
                 console.log(id);
+                Swal.fire({
+                    title: 'Apakah Anda yakin ingin menghapus gambar ini?',
+                    text: "Anda tidak akan dapat mengembalikan ini!",
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: 'Ya, Hapus!',
+                    cancelButtonText: 'Batal',
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        $.ajax({
+                            url: "{{ URL::to('back/product/destroy-images') }}",
+                            type: 'POST',
+                            data: { id: id, _token: "{{ csrf_token() }}" },
+                            success: function (response) {
+                                if (response.status == 'success') {
+                                    Swal.fire({
+                                        title: 'Berhasil!',
+                                        text: response.message,
+                                        icon: 'success',
+                                    });
+                                    table.ajax.reload(null, false);
+                                }
+                            }
+                        });
+                    }
+                });
             });
-        });
+        });            
     </script>
     <script>
         Dropzone.autoDiscover = false;
@@ -253,10 +282,10 @@
         var images = [];
 
         var myDropzone = new Dropzone(".dropzone", {
-            init: function() {
+            init: function () {
                 myDropzone = this;
 
-                $.each(images, function(key, value) {
+                $.each(images, function (key, value) {
                     var mockFile = {
                         name: value.name,
                         size: value.filesize
@@ -268,7 +297,7 @@
 
                 });
 
-                this.on("success", function(file, responseText) {
+                this.on("success", function (file, responseText) {
                     console.log(responseText);
                     $('#crudModal').modal('hide');
                     myDropzone.removeAllFiles();
@@ -282,9 +311,9 @@
             addRemoveLinks: true,
         });
 
-        $('#uploadFile').click(function() {
+        $('#uploadFile').click(function () {
             myDropzone.processQueue({
-                success: function(files, response) {
+                success: function (files, response) {
                     console.log(response);
                 }
             });

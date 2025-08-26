@@ -173,6 +173,32 @@ class B_ProductController extends Controller
             ], 500);
         }
     }
+
+    public function destroyImages(Request $request)
+    {
+        try {
+        $id = Crypt::decrypt($request->id);
+        $image = ProductImages::findOrFail($id);
+
+        // Unset old image file from storage
+        if ($image->filename && \Storage::disk('public')->exists($image->filename)) {
+            \Storage::disk('public')->delete($image->filename);
+        }
+
+        // Delete the database record
+        $image->delete();
+
+        return response()->json([
+            'status' => 'success',
+            'message' => 'Gambar berhasil dihapus.'
+        ]);
+        } catch (\Throwable $th) {
+            return response()->json([
+                'status' => 'error',
+                'message' => $th->getMessage()
+            ], 500);
+        }
+    }
     public function imagesShow2($id)
     {
         $id = Crypt::decrypt($id);

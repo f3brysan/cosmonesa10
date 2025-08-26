@@ -10,6 +10,7 @@ class DashboardGallery extends Model
     use HasFactory;
     protected $table = 'dashboard_gallery';
     protected $fillable = [
+        'name',
         'path',
     ];
     public $timestamps = false;

@@ -6,6 +6,7 @@ use App\Http\Controllers\Backend\B_EventController;
 use App\Http\Controllers\Backend\B_KioskController;
 use App\Http\Controllers\Backend\B_UsersController;
 use App\Http\Controllers\API\APIRajaOngkirController;
+use App\Http\Controllers\Backend\B_CarouselController;
 use App\Http\Controllers\Backend\B_ProductController;
 use App\Http\Controllers\Backend\B_ServiceController;
 use App\Http\Controllers\Backend\B_DashboardController;
@@ -62,6 +63,10 @@ Route::group(['middleware' => ['auth', 'role:superadmin|pengelola']], function (
 
     Route::get('transaction-history', [B_TransactionController::class, 'index']);
     Route::post('transaction-history/approve', [B_TransactionController::class, 'approve']);    
+
+    Route::get('carousel', [B_CarouselController::class, 'index']);
+    Route::post('carousel/upload', [B_CarouselController::class, 'upload']);
+    Route::post('carousel/destroy', [B_CarouselController::class, 'destroy']);
 });
 
 Route::group(['middleware' => ['auth', 'role:superadmin|pengelola']], function () {

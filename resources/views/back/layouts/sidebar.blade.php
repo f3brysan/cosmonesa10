@@ -53,86 +53,79 @@
         </li>
 
         @role('superadmin|pengelola')
-            <!-- Layouts -->
-            <li class="menu-header small text-uppercase">
-                <span class="menu-header-text">Menu</span>
-            </li>
-            <li class="menu-item">
-                <a href="javascript:void(0);" class="menu-link menu-toggle">
-                    <i class="menu-icon tf-icons bx bx-list-ul"></i>
-                    <div class="text-truncate" data-i18n="Menu">Dasboard Config</div>
-                </a>
-                <ul class="menu-sub">
-                    <li class="menu-item">
-                        <a href="{{ URL::to('admin_profile') }}" class="menu-link">
-                            <div class="text-truncate" data-i18n="Workshop">Landingpage Profile</div>
-                        </a>
-                    </li>
-                </ul>
-            </li>
-            <li class="menu-item">
-                <a href="javascript:void(0);" class="menu-link menu-toggle">
-                    <i class="menu-icon tf-icons bx bx-layout"></i>
-                    <div class="text-truncate" data-i18n="Menu">Menu</div>
-                </a>
-                <ul class="menu-sub">
-                    <li class="menu-item">
-                        <a href="javascript:void(0);" class="menu-link menu-toggle">
-                            <div class="text-truncate" data-i18n="Master Tools">Product</div>
-                        </a>
-                        <ul class="menu-sub">
-                            <li class="menu-item">
-                                <a href="{{ URL::to('back/product-categories') }}" class="menu-link">
-                                    <div class="text-truncate" data-i18n="Produk">Product Categories</div>
-                                </a>
-                            </li>
-                            <li class="menu-item">
-                                <a href="{{ URL::to('back/product') }}" class="menu-link">
-                                    <div class="text-truncate" data-i18n="Produk">Product Items</div>
-                                </a>
-                            </li>
-                        </ul>
-                    </li>
-                    <li class="menu-item">
-                        <a href="javascript:void(0);" class="menu-link menu-toggle">
-                            <div class="text-truncate" data-i18n="Master Tools">Service</div>
-                        </a>
-                        <ul class="menu-sub">
-                            <li class="menu-item">
-                                <a href="{{ URL::to('back/service-categories') }}" class="menu-link">
-                                    <div class="text-truncate" data-i18n="Produk">Service Categories</div>
-                                </a>
-                            </li>
-                        </ul>
-                    </li>
-                </ul>
-                <ul class="menu-sub">
-                    <li class="menu-item">
-                        <a href="{{ URL::to('back/event') }}" class="menu-link">
-                            <div class="text-truncate" data-i18n="Workshop">Event</div>
-                        </a>
-                    </li>
-                </ul>
-            </li>
-            <li class="menu-item">
-                <a href="javascript:void(0);" class="menu-link menu-toggle">
-                    <i class="menu-icon tf-icons bx bx-list-ul"></i>
-                    <div class="text-truncate" data-i18n="Menu">Penyedia Jasa</div>
-                </a>
-                <ul class="menu-sub">
-                    <li class="menu-item">
-                        <a href="{{ URL::to('back/service-provider-list') }}" class="menu-link">
-                            <div class="text-truncate" data-i18n="Workshop">Daftar Penyedia Jasa</div>
-                        </a>
-                    </li>
-                </ul>
-            </li>
-            <li class="menu-item">
+        <!-- Layouts -->
+        <li class="menu-header small text-uppercase">
+            <span class="menu-header-text">Menu</span>
+        </li>              
+        <li class="menu-item">
+            <a href="javascript:void(0);" class="menu-link menu-toggle">
+                <i class="menu-icon tf-icons bx bx-layout"></i>
+                <div class="text-truncate" data-i18n="Menu">Menu</div>
+            </a>
+            <ul class="menu-sub">
+                <li class="menu-item">
+                    <a href="javascript:void(0);" class="menu-link menu-toggle">
+                        <div class="text-truncate" data-i18n="Master Tools">Product</div>
+                    </a>
+                    <ul class="menu-sub">
+                        <li class="menu-item">
+                            <a href="{{ URL::to('back/product-categories') }}" class="menu-link">
+                                <div class="text-truncate" data-i18n="Produk">Product Categories</div>
+                            </a>
+                        </li>
+                        <li class="menu-item">
+                            <a href="{{ URL::to('back/product') }}" class="menu-link">
+                                <div class="text-truncate" data-i18n="Produk">Product Items</div>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+                <li class="menu-item">
+                    <a href="javascript:void(0);" class="menu-link menu-toggle">
+                        <div class="text-truncate" data-i18n="Master Tools">Service</div>
+                    </a>
+                    <ul class="menu-sub">
+                        <li class="menu-item">
+                            <a href="{{ URL::to('back/service-categories') }}" class="menu-link">
+                                <div class="text-truncate" data-i18n="Produk">Service Categories</div>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+            <ul class="menu-sub">
+                <li class="menu-item">
+                    <a href="{{ URL::to('back/event') }}" class="menu-link">
+                        <div class="text-truncate" data-i18n="Workshop">Event</div>
+                    </a>
+                </li>
+            </ul>
+        </li>
+        <li class="menu-item">
+            <a href="javascript:void(0);" class="menu-link menu-toggle">
+                <i class="menu-icon tf-icons bx bx-list-ul"></i>
+                <div class="text-truncate" data-i18n="Menu">Penyedia Jasa</div>
+            </a>
+            <ul class="menu-sub">
+                <li class="menu-item">
+                    <a href="{{ URL::to('back/service-provider-list') }}" class="menu-link">
+                        <div class="text-truncate" data-i18n="Workshop">Daftar Penyedia Jasa</div>
+                    </a>
+                </li>
+            </ul>
+        </li>
+        <li class="menu-item">
             <a href="{{ URL::to('back/transaction-history') }}" class="menu-link">
                 <i class="menu-icon tf-icons bx bx-list-ul"></i>
                 <div class="text-truncate" data-i18n="Basic">Histori Transaksi</div>
             </a>
         </li>
+        <li class="menu-item">
+            <a href="{{ URL::to('back/carousel') }}" class="menu-link">
+                <i class="menu-icon tf-icons bx bx-list-ul"></i>
+                <div class="text-truncate" data-i18n="Basic">Carousel</div>
+            </a>
+        </li>  
         @endrole
 
         @role('seller')
@@ -160,23 +153,23 @@
         @endrole
 
         @role('superadmin')
-            <!-- Master Tools -->
-            <li class="menu-header small text-uppercase">
-                <span class="menu-header-text">Master</span>
-            </li>
-            <li class="menu-item">
-                <a href="javascript:void(0);" class="menu-link menu-toggle">
-                    <i class="menu-icon tf-icons bx bxs-wrench"></i>
-                    <div class="text-truncate" data-i18n="Master Tools">Master Tools</div>
-                </a>
-                <ul class="menu-sub">
-                    <li class="menu-item">
-                        <a href="{{ URL::to('back/master/pengguna') }}" class="menu-link">
-                            <div class="text-truncate" data-i18n="Pengguna">Pengguna</div>
-                        </a>
-                    </li>
-                </ul>
-            </li>
+        <!-- Master Tools -->
+        <li class="menu-header small text-uppercase">
+            <span class="menu-header-text">Master</span>
+        </li>
+        <li class="menu-item">
+            <a href="javascript:void(0);" class="menu-link menu-toggle">
+                <i class="menu-icon tf-icons bx bxs-wrench"></i>
+                <div class="text-truncate" data-i18n="Master Tools">Master Tools</div>
+            </a>
+            <ul class="menu-sub">
+                <li class="menu-item">
+                    <a href="{{ URL::to('back/master/pengguna') }}" class="menu-link">
+                        <div class="text-truncate" data-i18n="Pengguna">Pengguna</div>
+                    </a>
+                </li>
+            </ul>
+        </li>
         @endrole
     </ul>
 </aside>

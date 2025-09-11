@@ -198,26 +198,25 @@ class F_AccountController extends Controller
             $rajaOngkirService = new RajaOngkirService();
             $provinces = $rajaOngkirService->getProvinces();
             $cities = $rajaOngkirService->getCities($request->provinces);
-
+            
             $proviceName = '';
             $cityName = '';
 
             foreach ($provinces as $key => $value) {
-                if ($value['province_id'] == $request->provinces) {
-                    $proviceName = $value['province'];
+                if ($value['id'] == $request->provinces) {
+                    $proviceName = $value['name'];
                     break;
                 }
             }
 
-            foreach ($cities as $key => $value) {
-                if ($value['city_id'] == $request->cities) {
-                    $cityName = $value['city_name'];
+            foreach ($cities as $key => $value) {                
+                if ($value['id'] == $request->cities) {
+                    $cityName = $value['name'];
                     break;
                 }
             }
 
-            $userId = auth()->user()->id;
-
+            $userId = auth()->user()->id;            
             $upsert = Address::updateOrCreate(
                 ['user_id' => $userId],
                 [

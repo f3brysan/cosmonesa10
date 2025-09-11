@@ -653,7 +653,7 @@
 
                             // Append new options
                             response.data.forEach(item => {
-                                let newOption = new Option(item.province, item.province_id,
+                                let newOption = new Option(item.name, item.id,
                                     false, false);
                                 $select.append(newOption);
                             });
@@ -683,7 +683,7 @@
 
                         if (response.success && Array.isArray(response.data)) {
                             response.data.forEach(city => {
-                                let newOption = new Option(city.city_name, city.city_id, false,
+                                let newOption = new Option(city.name, city.id, false,
                                     false);
                                 $citySelect.append(newOption);
                             });

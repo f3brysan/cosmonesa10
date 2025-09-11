@@ -207,14 +207,14 @@ class F_CartController extends Controller
         // Get the shipping cost from RajaOngkir API
         $rajaOngkir = new RajaOngkirService();
         $getOngkir = $rajaOngkir->checkOngkir($citiesOrigins, $address->regency_id, $totalWeight, 'jne');
-
+        
         // Loop through the shipping cost results and get the
         // shipping cost and estimated days for the 'REG' service
-        foreach ($getOngkir[0]['costs'] as $key => $value) {
+        foreach ($getOngkir as $key => $value) {
             if ($value['service'] == 'REG') {
-                $ongkir = $value['cost'][0]['value'];
-                $estimatedDays = $value['cost'][0]['etd'];
-                $serviceShipping = $value['service'];
+                $ongkir = $value['cost'];
+                $estimatedDays = $value['etd'];
+                $serviceShipping = $value['service'].' - '.$value['description'];
             }
         }
 

@@ -5,6 +5,12 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/css/select2.min.css" rel="stylesheet" />
 @endpush
 @section('body')
+    <style>
+        .select2-container {
+            z-index: 9999 !important;
+        }
+    </style>
+
     {{-- <style>
         #kodepos::-webkit-outer-spin-button,
         #kodepos::-webkit-inner-spin-button {
@@ -505,73 +511,301 @@
 
             // ================= Address Section ==============================
             // Add a click event listener to all "ubah" links
-            $('#edit-alamat').click(function() {
-
-
-                fetchProvinces();
-                //   $('#citySelect').select2();
-                //   $('#provinces').select2();
-                $("#kodepos").attr({
-                    "type": "number",
-                    "maxlength": "7"
-                }).on("input", function() {
-                    $(this).val($(this).val().replace(/[^0-9]/g, '').slice(0, 7));
-                });
-                // Initially hide city select
-                $('#citySelectContainer').hide();
-
-                $('#provinces').on('change', function() {
-                    let selectedProvinceId = $(this)
-                        .val(); // Get selected province ID
-                    // console.log(selectedProvinceId);
-                    if (selectedProvinceId) {
-                        $('#citySelectContainer')
-                            .show(); // Show city select when province is selected
-                        fetchCities(
-                            selectedProvinceId); // Load city options dynamically
-
-                    } else {
-                        $('#citySelectContainer')
-                            .hide(); // Hide if no province is selected
-                    }
-                });
-                // Fetch provinces and cities
+            function fetchAddress() {
+                // Make the AJAX request
                 $.ajax({
                     url: `{{ URL::to('/address') }}`,
                     type: 'GET',
                     success: function(response) {
-                        data = response.data;
-                        if (data) {
-                            // console.log(data);
-                            $('#provinces').val(data.province_id).trigger(
-                                'change');
-                                setTimeout(function() {
-                                $('#citySelect').val(data.regency_id).trigger('change');
-                                    // console.log("This runs after 2 seconds!");
-                                }, 2000);
+                        updateAddressFields(response); // Directly pass the JSON response
+                    },
+                    error: function(xhr, status, error) {
+                        console.error(`AJAX Error: ${status} - ${error}`);
+                    }
+                });
+            }
 
-                            $("#kodepos").val(data.kodepos);
-                            $("#address").text(data.detail);
+            $('#alamat-modal').on('shown.bs.modal', function() {
+                $('#provinces').select2({
+                    dropdownParent: $('#provinceSelectContainer')
+                });
+            });
 
-                        } else {
+            function initializeAddressForm() {
+                // Clear and reset fields
+                $('#citySelectContainer').hide();
+                $('#provinces').empty().append(`<option value="">--Pilih Provinsi--</option>`);
+                $('#citySelect').empty().append(`<option value="">--Pilih Kab./Kota--</option>`);
+                $('#kodepos').val('');
+                $('#address').val('');
 
-                            // Handle the case when no data is returned
-                            $("#alert").show();
+                // Fetch provinces and initialize Select2
+                fetchProvinces();
 
-                            // Swal.fire({
-                            //     title: "Gagal!",
-                            //     text: response.message,
-                            //     icon: "error"
-                            // });
+                // Bind province change event safely
+                $('#provinces').off('change').on('change', function() {
+                    const provinceId = $(this).val();
+                    if (provinceId) {
+                        $('#citySelectContainer').show();
+                        fetchCities(provinceId);
+                    } else {
+                        $('#citySelectContainer').hide();
+                    }
+                });
+
+                // Postal code input sanitization
+                $('#kodepos').attr({
+                    type: 'number',
+                    maxlength: '7'
+                }).off('input').on('input', function() {
+                    $(this).val($(this).val().replace(/[^0-9]/g, '').slice(0, 7));
+                });
+            }
+
+            function populateAddressForm(data) {
+                if (!data) return;
+
+                $('#provinces').val(data.province_id).trigger('change');
+
+                // Wait for province change to complete before loading cities
+                $('#provinces').one('change', function() {
+                    fetchCities(data.province_id, function() {
+                        $('#citySelect').val(data.regency_id).trigger('change');
+                    });
+                });
+
+                $('#kodepos').val(data.kodepos);
+                $('#address').val(data.detail);
+            }
+
+            function fetchProvinces() {
+                $.ajax({
+                    url: "{{ URL::to('back/api/provinces') }}",
+                    dataType: "json",
+                    success: function(response) {
+                        if (response.success && Array.isArray(response.data)) {
+                            const $select = $('#provinces');
+
+                            // Destroy previous Select2 if exists
+                            if ($select.hasClass('select2-hidden-accessible')) {
+                                $select.select2('destroy');
+                            }
+
+                            // Append options
+                            response.data.forEach(item => {
+                                $select.append(new Option(item.name, item.id, false, false));
+                            });
+
+                            // Reinitialize Select2
+                            $select.select2({
+                                dropdownParent: $('#provinceSelectContainer')
+                            });
                         }
-                        // Populate the form fields with the response data
+                    },
+                    error: function(xhr, status, error) {
+                        console.error("AJAX Error:", status, error);
+                    }
+                });
+            }
 
+            function fetchCities(provinceId, callback = null) {
+                $.ajax({
+                    url: `{{ URL::to('back/api/cities') }}/${provinceId}`,
+                    dataType: 'json',
+                    success: function(response) {
+                        const $citySelect = $('#citySelect');
+                        $citySelect.empty().append(`<option value="">--Pilih Kab./Kota--</option>`);
+
+                        if (response.success && Array.isArray(response.data)) {
+                            response.data.forEach(city => {
+                                $citySelect.append(new Option(city.name, city.id, false,
+                                    false));
+                            });
+
+                            // Destroy previous Select2 if exists
+                            if ($citySelect.hasClass('select2-hidden-accessible')) {
+                                $citySelect.select2('destroy');
+                            }
+
+                            // Reinitialize Select2
+                            $citySelect.select2({
+                                dropdownParent: $('#alamat-modal #citySelectContainer')
+                            });
+
+                            if (typeof callback === 'function') {
+                                callback();
+                            }
+                        }
+                    },
+                    error: function(xhr, status, error) {
+                        console.error("AJAX Error:", status, error);
+                    }
+                });
+            }
+
+            // Modal trigger
+            $('#edit-alamat').on('click', function() {
+                initializeAddressForm();
+
+                $.ajax({
+                    url: `{{ URL::to('/address') }}`,
+                    type: 'GET',
+                    success: function(response) {
+                        const data = response.data;
+                        if (data) {
+                            populateAddressForm(data);
+                        } else {
+                            $("#alert").show();
+                        }
                     },
                     error: function(xhr, status, error) {
                         console.error(`AJAX Error: ${status} - ${error}`);
                     }
                 });
             });
+
+            // let provinceData = [];
+
+            // function fetchProvinces() {
+            //     $.ajax({
+            //         url: "{{ URL::to('back/api/provinces') }}",
+            //         dataType: "json",
+            //         success: function(response) {
+            //             if (response.success && Array.isArray(response.data)) {
+            //                 let $select = $('#provinces');
+
+            //                 // Clear existing options
+            //                 $select.empty();
+            //                 $select.append(`<option value="">--Pilih Provinsi--</option>`);
+
+            //                 // Append new options
+            //                 response.data.forEach(item => {
+            //                     let newOption = new Option(item.name, item.id,
+            //                         false, false);
+            //                     $select.append(newOption);
+            //                 });
+
+            //                 // Refresh Select2 properly
+            //                 if ($select.hasClass("select2-hidden-accessible")) {
+            //                     $select.select2('destroy');
+            //                 }
+            //                 $select.select2({
+            //                     dropdownParent: $('#provinceSelectContainer')
+            //                 });
+
+            //                 // Ensure Select2 reinitializes
+            //             }
+            //         },
+            //         error: function(xhr, status, error) {
+            //             console.error("AJAX Error:", status, error);
+            //         }
+            //     });
+            // }
+
+            // function fetchCities(provinceId) {
+            //     $.ajax({
+            //         url: `{{ URL::to('back/api/cities') }}/${provinceId}`,
+            //         dataType: 'json',
+            //         success: function(response) {
+            //             let $citySelect = $('#citySelect'); // Target city dropdown
+            //             $citySelect.empty(); // Clear previous options
+            //             $citySelect.append(`<option value="">--Pilih Kab./Kota--</option>`);
+
+            //             if (response.success && Array.isArray(response.data)) {
+            //                 response.data.forEach(city => {
+            //                     let newOption = new Option(city.name, city.id, false,
+            //                         false);
+            //                     $citySelect.append(newOption);
+            //                 });
+
+            //                 // Reinitialize Select2
+            //                 if ($citySelect.hasClass("select2-hidden-accessible")) {
+            //                     $citySelect.select2('destroy');
+            //                 }
+            //                 $citySelect.select2({
+            //                     dropdownParent: $('#alamat-modal #citySelectContainer')
+            //                 });
+
+            //             }
+            //         },
+            //         error: function(xhr, status, error) {
+            //             console.error("AJAX Error:", status, error);
+            //         }
+            //     });
+            // }
+            // // Add a click event listener to all "ubah" links
+            // $('#alamat-modal').on('shown.bs.modal', function() {
+            //     $('#provinces').select2({
+            //         dropdownParent: $('#provinceSelectContainer')
+            //     });
+            // });
+            // $('#edit-alamat').click(function() {
+            //     fetchProvinces();
+            //     $('#provinces').off('change').on('change', function() {
+            //         let selectedProvinceId = $(this)
+            //             .val(); // Get selected province ID
+            //         // console.log(selectedProvinceId);
+            //         if (selectedProvinceId) {
+            //             $('#citySelectContainer')
+            //                 .show(); // Show city select when province is selected
+            //             fetchCities(
+            //                 selectedProvinceId); // Load city options dynamically
+
+            //         } else {
+            //             $('#citySelectContainer')
+            //                 .hide(); // Hide if no province is selected
+            //         }
+            //     });
+            //     //   $('#citySelect').select2();
+            //     //   $('#provinces').select2();
+            //     $("#kodepos").attr({
+            //         "type": "number",
+            //         "maxlength": "7"
+            //     }).on("input", function() {
+            //         $(this).val($(this).val().replace(/[^0-9]/g, '').slice(0, 7));
+            //     });
+            //     // Initially hide city select
+            //     $('#citySelectContainer').hide();
+
+
+            //     // Fetch provinces and cities
+            //     $.ajax({
+            //         url: `{{ URL::to('/address') }}`,
+            //         type: 'GET',
+            //         success: function(response) {
+            //             data = response.data;
+            //             if (data) {
+            //                 console.log(data);
+            //                 $('#provinces').val(data.province_id).trigger(
+            //                     'change');
+            //                 $('#provinces').one('change', function() {
+            //                     fetchCities(data.province_id);
+            //                     $('#citySelect').val(data.regency_id).trigger('change');
+            //                 });
+
+            //                 $("#kodepos").val(data.kodepos);
+            //                 $("#address").text(data.detail);
+
+            //             } else {
+
+            //                 // Handle the case when no data is returned
+            //                 $("#alert").show();
+
+            //                 // Swal.fire({
+            //                 //     title: "Gagal!",
+            //                 //     text: response.message,
+            //                 //     icon: "error"
+            //                 // });
+            //             }
+            //             // Populate the form fields with the response data
+
+            //         },
+            //         error: function(xhr, status, error) {
+            //             console.error(`AJAX Error: ${status} - ${error}`);
+            //         }
+            //     });
+            // });
+
             // Function to save and update address fields
             if ($("#formAlamat").length > 0) {
                 $("#formAlamat").validate({
@@ -623,84 +857,7 @@
                 }
             }
 
-            // Add a click event listener to all "ubah" links
-            function fetchAddress() {
-                // Make the AJAX request
-                $.ajax({
-                    url: `{{ URL::to('/address') }}`,
-                    type: 'GET',
-                    success: function(response) {
-                        updateAddressFields(response); // Directly pass the JSON response
-                    },
-                    error: function(xhr, status, error) {
-                        console.error(`AJAX Error: ${status} - ${error}`);
-                    }
-                });
-            }
-            let provinceData = [];
 
-            function fetchProvinces() {
-                $.ajax({
-                    url: "{{ URL::to('back/api/provinces') }}",
-                    dataType: "json",
-                    success: function(response) {
-                        if (response.success && Array.isArray(response.data)) {
-                            let $select = $('#provinces');
-
-                            // Clear existing options
-                            $select.empty();
-                            $select.append(`<option value="">--Pilih Provinsi--</option>`);
-
-                            // Append new options
-                            response.data.forEach(item => {
-                                let newOption = new Option(item.name, item.id,
-                                    false, false);
-                                $select.append(newOption);
-                            });
-
-                            // Refresh Select2 properly
-                            $select.select2({
-                                dropdownParent: $(
-                                    '#provinceSelectContainer'
-                                ) // Ensures dropdown stays inside the modal
-                            }); // Ensure Select2 reinitializes
-                        }
-                    },
-                    error: function(xhr, status, error) {
-                        console.error("AJAX Error:", status, error);
-                    }
-                });
-            }
-
-            function fetchCities(provinceId) {
-                $.ajax({
-                    url: `{{ URL::to('back/api/cities') }}/${provinceId}`,
-                    dataType: 'json',
-                    success: function(response) {
-                        let $citySelect = $('#citySelect'); // Target city dropdown
-                        $citySelect.empty(); // Clear previous options
-                        $citySelect.append(`<option value="">--Pilih Kab./Kota--</option>`);
-
-                        if (response.success && Array.isArray(response.data)) {
-                            response.data.forEach(city => {
-                                let newOption = new Option(city.name, city.id, false,
-                                    false);
-                                $citySelect.append(newOption);
-                            });
-
-                            // Reinitialize Select2
-                            $citySelect.select2({
-                                dropdownParent: $(
-                                    '#citySelectContainer'
-                                ) // Ensures dropdown stays inside the modal
-                            });
-                        }
-                    },
-                    error: function(xhr, status, error) {
-                        console.error("AJAX Error:", status, error);
-                    }
-                });
-            }
             // Run the function to fetch and populate the select box
 
 

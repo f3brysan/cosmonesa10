@@ -32,7 +32,7 @@ class APIOauthController extends Controller
             // Check if the user already exists in the database
             $finduser = User::where(function ($query) use ($user) {
                 $query->where('gauth_id', $user->id)
-                      ->orWhere('email', $user->email);
+                    ->orWhere('email', $user->email);
             })->first();
 
             if ($finduser) {
@@ -41,15 +41,15 @@ class APIOauthController extends Controller
                     return redirect()->route('login')->with('error', 'Your account is not active. Please contact your administrator.');
                 }
 
-                // Update the user's email and Google Auth ID if the user exists                
-                $update = $finduser->update([                                        
-                    'email' => $user->email,                    
-                    'gauth_id' => $user->id,                    
+                // Update the user's email and Google Auth ID if the user exists
+                $update = $finduser->update([
+                    'email' => $user->email,
+                    'gauth_id' => $user->id,
                 ]);
 
                 // If the user exists, login the user
                 $login = Auth::loginUsingId($finduser->id);
-               
+
                 // Redirect the user to the correct dashboard
                 if ($finduser->hasRole(['superadmin', 'pengelola', 'seller'])) {
                     return redirect()->intended('back/dashboard');
@@ -67,7 +67,7 @@ class APIOauthController extends Controller
                     'name' => $user->name,
                     'email' => $user->email,
                     'gauth_id' => $user->id,
-                    'gauth_type' => 'google',                    
+                    'gauth_type' => 'google',
                     'password' => bcrypt($password),
                 ]);
 
@@ -91,7 +91,8 @@ class APIOauthController extends Controller
             }
         } catch (\Exception $th) {
             // If there is an error, display the error message
-            dd($th->getMessage());
+            // dd($th->getMessage());
+            return redirect()->route('login')->with('error', 'Error is : ' . $th->getMessage());
         }
     }
 }
